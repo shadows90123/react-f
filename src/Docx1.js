@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Header from "./components/Header";
 import "./Docx1.css";
 import { MDBInput } from "mdbreact";
 import { MDBCheckbox } from "mdb-react-ui-kit";
@@ -12,6 +11,7 @@ import { collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore";
 
 import { auth } from "./components/Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Header_studen from "./components/Header_studen";
 
 const Docx1 = () => {
     const [user, loading, error] = useAuthState(auth);
@@ -150,7 +150,7 @@ const Docx1 = () => {
     };
     return (
         <div>
-            <Header />
+            <Header_studen />
             <div className="from">
                 <div className="frame">
                     <div className="title"> กรอกเอกสาร ป.1</div>

@@ -1,0 +1,10 @@
+
+.Home_studens{
+    display: flex;
+    justify-content: center;
+}
+
+.Home_studen{
+    margin: 5rem;
+    width: 500px;
+}

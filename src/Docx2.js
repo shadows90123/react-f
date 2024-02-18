@@ -1,10 +1,10 @@
 import React from "react";
-import Header from "./components/Header";
+import Header_studen from "./components/Header_studen";
 
 const Docx2 = () => {
     return (
         <div>
-            <Header />
+            <Header_studen />
             x.2
         </div>
     );

@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import { IoIosLogOut } from "react-icons/io";
 import "./Header_t.css";
 
-function Header() {
+const Header_t = () => {
     const navigate = useNavigate();
     const handleLogout = () => {
         auth.signOut();
@@ -34,6 +34,6 @@ function Header() {
             </Navbar>
         </div>
     );
-}
+};
 
-export default Header;
+export default Header_t;
