@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
-import "./Signaturetrue.css";
 
 const Home_teachar = () => {
     const [sign, setSign] = useState("");

@@ -14,6 +14,7 @@ import {
 
 import { loginWithPassword } from "./components/Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Button from "react-bootstrap/Button";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -29,6 +30,10 @@ const Login = () => {
         } else {
             console.log("login failed");
         }
+    };
+
+    const onSignUp = () => {
+        navigate("/SignUp");
     };
 
     return (
@@ -47,7 +52,6 @@ const Login = () => {
                                 <p className="text-black-50 mb-3">
                                     Please enter your login and password!
                                 </p>
-
                                 <MDBInput
                                     wrapperClass="mb-4 w-100"
                                     label="Email address"
@@ -66,32 +70,28 @@ const Login = () => {
                                     type="password"
                                     size="lg"
                                 />
-
                                 <MDBCheckbox
                                     name="flexCheck"
                                     className="mb-4"
                                     label="Remember password"
                                 />
-
-                                <MDBBtn size="lg" onClick={onLogin}>
-                                    Login
-                                </MDBBtn>
-
-                                <hr className="my-4" />
-
-                                <MDBBtn
+                                <Button
+                                    variant="primary"
                                     className="mb-2 w-100"
-                                    onClick={() => {}}
                                     size="lg"
-                                    style={{ backgroundColor: "#dd4b39" }}
+                                    onClick={onLogin}
                                 >
-                                    {/* <MDBIcon
-                                        fab
-                                        icon="google"
-                                        className="mx-2"
-                                    /> */}
+                                    Login
+                                </Button>{" "}
+                                <hr className="my-2" />
+                                <Button
+                                    variant="danger"
+                                    className="mb-2 w-100"
+                                    size="lg"
+                                    onClick={onSignUp}
+                                >
                                     Register
-                                </MDBBtn>
+                                </Button>{" "}
                             </MDBCardBody>
                         </MDBCard>
                     </MDBCol>

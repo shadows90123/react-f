@@ -7,7 +7,7 @@ import Home_teachar from "./Home_teachar";
 import Home_studen from "./Home_studen";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Docx4 from "./Docx4";
-import signup from "./signup";
+import SignUp from "./SignUp";
 
 function App() {
     return (
@@ -21,7 +21,7 @@ function App() {
                     <Route path="/Docx3" element={<Docx3 />} />
                     <Route path="/Docx4" element={<Docx4 />} />
                     <Route path="/Home_teachar" element={<Home_teachar />} />
-                    <Route path="/signup" element={<signup />} />
+                    <Route path="/SignUp" element={<SignUp />} />
                 </Routes>
             </BrowserRouter>
         </div>
