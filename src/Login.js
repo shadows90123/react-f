@@ -1,0 +1,104 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+    MDBBtn,
+    MDBContainer,
+    MDBRow,
+    MDBCol,
+    MDBCard,
+    MDBCardBody,
+    MDBInput,
+    MDBIcon,
+    MDBCheckbox,
+} from "mdb-react-ui-kit";
+
+import { loginWithPassword } from "./components/Firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+
+const Login = () => {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const onLogin = async (e) => {
+        e.preventDefault();
+        const success = await loginWithPassword(email, password);
+
+        if (success) {
+            navigate("/Home");
+        } else {
+            console.log("login failed");
+        }
+    };
+
+    return (
+        <div>
+            <MDBContainer fluid>
+                <MDBRow className="d-flex justify-content-center align-items-center h-100">
+                    <MDBCol col="12">
+                        <MDBCard
+                            className="bg-white my-5 mx-auto"
+                            style={{ borderRadius: "1rem", maxWidth: "500px" }}
+                        >
+                            <MDBCardBody className="p-5 w-100 d-flex flex-column">
+                                <h2 className="fw-bold mb-2 text-center">
+                                    Sign in
+                                </h2>
+                                <p className="text-black-50 mb-3">
+                                    Please enter your login and password!
+                                </p>
+
+                                <MDBInput
+                                    wrapperClass="mb-4 w-100"
+                                    label="Email address"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    name="email"
+                                    type="email"
+                                    size="lg"
+                                />
+                                <MDBInput
+                                    wrapperClass="mb-4 w-100"
+                                    label="Password"
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                    name="password"
+                                    type="password"
+                                    size="lg"
+                                />
+
+                                <MDBCheckbox
+                                    name="flexCheck"
+                                    className="mb-4"
+                                    label="Remember password"
+                                />
+
+                                <MDBBtn size="lg" onClick={onLogin}>
+                                    Login
+                                </MDBBtn>
+
+                                <hr className="my-4" />
+
+                                <MDBBtn
+                                    className="mb-2 w-100"
+                                    onClick={() => {}}
+                                    size="lg"
+                                    style={{ backgroundColor: "#dd4b39" }}
+                                >
+                                    {/* <MDBIcon
+                                        fab
+                                        icon="google"
+                                        className="mx-2"
+                                    /> */}
+                                    Register
+                                </MDBBtn>
+                            </MDBCardBody>
+                        </MDBCard>
+                    </MDBCol>
+                </MDBRow>
+            </MDBContainer>
+        </div>
+    );
+};
+
+export default Login;
