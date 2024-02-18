@@ -95,6 +95,7 @@ const signup = () => {
                                     src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
                                     fluid
                                 />
+                                <div>lfkjglkdgdgdgdfgdgfd</div>
                             </MDBCol>
                         </MDBRow>
                     </MDBCardBody>
