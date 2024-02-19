@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-    MDBBtn,
     MDBContainer,
     MDBRow,
     MDBCol,
     MDBCard,
     MDBCardBody,
     MDBInput,
-    MDBIcon,
     MDBCheckbox,
 } from "mdb-react-ui-kit";
 
-import { loginWithPassword } from "./components/Firebase";
+import { auth, loginWithPassword } from "../libs/Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Button from "react-bootstrap/Button";
 
 const Login = () => {
+    const [user, loading] = useAuthState(auth);
+
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -28,13 +28,23 @@ const Login = () => {
         if (success) {
             navigate("/Home");
         } else {
-            console.log("login failed");
+            alert("Login Failed!");
         }
     };
 
     const onSignUp = () => {
         navigate("/SignUp");
     };
+
+    useEffect(() => {
+        if (user) {
+            navigate("/Home");
+        }
+    }, [user]);
+
+    if (loading) {
+        return <p>loading</p>;
+    }
 
     return (
         <div>

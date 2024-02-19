@@ -1,18 +1,18 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "./Firebase";
+import { auth } from "../libs/Firebase";
 import Button from "react-bootstrap/Button";
 import { IoIosLogOut } from "react-icons/io";
-import "./Header_t.css";
+import "./HeaderT.css";
 
-const Header_t = () => {
+const HeaderT = () => {
     const navigate = useNavigate();
     const handleLogout = () => {
         auth.signOut();
         navigate("/");
     };
     return (
-        <div className="Header_t">
+        <div className="HeaderT">
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container>
                     <Navbar.Brand>
@@ -36,4 +36,4 @@ const Header_t = () => {
     );
 };
 
-export default Header_t;
+export default HeaderT;

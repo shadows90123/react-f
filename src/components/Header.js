@@ -1,9 +1,9 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "./Firebase";
+import { auth } from "../libs/Firebase";
 import Button from "react-bootstrap/Button";
 import { IoIosLogOut } from "react-icons/io";
-import "./Header_t.css";
+import "./HeaderT.css";
 
 function Header() {
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ function Header() {
         navigate("/");
     };
     return (
-        <div className="Header_t">
+        <div className="HeaderT">
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container>
                     <Navbar.Brand>

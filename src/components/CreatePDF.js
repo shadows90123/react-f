@@ -1,33 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
-import { THSarabunNewNormal } from "./THSarabunNew-normal";
-import { THSarabunNewBold } from "./THSarabunNew Bold-normal";
+import { THSarabunNewNormal } from "../assets/font/THSarabunNew-normal";
+import { THSarabunNewBold } from "../assets/font/THSarabunNew Bold-normal";
 import Button from "react-bootstrap/Button";
 
-import { db } from "./components/Firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { auth } from "./components/Firebase";
+import { auth, db } from "../libs/Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-const Docx4 = () => {
-    const [user, loading, error] = useAuthState(auth);
+const CreatePDF = () => {
+    const [user, loading] = useAuthState(auth);
 
     const [data, setData] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log(user?.uid);
-            if (user?.uid) {
-                const docRef = doc(db, "document_1", user.uid);
-                const docSnap = await getDoc(docRef);
+            const docRef = doc(db, "documents", "tiC645NHG18FPPCm2Grk");
+            const docSnap = await getDoc(docRef);
 
-                if (docSnap.exists()) {
-                    console.log("Document data:", docSnap.data());
-                    setData(docSnap.data());
-                } else {
-                    // docSnap.data() will be undefined in this case
-                    console.log("No such document!");
-                }
+            if (docSnap.exists()) {
+                console.log("Document data:", docSnap.data());
+                setData(docSnap.data());
+            } else {
+                // docSnap.data() will be undefined in this case
+                console.log("No such document!");
             }
         };
 
@@ -38,8 +34,9 @@ const Docx4 = () => {
         const doc = new jsPDF();
         var img = new Image();
         var img1 = new Image();
-        img.src = require("./Ramkhamhaeng.png");
-        img1.src = require("./check.png");
+        img.src = require("../assets/images/Ramkhamhaeng.png");
+        // img1.src = require("./check.png");
+        img1.src = require("../assets/images/check.png");
         img.onload = () => {
             doc.addFileToVFS("THSarabunNewNormal.ttf", THSarabunNewNormal);
             doc.addFont(
@@ -95,56 +92,56 @@ const Docx4 = () => {
                 align: "left",
             });
             //---------------------------> input Studens
-            doc.text(data.studen1, 65, 180, {
+            doc.text(data.student1, 65, 180, {
                 align: "left",
             });
-            doc.text(data.studen1, 65, 187, {
+            doc.text(data.student1, 65, 187, {
                 align: "left",
             });
-            doc.text(data.studen2, 135, 180, {
+            doc.text(data.student2, 135, 180, {
                 align: "left",
             });
-            doc.text(data.studen2, 135, 187, {
+            doc.text(data.student2, 135, 187, {
                 align: "left",
             });
-            doc.text(data.studen3, 105, 194, {
+            doc.text(data.student3, 105, 194, {
                 align: "left",
             });
-            doc.text(data.studen3, 105, 201, {
+            doc.text(data.student3, 105, 201, {
                 align: "left",
             });
 
             doc.addImage(img, "png", 95, 10, 25, 25);
             ////////////////////////////////////////
-            if (data.checkGoup1) {
+            if (data.checkGroup1) {
                 doc.addImage(img1, "png", 67, 54, 5, 5);
             }
-            if (data.checkGoup2) {
+            if (data.checkGroup2) {
                 doc.addImage(img1, "png", 84, 54, 5, 5);
             }
-            if (data.checkGoup3) {
+            if (data.checkGroup3) {
                 doc.addImage(img1, "png", 107, 54, 5, 5);
             }
-            if (data.checkGoup4) {
+            if (data.checkGroup4) {
                 doc.addImage(img1, "png", 134, 54, 5, 5);
             }
-            if (data.checkGoup5) {
+            if (data.checkGroup5) {
                 doc.addImage(img1, "png", 162, 54, 5, 5);
             }
 
             ////////////////////////////////////////
-            if (data.radioGoup == "group1") {
+            if (data.radioGoup === "group1") {
                 doc.addImage(img1, "png", 75, 90.5, 5, 5);
-            } else if (data.radioGoup == "group2") {
+            } else if (data.radioGroup === "group2") {
                 doc.addImage(img1, "png", 95, 90.5, 5, 5);
-            } else if (data.radioGoup == "group3") {
+            } else if (data.radioGroup === "group3") {
                 doc.addImage(img1, "png", 114, 90.5, 5, 5);
-            } else if (data.radioGoup == "group4") {
+            } else if (data.radioGroup === "group4") {
                 doc.addImage(img1, "png", 134, 90.5, 5, 5);
             }
 
             ////////////////////////////////////////
-            if (data.checkGoup6) {
+            if (data.checkGroup6) {
                 doc.addImage(img1, "png", 88.5, 118.5, 5, 5);
             }
 
@@ -458,13 +455,17 @@ const Docx4 = () => {
         };
     };
 
+    if (loading || data == null) {
+        return <>loading</>;
+    }
+
     return (
         <div>
             <Button variant="success" className="button-1" onClick={handdlePDF}>
                 Save
-            </Button>{" "}
+            </Button>
         </div>
     );
 };
 
-export default Docx4;
+export default CreatePDF;

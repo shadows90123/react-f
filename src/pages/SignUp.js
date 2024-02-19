@@ -10,7 +10,7 @@ import {
     MDBCheckbox,
 } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
-import { registerWithPassword } from "./components/Firebase";
+import { registerWithPassword } from "../libs/Firebase";
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -23,7 +23,7 @@ const SignUp = () => {
         if (success) {
             navigate("/");
         } else {
-            console.log("login failed");
+            alert("Sign Up Failed!");
         }
     };
     return (

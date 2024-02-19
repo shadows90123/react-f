@@ -1,5 +1,5 @@
 import React from "react";
-import Header_studen from "./components/Header_studen";
+import Header_studen from "./components/HeaderStudent";
 
 const Docx2 = () => {
     return (
