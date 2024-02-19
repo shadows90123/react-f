@@ -5,8 +5,13 @@ import "./Home_teachar.css";
 import { MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
 import "./Home_teachar.css";
+import { useNavigate } from "react-router-dom";
 
 const HomeTeacher = () => {
+    const navigate = useNavigate();
+    const linkDocx = () => {
+        navigate("/DocDetails");
+    };
     return (
         <div>
             <Header_t />
@@ -29,7 +34,11 @@ const HomeTeacher = () => {
                         <td></td>
                         <td>
                             {" "}
-                            <Button variant="success" className="button-0">
+                            <Button
+                                variant="success"
+                                className="button-0"
+                                onClick={linkDocx}
+                            >
                                 เอกสาร
                             </Button>{" "}
                         </td>
