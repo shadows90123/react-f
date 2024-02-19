@@ -8,6 +8,7 @@ import Home_teachar from "./pages/HomeTeacher";
 import Home_studen from "./pages/HomeStudent";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUp from "./pages/SignUp";
+import DocDetails from "./pages/DocDetails";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                     <Route path="/CreatePDF" element={<CreatePDF />} />
                     <Route path="/Home_teachar" element={<Home_teachar />} />
                     <Route path="/SignUp" element={<SignUp />} />
+                    <Route path="/DocDetails" element={<DocDetails />} />
                 </Routes>
             </BrowserRouter>
         </div>
