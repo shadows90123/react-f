@@ -1,10 +1,10 @@
 import React from "react";
-import Header from "./components/Header";
+import Header from "../components/Header";
 import Button from "react-bootstrap/Button";
 import "./Home_studen.css";
 import { useNavigate } from "react-router-dom";
 
-const Home_studen = () => {
+const HomeStudent = () => {
     const navigate = useNavigate();
     const ocDocx = () => {
         navigate("/Docx1");
@@ -36,4 +36,4 @@ const Home_studen = () => {
     );
 };
 
-export default Home_studen;
+export default HomeStudent;

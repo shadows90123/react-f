@@ -1,12 +1,12 @@
 // import React, { useState } from "react";
 // import SignatureCanvas from "react-signature-canvas";
-import Header_t from "./components/Header_t";
+import Header_t from "../components/HeaderT";
 import "./Home_teachar.css";
 import { MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
 import "./Home_teachar.css";
 
-const Home_teachar = () => {
+const HomeTeacher = () => {
     return (
         <div>
             <Header_t />
@@ -40,7 +40,7 @@ const Home_teachar = () => {
     );
 };
 
-export default Home_teachar;
+export default HomeTeacher;
 
 // const [sign, setSign] = useState("");
 // const [url, setUrl] = useState("");
