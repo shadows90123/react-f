@@ -12,6 +12,7 @@ import DocDetails from "./pages/DocDetails";
 import DocDetailsStudents from "./pages/DocDetailsStudents";
 import HomeStudent from "./pages/HomeStudent";
 import HomeTeacher from "./pages/HomeTeacher";
+import CreatePDF2 from "./components/CreatePDF2";
 
 function App() {
     return (
@@ -33,6 +34,7 @@ function App() {
                     />
                     <Route path="/HomeStudent" element={<HomeStudent />} />
                     <Route path="/HomeTeacher" element={<HomeTeacher />} />
+                    <Route path="/CreatePDF2" element={<CreatePDF2 />} />
                 </Routes>
             </BrowserRouter>
         </div>
