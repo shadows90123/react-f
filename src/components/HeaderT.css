@@ -1,5 +1,8 @@
 .HeaderT {
+    background-color: #7e0202;
+    
 }
 .HeaderT a {
     text-decoration: none;
+    color: white;
 }

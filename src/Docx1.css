@@ -13,7 +13,7 @@
   align-items: center;
   width: auto;
   height: 60px;
-  background-color:rgb(255, 44, 44) ;
+  background-color: #7e0202 ;
   justify-content: center;
   color: white;
   font-size: 20px;
@@ -25,7 +25,7 @@
     background-color:  white;
     display: flex;
     flex-direction: column;
-    border:  2px solid rgb(255, 44, 44);
+    border:  2px solid  #7e0202;
     
     margin-top: 1rem;
     margin-bottom: 1rem;
