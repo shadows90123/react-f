@@ -10,7 +10,8 @@ import {
     MDBCheckbox,
 } from "mdb-react-ui-kit";
 
-import { auth, loginWithPassword } from "../libs/Firebase";
+import { auth, db, loginWithPassword } from "../libs/Firebase";
+import { doc, getDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Button from "react-bootstrap/Button";
 
@@ -26,7 +27,17 @@ const Login = () => {
         const success = await loginWithPassword(email, password);
 
         if (success) {
-            navigate("/Home");
+            // navigate("/");
+            if (user) {
+                // navigate
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+                const data = docSnap.exists() ? docSnap.data() : null;
+
+                if (data) {
+                    navigate(`/${data.user_type}`);
+                }
+            }
         } else {
             alert("Login Failed!");
         }
@@ -37,13 +48,22 @@ const Login = () => {
     };
 
     useEffect(() => {
+        const getUserData = async (uid) => {
+            const docRef = doc(db, "users", uid);
+            const docSnap = await getDoc(docRef);
+            return docSnap.exists() ? docSnap.data() : null;
+        };
+
         if (user) {
-            navigate("/Home");
+            // navigate
+            getUserData(user.uid).then((res) => {
+                navigate(`/${res.user_type}`);
+            });
         }
     }, [user]);
 
     if (loading) {
-        return <p>loading</p>;
+        return <p>loading login</p>;
     }
 
     return (

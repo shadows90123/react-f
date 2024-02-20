@@ -3,6 +3,7 @@ import {
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
+    signOut,
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
@@ -19,6 +20,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const db = getFirestore(app);
+
+export const logOut = async () => {
+    signOut(auth);
+};
 
 export const loginWithPassword = async (email, password) => {
     return await signInWithEmailAndPassword(auth, email, password)

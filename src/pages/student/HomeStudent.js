@@ -1,39 +1,32 @@
 import React from "react";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import Button from "react-bootstrap/Button";
-import "./Home_studen.css";
-import { useNavigate } from "react-router-dom";
+import "./HomeStudent.css";
+import { Link } from "react-router-dom";
 
-const HomeStudent = () => {
-    const navigate = useNavigate();
-    const ocDocx = () => {
-        navigate("/DocDetailsStudents");
-    };
+export default function HomeStudent() {
     return (
         <div>
             <Header />
             <hr></hr>
             <div className="Home_studens">
                 <div className="Home_studen">
-                    {" "}
                     <div className="d-grid gap-2 ">
-                        <Button variant="danger" size="lg" onClick={ocDocx}>
-                            กรอกเอกสาร ป.1
+                        <Button variant="danger" size="lg">
+                            <Link to="document_i">กรอกเอกสาร ป.1</Link>
                         </Button>
                         <Button variant="danger" size="lg">
-                            กรอกเอกสาร ป.2
+                            <Link to="document_i">กรอกเอกสาร ป.2</Link>
                         </Button>
                         <Button variant="danger" size="lg">
-                            กรอกเอกสาร ป.3
+                            <Link to="document_i">กรอกเอกสาร ป.3</Link>
                         </Button>
                         <Button variant="danger" size="lg">
-                            กรอกเอกสาร ป.4
+                            <Link to="document_i">กรอกเอกสาร ป.4</Link>
                         </Button>
                     </div>
                 </div>
             </div>
         </div>
     );
-};
-
-export default HomeStudent;
+}

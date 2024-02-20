@@ -5,9 +5,9 @@ import { MDBCheckbox, MDBRadio } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
 
 import { collection, addDoc } from "firebase/firestore";
-import { auth, db } from "./libs/Firebase";
+import { auth, db } from "../../libs/Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import HeaderStudent from "./components/HeaderStudent";
+import HeaderStudent from "../../components/Student/Header";
 import { useNavigate } from "react-router-dom";
 
 const Docx1 = () => {

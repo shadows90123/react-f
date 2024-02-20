@@ -1,43 +1,34 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../libs/Firebase";
+import { Link } from "react-router-dom";
+import { logOut } from "../../libs/Firebase";
 import Button from "react-bootstrap/Button";
 import { IoIosLogOut } from "react-icons/io";
-import "./HeaderT.css";
 
-const HeaderT = () => {
-    const navigate = useNavigate();
-    const handleLogout = () => {
-        auth.signOut();
-        navigate("/");
-    };
+const Header = () => {
     return (
-        <div className="HeaderT">
-            <Navbar expand="lg" className="HeaderT">
+        <div className="Header">
+            <Navbar expand="lg" className="Header">
                 <Container>
                     <Navbar.Brand>
-                        <Link to="/HomeTeacher">หน้าหลัก </Link>
+                        <Link to="/teacher">หน้าหลัก </Link>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link>
                                 {" "}
-                                <Link to="/HomeTeacher">กรอกเอกสาร ป.1</Link>
+                                <Link to="/teacher">กรอกเอกสาร ป.1</Link>
                             </Nav.Link>
                             <Nav.Link>
                                 {" "}
-                                <Link to="/HomeTeacher">กรอกเอกสาร ป.2</Link>
+                                <Link to="/teacher">กรอกเอกสาร ป.2</Link>
                             </Nav.Link>
                             <Nav.Link>
                                 {" "}
-                                <Link to="/HomeTeacher">กรอกเอกสาร ป.3</Link>
+                                <Link to="/teacher">กรอกเอกสาร ป.3</Link>
                             </Nav.Link>
                         </Nav>
-                        <Button
-                            variant="light text-danger"
-                            onClick={handleLogout}
-                        >
+                        <Button variant="light text-danger" onClick={logOut}>
                             Logout&nbsp;&nbsp;
                             <IoIosLogOut />
                         </Button>{" "}
@@ -48,4 +39,4 @@ const HeaderT = () => {
     );
 };
 
-export default HeaderT;
+export default Header;

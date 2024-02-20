@@ -2,7 +2,7 @@ import "../../src/Docx1.css";
 import { MDBInput } from "mdbreact";
 import { MDBCheckbox, MDBRadio } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
-import HeaderT from "../components/HeaderT";
+import HeaderT from "../components/Teacher/Header";
 import SignatureCanvas from "react-signature-canvas";
 import "./signture.css";
 import { useState } from "react";

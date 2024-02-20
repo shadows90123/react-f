@@ -1,22 +1,16 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../libs/Firebase";
+import { Link } from "react-router-dom";
+import { logOut } from "../libs/Firebase";
 import Button from "react-bootstrap/Button";
 import { IoIosLogOut } from "react-icons/io";
-import "./HeaderT.css";
 
 function Header() {
-    const navigate = useNavigate();
-    const handleLogout = () => {
-        auth.signOut();
-        navigate("/");
-    };
     return (
-        <div className="HeaderT">
-            <Navbar expand="lg" className="HeaderT ">
+        <div className="Header">
+            <Navbar expand="lg" className="Header ">
                 <Container>
                     <Navbar.Brand>
-                        <Link to="/Home">หน้าหลัก </Link>
+                        <Link to="/student">หน้าหลัก </Link>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -25,10 +19,7 @@ function Header() {
                             <Nav.Link></Nav.Link>
                             <Nav.Link></Nav.Link>
                         </Nav>
-                        <Button
-                            variant="light text-danger"
-                            onClick={handleLogout}
-                        >
+                        <Button variant="light text-danger" onClick={logOut}>
                             Logout&nbsp;&nbsp;
                             <IoIosLogOut />
                         </Button>{" "}

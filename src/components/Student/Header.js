@@ -1,40 +1,37 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../libs/Firebase";
+import { Link } from "react-router-dom";
+import { logOut } from "../../libs/Firebase";
 import Button from "react-bootstrap/Button";
 import { IoIosLogOut } from "react-icons/io";
-import "./HeaderT.css";
 
-function HeaderStudent() {
-    const navigate = useNavigate();
-    const handleLogout = () => {
-        auth.signOut();
-        navigate("/");
-    };
+function Header() {
     return (
-        <div className="HeaderT">
-            <Navbar expand="lg" className="HeaderT">
+        <div className="Header">
+            <Navbar expand="lg" className="Header">
                 <Container>
                     <Navbar.Brand>
-                        <Link to="/Home">หน้าหลัก </Link>
+                        <Link to="/student">หน้าหลัก </Link>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link>
-                                <Link to="/HomeStudent">กรอกเอกสาร ป.1</Link>
+                                <Link to="/student/document_i">
+                                    กรอกเอกสาร ป.1
+                                </Link>
                             </Nav.Link>
                             <Nav.Link>
-                                <Link to="/Docx2">กรอกเอกสาร ป.2</Link>
+                                <Link to="/student/document_i">
+                                    กรอกเอกสาร ป.2
+                                </Link>
                             </Nav.Link>
                             <Nav.Link>
-                                <Link to="/Docx3">กรอกเอกสาร ป.3</Link>
+                                <Link to="/student/document_i">
+                                    กรอกเอกสาร ป.3
+                                </Link>
                             </Nav.Link>
                         </Nav>
-                        <Button
-                            variant="light text-danger"
-                            onClick={handleLogout}
-                        >
+                        <Button variant="light text-danger" onClick={logOut}>
                             Logout&nbsp;&nbsp;
                             <IoIosLogOut />
                         </Button>{" "}
@@ -45,4 +42,4 @@ function HeaderStudent() {
     );
 }
 
-export default HeaderStudent;
+export default Header;
