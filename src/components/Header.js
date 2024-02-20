@@ -13,7 +13,7 @@ function Header() {
     };
     return (
         <div className="HeaderT">
-            <Navbar expand="lg" className="bg-body-tertiary">
+            <Navbar expand="lg" className="HeaderT ">
                 <Container>
                     <Navbar.Brand>
                         <Link to="/Home">หน้าหลัก </Link>
@@ -25,7 +25,10 @@ function Header() {
                             <Nav.Link></Nav.Link>
                             <Nav.Link></Nav.Link>
                         </Nav>
-                        <Button variant="primary" onClick={handleLogout}>
+                        <Button
+                            variant="light text-danger"
+                            onClick={handleLogout}
+                        >
                             Logout&nbsp;&nbsp;
                             <IoIosLogOut />
                         </Button>{" "}

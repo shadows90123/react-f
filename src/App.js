@@ -10,6 +10,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import DocDetails from "./pages/DocDetails";
 import DocDetailsStudents from "./pages/DocDetailsStudents";
+import HomeStudent from "./pages/HomeStudent";
+import HomeTeacher from "./pages/HomeTeacher";
 
 function App() {
     return (
@@ -29,6 +31,8 @@ function App() {
                         path="/DocDetailsStudents"
                         element={<DocDetailsStudents />}
                     />
+                    <Route path="/HomeStudent" element={<HomeStudent />} />
+                    <Route path="/HomeTeacher" element={<HomeTeacher />} />
                 </Routes>
             </BrowserRouter>
         </div>

@@ -13,7 +13,7 @@ function HeaderStudent() {
     };
     return (
         <div className="HeaderT">
-            <Navbar expand="lg" className="bg-body-tertiary">
+            <Navbar expand="lg" className="HeaderT">
                 <Container>
                     <Navbar.Brand>
                         <Link to="/Home">หน้าหลัก </Link>
@@ -22,7 +22,7 @@ function HeaderStudent() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link>
-                                <Link to="/Docx1">กรอกเอกสาร ป.1</Link>
+                                <Link to="/HomeStudent">กรอกเอกสาร ป.1</Link>
                             </Nav.Link>
                             <Nav.Link>
                                 <Link to="/Docx2">กรอกเอกสาร ป.2</Link>
@@ -31,7 +31,10 @@ function HeaderStudent() {
                                 <Link to="/Docx3">กรอกเอกสาร ป.3</Link>
                             </Nav.Link>
                         </Nav>
-                        <Button variant="primary" onClick={handleLogout}>
+                        <Button
+                            variant="light text-danger"
+                            onClick={handleLogout}
+                        >
                             Logout&nbsp;&nbsp;
                             <IoIosLogOut />
                         </Button>{" "}

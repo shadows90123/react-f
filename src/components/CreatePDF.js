@@ -15,7 +15,7 @@ const CreatePDF = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const docRef = doc(db, "documents", "tiC645NHG18FPPCm2Grk");
+            const docRef = doc(db, "documents", "zZOj2SI6fot6lPbUKYlP");
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {

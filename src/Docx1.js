@@ -8,8 +8,10 @@ import { collection, addDoc } from "firebase/firestore";
 import { auth, db } from "./libs/Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import HeaderStudent from "./components/HeaderStudent";
+import { useNavigate } from "react-router-dom";
 
 const Docx1 = () => {
+    const navigate = useNavigate();
     const [user, loading, error] = useAuthState(auth);
     const [formData, setFromData] = useState({
         name1: "",
@@ -47,6 +49,7 @@ const Docx1 = () => {
     const onSave = async () => {
         alert("Save");
         await addDoc(collection(db, `documents`), formData);
+        navigate("/DocDetailsStudents");
     };
 
     return (

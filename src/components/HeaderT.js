@@ -13,19 +13,31 @@ const HeaderT = () => {
     };
     return (
         <div className="HeaderT">
-            <Navbar expand="lg" className="bg-body-tertiary">
+            <Navbar expand="lg" className="HeaderT">
                 <Container>
                     <Navbar.Brand>
-                        <Link to="/Home">หน้าหลัก </Link>
+                        <Link to="/HomeTeacher">หน้าหลัก </Link>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link></Nav.Link>
-                            <Nav.Link></Nav.Link>
-                            <Nav.Link></Nav.Link>
+                            <Nav.Link>
+                                {" "}
+                                <Link to="/HomeTeacher">กรอกเอกสาร ป.1</Link>
+                            </Nav.Link>
+                            <Nav.Link>
+                                {" "}
+                                <Link to="/HomeTeacher">กรอกเอกสาร ป.2</Link>
+                            </Nav.Link>
+                            <Nav.Link>
+                                {" "}
+                                <Link to="/HomeTeacher">กรอกเอกสาร ป.3</Link>
+                            </Nav.Link>
                         </Nav>
-                        <Button variant="primary" onClick={handleLogout}>
+                        <Button
+                            variant="light text-danger"
+                            onClick={handleLogout}
+                        >
                             Logout&nbsp;&nbsp;
                             <IoIosLogOut />
                         </Button>{" "}

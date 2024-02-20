@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const HomeStudent = () => {
     const navigate = useNavigate();
     const ocDocx = () => {
-        navigate("/Docx1");
+        navigate("/DocDetailsStudents");
     };
     return (
         <div>

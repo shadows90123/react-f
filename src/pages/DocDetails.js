@@ -10,13 +10,16 @@ import { useState } from "react";
 const DocDetails = () => {
     const [signCanvas, setSignCanvas] = useState("");
     const [url, setUrl] = useState("");
+    const [data, setData] = useState("");
     const handleClear = () => {
         signCanvas.clear();
     };
+
     // ใช้งาน
     // const handleSave = () => {
     //     setUrl(signCanvas.getTrimmedCanvas().toDataURL('signCanvas'))
     // };
+
     return (
         <div>
             <HeaderT />

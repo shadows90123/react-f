@@ -1,6 +1,6 @@
 // import React, { useState } from "react";
 // import SignatureCanvas from "react-signature-canvas";
-import Header_t from "../components/HeaderT";
+import HeaderT from "../components/HeaderT";
 import "./Home_teachar.css";
 import { MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
@@ -12,9 +12,10 @@ const HomeTeacher = () => {
     const linkDocx = () => {
         navigate("/DocDetails");
     };
+
     return (
         <div>
-            <Header_t />
+            <HeaderT />
             <hr></hr>
             <MDBTable className="form-table">
                 <MDBTableHead>
