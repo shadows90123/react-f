@@ -119,6 +119,18 @@ const CreatePDF3 = () => {
             //     doc.addImage(img1, "png", 88.5, 118.5, 5, 5);
             // }
 
+            ///////////////////////////////////////
+            doc.addImage(img1, "png", 62, 54, 5, 5);
+            doc.addImage(img1, "png", 80, 54, 5, 5);
+            doc.addImage(img1, "png", 107, 54, 5, 5);
+            doc.addImage(img1, "png", 137, 54, 5, 5);
+            doc.addImage(img1, "png", 168, 54, 5, 5);
+            ////////////////////////////////////////
+            doc.addImage(img1, "png", 54, 63, 5, 5);
+            doc.addImage(img1, "png", 82.5, 63, 5, 5);
+            doc.addImage(img1, "png", 112, 63, 5, 5);
+            doc.addImage(img1, "png", 139.5, 63, 5, 5);
+
             doc.setFont("THSarabunNewBold");
             doc.text("(แบบ ป.3)", 185, 10);
             doc.setFont("THSarabunNewNormal");
@@ -433,11 +445,11 @@ const CreatePDF3 = () => {
                 align: "left",
             });
 
-            doc.rect(61, 55, 4, 4);
-            doc.rect(79, 55, 4, 4);
-            doc.rect(106, 55, 4, 4);
-            doc.rect(135, 55, 4, 4);
-            doc.rect(167, 55, 4, 4);
+            doc.rect(62, 55, 4, 4);
+            doc.rect(80, 55, 4, 4);
+            doc.rect(107, 55, 4, 4);
+            doc.rect(137, 55, 4, 4);
+            doc.rect(168, 55, 4, 4);
             doc.rect(158, 127, 40, 89);
             doc.rect(20, 229, 80, 35);
             doc.rect(100, 229, 100, 35);
