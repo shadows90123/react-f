@@ -1,93 +1,16 @@
-import HeaderStudent from "./components/HeaderStudent";
 import { MDBInput } from "mdbreact";
-import { MDBCheckbox, MDBRadio } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
+import HeaderStudent from "./components/HeaderStudent";
 
-const Docx2 = () => {
+const Docx4 = () => {
     return (
         <div>
             <HeaderStudent />
             <div className="from">
-                <div className="frame-2">
-                    <div className="title"> กรอกเอกสาร ป.2</div>
-                    <div className="formcheck">
-                        <MDBCheckbox
-                            name="checkGroup1"
-                            // value={formData.checkGroup1}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
-                            label="&nbsp;โยธา"
-                        />
-                        <MDBCheckbox
-                            name="checkGroup2"
-                            // value={formData.checkGroup2}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
-                            label="&nbsp;อุสาหการ"
-                        />
-                        <MDBCheckbox
-                            name="checkGroup3"
-                            // value={formData.checkGroup3}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
-                            label="&nbsp;สิ่งเเวดล้อม"
-                        />
-                        <MDBCheckbox
-                            name="checkGroup4"
-                            // value={formData.checkGroup4}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
-                            label="&nbsp;คอมพิวเตอร์"
-                        />
-                        <MDBCheckbox
-                            name="checkGroup5"
-                            // value={formData.checkGroup5}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
-                            label="&nbsp;พลังงาน"
-                        />
-                    </div>
-
-                    <div className="formcheck-1">
-                        <label>1.บัดนี้ ได้ดำเนินการจัดทำโครงงานวิศวกรรม</label>
-                        &nbsp;&nbsp;&nbsp;
-                        <MDBCheckbox
-                            name="checkGroup7"
-                            // value={formData.checkGroup7}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
-                            label="&nbsp;&nbsp;โครงงานฯ 1"
-                        />
-                        &nbsp;&nbsp;&nbsp;
-                        <MDBCheckbox
-                            name="checkGroup8"
-                            // value={formData.checkGroup8}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
-                            label="&nbsp;&nbsp;โครงงานฯ 2"
-                        />
-                        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-                        <label>2.มีความประสงค์ขอสอบ</label>
-                        &nbsp;&nbsp;&nbsp;
-                        <MDBCheckbox
-                            name="checkGroup13"
-                            // value={formData.checkGroup13}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
-                            label="&nbsp;&nbsp;ความก้าวหน้า"
-                        />
-                        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-                        <MDBCheckbox
-                            name="checkGroup13"
-                            // value={formData.checkGroup13}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
-                            label="&nbsp;&nbsp;ปริญญานิพนธ์ขั้นทุดท้าย"
-                        />
-                        &nbsp;&nbsp;&nbsp;
-                    </div>
+                <div className="frame-3">
+                    <div className="title"> กรอกเอกสาร ป.4</div>
                     <div className="input">
-                        <label>3. ชื่อ-สกุล&nbsp;</label>
+                        <label>1. ชื่อ-สกุล&nbsp;</label>
                         <MDBInput
                             background
                             type="text"
@@ -119,7 +42,7 @@ const Docx2 = () => {
                         &nbsp;
                     </div>
                     <div className="input">
-                        <label>4. ชื่อ-สกุล&nbsp;</label>
+                        <label>2. ชื่อ-สกุล&nbsp;</label>
                         <MDBInput
                             name="name2"
                             id="name2"
@@ -148,7 +71,7 @@ const Docx2 = () => {
                         &nbsp;
                     </div>
                     <div className="input">
-                        <label>5. ชื่อ-สกุล&nbsp;</label>
+                        <label>3. ชื่อ-สกุล&nbsp;</label>
                         <MDBInput
                             name="name3"
                             id="name3"
@@ -179,7 +102,7 @@ const Docx2 = () => {
 
                     <div className="input">
                         <label>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.
                             เสนอหัวข้อโครงงาน&nbsp;
                         </label>
                         <MDBInput
@@ -192,33 +115,39 @@ const Docx2 = () => {
                         &nbsp; &nbsp;
                     </div>
                     <div className="input">
-                        <label>7.ลงชื่อนักศึกษา</label>
+                        <label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.สาขาวิชา
+                        </label>
                         <MDBInput
-                            name="student1"
-                            id="student1"
+                            name="fieldofstudy"
+                            id="fieldofstudy"
                             type="text"
-                            // value={formData.student1}
+                            // value={formData.project}
                             // onChange={onFormDataChange}
                         />
-                        &nbsp;<label>ภาคเรียนที่ &nbsp;</label>
+                        &nbsp; &nbsp;
+                        <label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.จำนวนเงิน
+                        </label>
                         <MDBInput
-                            background
+                            name="money"
+                            id="money"
                             type="text"
-                            id="sec"
-                            name="sec"
-                            // value={formData.name1}
+                            // value={formData.project}
                             // onChange={onFormDataChange}
                         />
-                        &nbsp;<label>ปีการศึกษา &nbsp;</label>
+                        <label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.จำนวนเงินภาษาไทย
+                        </label>
                         <MDBInput
-                            background
+                            name="money1"
+                            id="money1"
                             type="text"
-                            id="year"
-                            name="year"
-                            // value={formData.name1}
+                            // value={formData.project}
                             // onChange={onFormDataChange}
                         />
                     </div>
+
                     <div className="button">
                         <div>
                             <Button
@@ -236,4 +165,4 @@ const Docx2 = () => {
     );
 };
 
-export default Docx2;
+export default Docx4;

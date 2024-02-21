@@ -26,7 +26,7 @@ const Login = () => {
         const success = await loginWithPassword(email, password);
 
         if (success) {
-            navigate("/Home");
+            navigate("/HomeStudent");
         } else {
             alert("Login Failed!");
         }
@@ -38,7 +38,7 @@ const Login = () => {
 
     useEffect(() => {
         if (user) {
-            navigate("/Home");
+            navigate("/HomeStudent");
         }
     }, [user]);
 

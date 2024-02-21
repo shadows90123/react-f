@@ -16,7 +16,7 @@ function HeaderStudent() {
             <Navbar expand="lg" className="HeaderT">
                 <Container>
                     <Navbar.Brand>
-                        <Link to="/Home">หน้าหลัก </Link>
+                        <Link to="/HomeStudent">หน้าหลัก </Link>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -25,10 +25,13 @@ function HeaderStudent() {
                                 <Link to="/HomeStudent">กรอกเอกสาร ป.1</Link>
                             </Nav.Link>
                             <Nav.Link>
-                                <Link to="/Docx2">กรอกเอกสาร ป.2</Link>
+                                <Link to="/HomeStudent">กรอกเอกสาร ป.2</Link>
                             </Nav.Link>
                             <Nav.Link>
-                                <Link to="/Docx3">กรอกเอกสาร ป.3</Link>
+                                <Link to="/HomeStudent">กรอกเอกสาร ป.3</Link>
+                            </Nav.Link>
+                            <Nav.Link>
+                                <Link to="/HomeStudent">กรอกเอกสาร ป.4</Link>
                             </Nav.Link>
                         </Nav>
                         <Button

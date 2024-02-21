@@ -16,7 +16,7 @@ function Header() {
             <Navbar expand="lg" className="HeaderT ">
                 <Container>
                     <Navbar.Brand>
-                        <Link to="/Home">หน้าหลัก </Link>
+                        <Link to="/HomeStudent">หน้าหลัก </Link>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">

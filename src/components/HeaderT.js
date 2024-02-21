@@ -16,7 +16,7 @@ const HeaderT = () => {
             <Navbar expand="lg" className="HeaderT">
                 <Container>
                     <Navbar.Brand>
-                        <Link to="/HomeTeacher">หน้าหลัก </Link>
+                        <Link to="/HomeT">หน้าหลัก </Link>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -27,11 +27,15 @@ const HeaderT = () => {
                             </Nav.Link>
                             <Nav.Link>
                                 {" "}
-                                <Link to="/HomeTeacher">กรอกเอกสาร ป.2</Link>
+                                <Link to="/HomeTeacher2">กรอกเอกสาร ป.2</Link>
                             </Nav.Link>
                             <Nav.Link>
                                 {" "}
-                                <Link to="/HomeTeacher">กรอกเอกสาร ป.3</Link>
+                                <Link to="/HomeTeacher3">กรอกเอกสาร ป.3</Link>
+                            </Nav.Link>
+                            <Nav.Link>
+                                {" "}
+                                <Link to="/HomeTeacher4">กรอกเอกสาร ป.4</Link>
                             </Nav.Link>
                         </Nav>
                         <Button
