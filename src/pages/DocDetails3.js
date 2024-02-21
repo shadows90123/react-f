@@ -1,15 +1,28 @@
-import HeaderStudent from "./components/HeaderStudent";
 import { MDBInput } from "mdbreact";
 import { MDBCheckbox, MDBRadio } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
+import SignatureCanvas from "react-signature-canvas";
+import "./signture.css";
+import { useState } from "react";
+import HeaderT from "../components/HeaderT";
 
-const Docx2 = () => {
+const DocDetails3 = () => {
+    const [signCanvas, setSignCanvas] = useState("");
+    const [url, setUrl] = useState("");
+    const [data, setData] = useState("");
+    const handleClear = () => {
+        signCanvas.clear();
+    };
+    // ใช้งาน
+    // const handleSave = () => {
+    //     setUrl(signCanvas.getTrimmedCanvas().toDataURL('signCanvas'))
+    // };
     return (
         <div>
-            <HeaderStudent />
+            <HeaderT />
             <div className="from">
-                <div className="frame-2">
-                    <div className="title"> กรอกเอกสาร ป.2</div>
+                <div className="frame-1">
+                    <div className="title"> กรอกเอกสาร ป.3</div>
                     <div className="formcheck">
                         <MDBCheckbox
                             name="checkGroup1"
@@ -48,46 +61,39 @@ const Docx2 = () => {
                         />
                     </div>
 
-                    <div className="formcheck-1">
-                        <label>1.บัดนี้ ได้ดำเนินการจัดทำโครงงานวิศวกรรม</label>
-                        &nbsp;&nbsp;&nbsp;
-                        <MDBCheckbox
-                            name="checkGroup7"
-                            // value={formData.checkGroup7}
+                    <div className="changeradio-1">
+                        <label>1. ลงทะเบียนเรียน </label>
+                        <MDBRadio
+                            name="radioGroup"
+                            value="group1"
+                            label="กลุ่ม 1"
                             // onChange={onFormDataChange}
-                            id="flexCheckDefault"
-                            label="&nbsp;&nbsp;โครงงานฯ 1"
+                            inline
                         />
-                        &nbsp;&nbsp;&nbsp;
-                        <MDBCheckbox
-                            name="checkGroup8"
-                            // value={formData.checkGroup8}
+                        <MDBRadio
+                            name="radioGroup"
+                            value="group2"
+                            label="กลุ่ม 2"
                             // onChange={onFormDataChange}
-                            id="flexCheckDefault"
-                            label="&nbsp;&nbsp;โครงงานฯ 2"
+                            inline
                         />
-                        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-                        <label>2.มีความประสงค์ขอสอบ</label>
-                        &nbsp;&nbsp;&nbsp;
-                        <MDBCheckbox
-                            name="checkGroup13"
-                            // value={formData.checkGroup13}
+                        <MDBRadio
+                            name="radioGroup"
+                            value="group3"
+                            label="กลุ่ม 3"
                             // onChange={onFormDataChange}
-                            id="flexCheckDefault"
-                            label="&nbsp;&nbsp;ความก้าวหน้า"
+                            inline
                         />
-                        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-                        <MDBCheckbox
-                            name="checkGroup13"
-                            // value={formData.checkGroup13}
+                        <MDBRadio
+                            name="radioGroup"
+                            value="group4"
+                            label="กลุ่ม อื่นๆ................................................."
                             // onChange={onFormDataChange}
-                            id="flexCheckDefault"
-                            label="&nbsp;&nbsp;ปริญญานิพนธ์ขั้นทุดท้าย"
+                            inline
                         />
-                        &nbsp;&nbsp;&nbsp;
                     </div>
                     <div className="input">
-                        <label>3. ชื่อ-สกุล&nbsp;</label>
+                        <label>2. ชื่อ-สกุล&nbsp;</label>
                         <MDBInput
                             background
                             type="text"
@@ -119,7 +125,7 @@ const Docx2 = () => {
                         &nbsp;
                     </div>
                     <div className="input">
-                        <label>4. ชื่อ-สกุล&nbsp;</label>
+                        <label>3. ชื่อ-สกุล&nbsp;</label>
                         <MDBInput
                             name="name2"
                             id="name2"
@@ -148,7 +154,7 @@ const Docx2 = () => {
                         &nbsp;
                     </div>
                     <div className="input">
-                        <label>5. ชื่อ-สกุล&nbsp;</label>
+                        <label>4. ชื่อ-สกุล&nbsp;</label>
                         <MDBInput
                             name="name3"
                             id="name3"
@@ -185,45 +191,37 @@ const Docx2 = () => {
                         <MDBInput
                             name="project"
                             id="project"
-                            type="text1"
+                            type="text4"
                             // value={formData.project}
                             // onChange={onFormDataChange}
                         />
-                        &nbsp; &nbsp;
-                    </div>
-                    <div className="input">
-                        <label>7.ลงชื่อนักศึกษา</label>
-                        <MDBInput
-                            name="student1"
-                            id="student1"
-                            type="text"
-                            // value={formData.student1}
-                            // onChange={onFormDataChange}
-                        />
-                        &nbsp;<label>ภาคเรียนที่ &nbsp;</label>
-                        <MDBInput
-                            background
-                            type="text"
-                            id="sec"
-                            name="sec"
-                            // value={formData.name1}
-                            // onChange={onFormDataChange}
-                        />
-                        &nbsp;<label>ปีการศึกษา &nbsp;</label>
-                        <MDBInput
-                            background
-                            type="text"
-                            id="year"
-                            name="year"
-                            // value={formData.name1}
-                            // onChange={onFormDataChange}
-                        />
+                        &nbsp; &nbsp; &nbsp;&nbsp;
+                        <label>ลายเซ็นอาจารย์ที่ปรึกษา</label>&nbsp; &nbsp;
+                        <div className="signture">
+                            {" "}
+                            <SignatureCanvas
+                                penColor="black"
+                                canvasProps={{
+                                    width: 220,
+                                    height: 50,
+                                    className: "sigCanvas",
+                                }}
+                                ref={(data) => setSignCanvas(data)}
+                            />
+                        </div>
+                        <Button
+                            variant="success"
+                            className="button-0"
+                            onClick={handleClear}
+                        >
+                            Clear
+                        </Button>
                     </div>
                     <div className="button">
                         <div>
                             <Button
                                 variant="success"
-                                className="button-1"
+                                className="button-2"
                                 // onClick={onSave}
                             >
                                 Save
@@ -236,4 +234,4 @@ const Docx2 = () => {
     );
 };
 
-export default Docx2;
+export default DocDetails3;
