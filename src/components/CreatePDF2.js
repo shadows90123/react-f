@@ -117,7 +117,20 @@ const CreatePDF2 = () => {
             ////////////////////////////////////////
             // if (data.checkGroup6) {
             //     doc.addImage(img1, "png", 88.5, 118.5, 5, 5);
+
             // }
+
+            doc.addImage(img1, "png", 61, 54, 5, 5);
+            doc.addImage(img1, "png", 79, 54, 5, 5);
+            doc.addImage(img1, "png", 106, 54, 5, 5);
+            doc.addImage(img1, "png", 135, 54, 5, 5);
+            doc.addImage(img1, "png", 167, 54, 5, 5);
+            ////////////////////////////////////////
+            doc.addImage(img1, "png", 96, 70, 5, 5);
+            doc.addImage(img1, "png", 129, 70, 5, 5);
+            /////////////////////////////////////////
+            doc.addImage(img1, "png", 85, 119, 5, 5);
+            doc.addImage(img1, "png", 114, 119, 5, 5);
 
             doc.setFont("THSarabunNewBold");
             doc.text("(แบบ ป.2)", 185, 10);
