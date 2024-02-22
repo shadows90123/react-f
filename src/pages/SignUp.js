@@ -7,7 +7,7 @@ import {
     MDBCard,
     MDBCardBody,
     MDBInput,
-    MDBCheckbox,
+    MDBRadio,
 } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
 import { registerWithPassword } from "../libs/Firebase";
@@ -60,10 +60,17 @@ const SignUp = () => {
                                     type="password"
                                     size="lg"
                                 />
-                                <MDBCheckbox
-                                    name="flexCheck"
-                                    className="mb-4"
-                                    label="Remember password"
+                                <MDBRadio
+                                    name="radioGroup"
+                                    value="group3"
+                                    label="student"
+                                    inline
+                                />
+                                <MDBRadio
+                                    name="radioGroup"
+                                    value="group3"
+                                    label="teachar"
+                                    inline
                                 />
                                 <Button
                                     variant="danger"
