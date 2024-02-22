@@ -16,16 +16,24 @@ const Header = () => {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link>
-                                {" "}
-                                <Link to="/teacher">กรอกเอกสาร ป.1</Link>
+                                <Link to="/teacher/document_1">
+                                    กรอกเอกสาร ป.1
+                                </Link>
                             </Nav.Link>
                             <Nav.Link>
-                                {" "}
-                                <Link to="/teacher">กรอกเอกสาร ป.2</Link>
+                                <Link to="/teacher/document_2">
+                                    กรอกเอกสาร ป.2
+                                </Link>
                             </Nav.Link>
                             <Nav.Link>
-                                {" "}
-                                <Link to="/teacher">กรอกเอกสาร ป.3</Link>
+                                <Link to="/teacher/document_3">
+                                    กรอกเอกสาร ป.3
+                                </Link>
+                            </Nav.Link>
+                            <Nav.Link>
+                                <Link to="/teacher/document_4">
+                                    กรอกเอกสาร ป.4
+                                </Link>
                             </Nav.Link>
                         </Nav>
                         <Button variant="light text-danger" onClick={logOut}>

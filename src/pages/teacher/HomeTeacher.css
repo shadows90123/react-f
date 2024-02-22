@@ -1,3 +1,13 @@
-.form-table{
+.form-table {
     margin-top: 2rem;
+}
+
+.Home_teacher {
+    display: flex;
+    justify-content: center;
+}
+
+.Home_teacher {
+    margin: 5rem;
+    width: 500px;
 }

@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../libs/Firebase";
 import Button from "react-bootstrap/Button";
 import { IoIosLogOut } from "react-icons/io";
-import "./HeaderT.css";
 
 const HeaderTT = () => {
     const navigate = useNavigate();
@@ -13,8 +12,8 @@ const HeaderTT = () => {
     };
     return (
         <div>
-            <div className="HeaderT">
-                <Navbar expand="lg" className="HeaderT ">
+            <div className="Header">
+                <Navbar expand="lg" className="Header ">
                     <Container>
                         <Navbar.Brand>
                             <Link to="/HomeT">หน้าหลัก </Link>

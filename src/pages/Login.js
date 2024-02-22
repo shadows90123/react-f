@@ -14,6 +14,7 @@ import { auth, db, loginWithPassword } from "../libs/Firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 const Login = () => {
     const [user, loading] = useAuthState(auth);
@@ -41,10 +42,6 @@ const Login = () => {
         } else {
             alert("Login Failed!");
         }
-    };
-
-    const onSignUp = () => {
-        navigate("/SignUp");
     };
 
     useEffect(() => {
@@ -118,9 +115,8 @@ const Login = () => {
                                     variant="danger"
                                     className="mb-2 w-100"
                                     size="lg"
-                                    onClick={onSignUp}
                                 >
-                                    Register
+                                    <Link to="register">Register</Link>
                                 </Button>{" "}
                             </MDBCardBody>
                         </MDBCard>

@@ -1,80 +1,33 @@
-// import React, { useState } from "react";
-// import SignatureCanvas from "react-signature-canvas";
-import Header from "../../components/Teacher/Header";
-import { MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
+import HeaderTT from "../../components/HeaderTT";
 import Button from "react-bootstrap/Button";
 import "./HomeTeacher.css";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const HomeTeacher = () => {
-    const navigate = useNavigate();
-    const linkDocx = () => {
-        navigate("/DocDetails");
-    };
-
     return (
         <div>
-            <Header />
+            <HeaderTT />
             <hr></hr>
-            <MDBTable className="form-table">
-                <MDBTableHead>
-                    <tr>
-                        <th scope="col">ลำดับ</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">เอกสาร</th>
-                        <th scope="col">สถานะ</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </MDBTableHead>
-                <MDBTableBody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            {" "}
-                            <Button
-                                variant="success"
-                                className="button-0"
-                                onClick={linkDocx}
-                            >
-                                เอกสาร
-                            </Button>{" "}
-                        </td>
-                    </tr>
-                </MDBTableBody>
-            </MDBTable>
+            <div className="Home_teacher">
+                <div className="Home_teacher">
+                    <div className="d-grid gap-2 ">
+                        <Button variant="danger" size="lg">
+                            <Link to="document_1">กรอกเอกสาร ป.1</Link>
+                        </Button>
+                        <Button variant="danger" size="lg">
+                            <Link to="document_2">กรอกเอกสาร ป.2</Link>
+                        </Button>
+                        <Button variant="danger" size="lg">
+                            <Link to="document_3">กรอกเอกสาร ป.3</Link>
+                        </Button>
+                        <Button variant="danger" size="lg">
+                            <Link to="document_4">กรอกเอกสาร ป.4</Link>
+                        </Button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
 
 export default HomeTeacher;
-
-// const [sign, setSign] = useState("");
-// const [url, setUrl] = useState("");
-
-// const handleClear = () => {
-//     sign.clear();
-// };
-// const handleSave = () => {
-//     setUrl(sign.getTrimmedCanvas().toDataURL("sign.png"));
-// };
-
-//<div className="box">
-//     <div style={{ border: "2px solid black", width: 500, height: 200 }}>
-//         <SignatureCanvas
-//             canvasProps={{
-//                 width: 500,
-//                 height: 200,
-//                 className: "sigCanvas",
-//             }}
-//             ref={(data) => setSign(data)}
-//         />
-//     </div>
-//     <button onClick={handleClear}> Clear</button>
-//     <button onClick={handleSave}>Save</button>
-//     <br></br>
-//     <br></br>
-//     <img src={url} />
-// </div>

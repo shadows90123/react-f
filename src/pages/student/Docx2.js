@@ -1,25 +1,12 @@
+import HeaderStudent from "../../components/Student/Header";
 import { MDBInput } from "mdbreact";
-import { MDBCheckbox } from "mdb-react-ui-kit";
+import { MDBCheckbox, MDBRadio } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
-import SignatureCanvas from "react-signature-canvas";
-import "./signture.css";
-import { useState } from "react";
-import HeaderT from "../components/HeaderT";
 
-const DocDetails2 = () => {
-    const [signCanvas, setSignCanvas] = useState("");
-    const [url, setUrl] = useState("");
-    const [data, setData] = useState("");
-    const handleClear = () => {
-        signCanvas.clear();
-    };
-    // ใช้งาน
-    // const handleSave = () => {
-    //     setUrl(signCanvas.getTrimmedCanvas().toDataURL('signCanvas'))
-    // };
+const Docx2 = () => {
     return (
         <div>
-            <HeaderT />
+            <HeaderStudent />
             <div className="from">
                 <div className="frame-2">
                     <div className="title"> กรอกเอกสาร ป.2</div>
@@ -60,6 +47,7 @@ const DocDetails2 = () => {
                             label="&nbsp;พลังงาน"
                         />
                     </div>
+
                     <div className="formcheck-1">
                         <label>1.บัดนี้ ได้ดำเนินการจัดทำโครงงานวิศวกรรม</label>
                         &nbsp;&nbsp;&nbsp;
@@ -188,6 +176,7 @@ const DocDetails2 = () => {
                         />
                         &nbsp;
                     </div>
+
                     <div className="input">
                         <label>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.
@@ -196,31 +185,11 @@ const DocDetails2 = () => {
                         <MDBInput
                             name="project"
                             id="project"
-                            type="text4"
+                            type="text1"
                             // value={formData.project}
                             // onChange={onFormDataChange}
                         />
-                        &nbsp; &nbsp; &nbsp;&nbsp;
-                        <label>ลายเซ็นอาจารย์ที่ปรึกษา</label>&nbsp; &nbsp;
-                        <div className="signture">
-                            {" "}
-                            <SignatureCanvas
-                                penColor="black"
-                                canvasProps={{
-                                    width: 220,
-                                    height: 50,
-                                    className: "sigCanvas",
-                                }}
-                                ref={(data) => setSignCanvas(data)}
-                            />
-                        </div>
-                        <Button
-                            variant="success"
-                            className="button-0"
-                            onClick={handleClear}
-                        >
-                            Clear
-                        </Button>
+                        &nbsp; &nbsp;
                     </div>
                     <div className="input">
                         <label>7.ลงชื่อนักศึกษา</label>
@@ -250,7 +219,6 @@ const DocDetails2 = () => {
                             // onChange={onFormDataChange}
                         />
                     </div>
-
                     <div className="button">
                         <div>
                             <Button
@@ -268,4 +236,4 @@ const DocDetails2 = () => {
     );
 };
 
-export default DocDetails2;
+export default Docx2;

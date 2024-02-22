@@ -16,18 +16,23 @@ function Header() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link>
-                                <Link to="/student/document_i">
+                                <Link to="/student/document_1">
                                     กรอกเอกสาร ป.1
                                 </Link>
                             </Nav.Link>
                             <Nav.Link>
-                                <Link to="/student/document_i">
+                                <Link to="/student/document_2">
                                     กรอกเอกสาร ป.2
                                 </Link>
                             </Nav.Link>
                             <Nav.Link>
-                                <Link to="/student/document_i">
+                                <Link to="/student/document_3">
                                     กรอกเอกสาร ป.3
+                                </Link>
+                            </Nav.Link>
+                            <Nav.Link>
+                                <Link to="/student/document_4">
+                                    กรอกเอกสาร ป.4
                                 </Link>
                             </Nav.Link>
                         </Nav>

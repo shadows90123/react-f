@@ -1,6 +1,7 @@
 import { MDBInput } from "mdbreact";
 import Button from "react-bootstrap/Button";
-import HeaderStudent from "./components/HeaderStudent";
+import HeaderStudent from "../../components/Student/Header";
+import "./Docx1.css";
 
 const Docx4 = () => {
     return (

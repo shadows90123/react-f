@@ -1,17 +1,12 @@
-import HeaderT from "../components/HeaderT";
+import Header from "../../components/Teacher/Header";
 import { MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
-import "./Home_teachar.css";
-import { useNavigate } from "react-router-dom";
-
-const HomeTeacher3 = () => {
-    const navigate = useNavigate();
-    const linkDocx = () => {
-        navigate("/DocDetails3");
-    };
+import { Link } from "react-router-dom";
+import "./HomeTeacher.css";
+const TableDoc3 = () => {
     return (
         <div>
-            <HeaderT />
+            <Header />
             <hr></hr>
             <MDBTable className="form-table">
                 <MDBTableHead>
@@ -30,14 +25,9 @@ const HomeTeacher3 = () => {
                         <td></td>
                         <td></td>
                         <td>
-                            {" "}
-                            <Button
-                                variant="success"
-                                className="button-0"
-                                onClick={linkDocx}
-                            >
-                                เอกสาร
-                            </Button>{" "}
+                            <Button variant="success" className="button-0">
+                                <Link to="detail">เอกสาร</Link>
+                            </Button>
                         </td>
                     </tr>
                 </MDBTableBody>
@@ -46,4 +36,4 @@ const HomeTeacher3 = () => {
     );
 };
 
-export default HomeTeacher3;
+export default TableDoc3;

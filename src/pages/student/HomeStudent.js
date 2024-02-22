@@ -13,16 +13,16 @@ export default function HomeStudent() {
                 <div className="Home_studen">
                     <div className="d-grid gap-2 ">
                         <Button variant="danger" size="lg">
-                            <Link to="document_i">กรอกเอกสาร ป.1</Link>
+                            <Link to="document_1">กรอกเอกสาร ป.1</Link>
                         </Button>
                         <Button variant="danger" size="lg">
-                            <Link to="document_i">กรอกเอกสาร ป.2</Link>
+                            <Link to="document_2">กรอกเอกสาร ป.2</Link>
                         </Button>
                         <Button variant="danger" size="lg">
-                            <Link to="document_i">กรอกเอกสาร ป.3</Link>
+                            <Link to="document_3">กรอกเอกสาร ป.3</Link>
                         </Button>
                         <Button variant="danger" size="lg">
-                            <Link to="document_i">กรอกเอกสาร ป.4</Link>
+                            <Link to="document_4">กรอกเอกสาร ป.4</Link>
                         </Button>
                     </div>
                 </div>

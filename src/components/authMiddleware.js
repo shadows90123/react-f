@@ -26,6 +26,7 @@ export const authMiddleware = (allowedRoles) => (Component) => {
                 });
             } else {
                 setIsAuthenticated(false);
+                navigate("/");
             }
         }, [user]);
 
@@ -43,7 +44,7 @@ export const authMiddleware = (allowedRoles) => (Component) => {
             );
         }
 
-        if (!isAuthenticated) return navigate("/");
+        // if (!isAuthenticated) return navigate("/");
 
         if (userRole && !allowedRoles.includes(userRole))
             return <>404 NOT FOUND</>;
