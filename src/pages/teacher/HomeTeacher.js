@@ -1,10 +1,9 @@
 // import React, { useState } from "react";
 // import SignatureCanvas from "react-signature-canvas";
-import HeaderT from "../components/HeaderT";
-import "./Home_teachar.css";
+import Header from "../../components/Teacher/Header";
 import { MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
-import "./Home_teachar.css";
+import "./HomeTeacher.css";
 import { useNavigate } from "react-router-dom";
 
 const HomeTeacher = () => {
@@ -15,7 +14,7 @@ const HomeTeacher = () => {
 
     return (
         <div>
-            <HeaderT />
+            <Header />
             <hr></hr>
             <MDBTable className="form-table">
                 <MDBTableHead>
