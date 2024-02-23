@@ -10,17 +10,29 @@ import {
     MDBRadio,
 } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
-import { registerWithPassword } from "../libs/Firebase";
+import { db, registerWithPassword } from "../libs/Firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const SignUp = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [role, setRole] = useState("student");
 
     const onSignUp = async (e) => {
         e.preventDefault();
-        const success = await registerWithPassword(email, password);
-        if (success) {
+        if (email === "" && password === "") {
+            alert("กรอกข้อมูลให้ครบ");
+            return;
+        }
+        const user = await registerWithPassword(email, password);
+
+        if (user) {
+            await setDoc(doc(db, "users", user.uid), {
+                email: user.email,
+                name: user.displayName,
+                user_type: role,
+            });
             navigate("/");
         } else {
             alert("Sign Up Failed!");
@@ -49,6 +61,7 @@ const SignUp = () => {
                                     name="email"
                                     type="email"
                                     size="lg"
+                                    required
                                 />
                                 <MDBInput
                                     wrapperClass="mb-4 w-100"
@@ -59,20 +72,29 @@ const SignUp = () => {
                                     name="password"
                                     type="password"
                                     size="lg"
+                                    required
                                 />
                                 <div className="radioGroup">
-                                    {" "}
                                     <MDBRadio
-                                        name="radioGroup"
-                                        value="group3"
+                                        name="role"
+                                        value="student"
                                         label="student"
                                         inline
+                                        checked
+                                        onChange={(e) =>
+                                            setRole(e.target.value)
+                                        }
+                                        required
                                     />
                                     <MDBRadio
-                                        name="radioGroup"
-                                        value="group3"
-                                        label="teachar"
+                                        name="role"
+                                        value="teacher"
+                                        label="teacher"
                                         inline
+                                        onChange={(e) =>
+                                            setRole(e.target.value)
+                                        }
+                                        required
                                     />
                                 </div>
                                 <Button
@@ -82,7 +104,7 @@ const SignUp = () => {
                                     onClick={onSignUp}
                                 >
                                     Register
-                                </Button>{" "}
+                                </Button>
                             </MDBCardBody>
                         </MDBCard>
                     </MDBCol>

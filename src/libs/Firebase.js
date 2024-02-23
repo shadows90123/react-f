@@ -30,28 +30,20 @@ export const loginWithPassword = async (email, password) => {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            return true;
-            // ...
+            return user;
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            return false;
+            console.error(error);
         });
 };
 
-export const registerWithPassword = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed up
+export const registerWithPassword = async (email, password) => {
+    return await createUserWithEmailAndPassword(auth, email, password)
+        .then(async (userCredential) => {
             const user = userCredential.user;
-            // ...
-            return true;
+            return user;
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // ..
-            return false;
+            console.error(error);
         });
 };
