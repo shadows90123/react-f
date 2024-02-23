@@ -116,9 +116,7 @@ const Docx4 = () => {
                         &nbsp; &nbsp;
                     </div>
                     <div className="input">
-                        <label>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.สาขาวิชา
-                        </label>
+                        <label>&nbsp;5.สาขาวิชา</label>
                         <MDBInput
                             name="fieldofstudy"
                             id="fieldofstudy"

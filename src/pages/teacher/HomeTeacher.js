@@ -8,20 +8,40 @@ const HomeTeacher = () => {
         <div>
             <HeaderTT />
             <hr></hr>
-            <div className="Home_teacher">
-                <div className="Home_teacher">
+            <div className="HomeTeacher">
+                <div className="HomeTeacher-1">
                     <div className="d-grid gap-2 ">
-                        <Button variant="danger" size="lg">
-                            <Link to="document_1">กรอกเอกสาร ป.1</Link>
+                        <Button variant="danger" size="lg" className="color">
+                            <Link
+                                to="document_1"
+                                className="text-white text-decoration-none"
+                            >
+                                เอกสาร ป.1
+                            </Link>
                         </Button>
-                        <Button variant="danger" size="lg">
-                            <Link to="document_2">กรอกเอกสาร ป.2</Link>
+                        <Button variant="danger" size="lg" className="color">
+                            <Link
+                                to="document_2"
+                                className="text-white text-decoration-none"
+                            >
+                                เอกสาร ป.2
+                            </Link>
                         </Button>
-                        <Button variant="danger" size="lg">
-                            <Link to="document_3">กรอกเอกสาร ป.3</Link>
+                        <Button variant="danger" size="lg" className="color">
+                            <Link
+                                to="document_3"
+                                className="text-white text-decoration-none"
+                            >
+                                เอกสาร ป.3
+                            </Link>
                         </Button>
-                        <Button variant="danger" size="lg">
-                            <Link to="document_4">กรอกเอกสาร ป.4</Link>
+                        <Button variant="danger" size="lg" className="color">
+                            <Link
+                                to="document_4"
+                                className="text-white text-decoration-none"
+                            >
+                                เอกสาร ป.4
+                            </Link>
                         </Button>
                     </div>
                 </div>

@@ -190,7 +190,7 @@ const Docx3 = () => {
                         <div>
                             <Button
                                 variant="success"
-                                className="button-2"
+                                className="button-1"
                                 // onClick={onSave}
                             >
                                 Save

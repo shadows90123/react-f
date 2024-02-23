@@ -113,11 +113,8 @@ const DocDetails4 = () => {
                         &nbsp;
                     </div>
 
-                    <div className="input">
-                        <label>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.
-                            เสนอหัวข้อโครงงาน&nbsp;
-                        </label>
+                    <div className="input-3">
+                        <label>4. เสนอหัวข้อโครงงาน&nbsp;</label>
                         <MDBInput
                             name="project"
                             id="project"
@@ -125,7 +122,6 @@ const DocDetails4 = () => {
                             // value={formData.project}
                             // onChange={onFormDataChange}
                         />
-                        &nbsp; &nbsp; &nbsp;&nbsp;
                         <label>ลายเซ็นอาจารย์ที่ปรึกษา</label>&nbsp; &nbsp;
                         <div className="signture">
                             {" "}
@@ -147,7 +143,7 @@ const DocDetails4 = () => {
                             Clear
                         </Button>
                     </div>
-                    <div className="input-1">
+                    <div className="input-4">
                         <label>5.สาขาวิชา</label>
                         <MDBInput
                             name="fieldofstudy"
@@ -157,9 +153,7 @@ const DocDetails4 = () => {
                             // onChange={onFormDataChange}
                         />
                         &nbsp; &nbsp;
-                        <label>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.จำนวนเงิน
-                        </label>
+                        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.จำนวนเงิน</label>
                         <MDBInput
                             name="money"
                             id="money"
@@ -168,7 +162,7 @@ const DocDetails4 = () => {
                             // onChange={onFormDataChange}
                         />
                         <label>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.จำนวนเงินภาษาไทย
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.จำนวนเงินภาษาไทย&nbsp;&nbsp;
                         </label>
                         <MDBInput
                             name="money1"
@@ -186,7 +180,7 @@ const DocDetails4 = () => {
                                 className="button-1"
                                 // onClick={onSave}
                             >
-                                Save
+                                Submit
                             </Button>
                         </div>
                     </div>

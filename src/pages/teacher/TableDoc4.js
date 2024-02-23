@@ -26,7 +26,12 @@ const TableDoc4 = () => {
                         <td></td>
                         <td>
                             <Button variant="success" className="button-0">
-                                <Link to="detail">เอกสาร</Link>
+                                <Link
+                                    to="detail"
+                                    className="text-white text-decoration-none"
+                                >
+                                    เอกสาร
+                                </Link>
                             </Button>
                         </td>
                     </tr>

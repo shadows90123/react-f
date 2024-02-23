@@ -12,7 +12,13 @@ const Document2 = () => {
             <hr></hr>
             <div className="DocDetails">
                 <button class="button1 button2">
-                    <Link to="create"> กรอกเอกสารป.2</Link>
+                    <Link
+                        to="create"
+                        className="text-white  text-decoration-none"
+                    >
+                        {" "}
+                        กรอกเอกสารป.2
+                    </Link>
                 </button>
                 <button class="button1 button2">เเก้ไขเอกสารป.2</button>
                 <button class="button1 button2">Download</button>

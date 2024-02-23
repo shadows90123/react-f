@@ -188,11 +188,8 @@ const DocDetails2 = () => {
                         />
                         &nbsp;
                     </div>
-                    <div className="input">
-                        <label>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.
-                            เสนอหัวข้อโครงงาน&nbsp;
-                        </label>
+                    <div className="input-1">
+                        <label>6. เสนอหัวข้อโครงงาน</label>
                         <MDBInput
                             name="project"
                             id="project"
@@ -200,7 +197,6 @@ const DocDetails2 = () => {
                             // value={formData.project}
                             // onChange={onFormDataChange}
                         />
-                        &nbsp; &nbsp; &nbsp;&nbsp;
                         <label>ลายเซ็นอาจารย์ที่ปรึกษา</label>&nbsp; &nbsp;
                         <div className="signture">
                             {" "}
@@ -223,7 +219,7 @@ const DocDetails2 = () => {
                         </Button>
                     </div>
                     <div className="input">
-                        <label>7.ลงชื่อนักศึกษา</label>
+                        <label>7.ลงชื่อนักศึกษา</label>&nbsp; &nbsp;
                         <MDBInput
                             name="student1"
                             id="student1"
@@ -258,7 +254,7 @@ const DocDetails2 = () => {
                                 className="button-1"
                                 // onClick={onSave}
                             >
-                                Save
+                                Submit
                             </Button>
                         </div>
                     </div>

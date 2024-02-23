@@ -60,18 +60,21 @@ const SignUp = () => {
                                     type="password"
                                     size="lg"
                                 />
-                                <MDBRadio
-                                    name="radioGroup"
-                                    value="group3"
-                                    label="student"
-                                    inline
-                                />
-                                <MDBRadio
-                                    name="radioGroup"
-                                    value="group3"
-                                    label="teachar"
-                                    inline
-                                />
+                                <div className="radioGroup">
+                                    {" "}
+                                    <MDBRadio
+                                        name="radioGroup"
+                                        value="group3"
+                                        label="student"
+                                        inline
+                                    />
+                                    <MDBRadio
+                                        name="radioGroup"
+                                        value="group3"
+                                        label="teachar"
+                                        inline
+                                    />
+                                </div>
                                 <Button
                                     variant="danger"
                                     className="mb-2 w-100"

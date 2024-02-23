@@ -11,8 +11,14 @@ const Document1 = () => {
             <br></br>
             <hr></hr>
             <div className="DocDetails">
-                <button class="button1 button2">
-                    <Link to="create"> กรอกเอกสารป.1</Link>
+                <button class="button1 button2 ">
+                    <Link
+                        to="create"
+                        className="text-white  text-decoration-none"
+                    >
+                        {" "}
+                        กรอกเอกสารป.1
+                    </Link>
                 </button>
                 <button class="button1 button2">เเก้ไขเอกสารป.1</button>
                 <button class="button1 button2">Download</button>

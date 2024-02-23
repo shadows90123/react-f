@@ -61,7 +61,7 @@ const DocDetails3 = () => {
                         />
                     </div>
 
-                    <div className="changeradio-1">
+                    <div className="changeradio1">
                         <label>1. ลงทะเบียนเรียน </label>
                         <MDBRadio
                             name="radioGroup"
@@ -183,11 +183,8 @@ const DocDetails3 = () => {
                         &nbsp;
                     </div>
 
-                    <div className="input">
-                        <label>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.
-                            เสนอหัวข้อโครงงาน&nbsp;
-                        </label>
+                    <div className="input-2">
+                        <label>6. เสนอหัวข้อโครงงาน&nbsp;</label>
                         <MDBInput
                             name="project"
                             id="project"
@@ -221,10 +218,10 @@ const DocDetails3 = () => {
                         <div>
                             <Button
                                 variant="success"
-                                className="button-2"
+                                className="button-1"
                                 // onClick={onSave}
                             >
-                                Save
+                                Submit
                             </Button>
                         </div>
                     </div>

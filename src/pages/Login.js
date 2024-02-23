@@ -113,10 +113,15 @@ const Login = () => {
                                 <hr className="my-2" />
                                 <Button
                                     variant="danger"
-                                    className="mb-2 w-100"
+                                    className="mb-2 w-100 "
                                     size="lg"
                                 >
-                                    <Link to="register">Register</Link>
+                                    <Link
+                                        to="register"
+                                        className="text-white text-decoration-none"
+                                    >
+                                        Register
+                                    </Link>
                                 </Button>{" "}
                             </MDBCardBody>
                         </MDBCard>
