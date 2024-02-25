@@ -17,6 +17,8 @@ import {
     updateDoc,
 } from "firebase/firestore";
 
+import { getStorage, ref, uploadBytes, uploadString } from "firebase/storage";
+
 const firebaseConfig = {
     apiKey: "AIzaSyBrpJ5S7qkpTHk38BEu9y0GKDL4ChTKDAA",
     authDomain: "react-f-b9ab0.firebaseapp.com",
@@ -30,6 +32,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const db = getFirestore(app);
+export const storage = getStorage(app);
 
 // Authentication
 export const logOut = async () => {
@@ -60,7 +63,6 @@ export const registerWithPassword = async (email, password) => {
 };
 
 // FireStore
-
 export const createDocument = async (uid, docType, data) => {
     try {
         const docRef = await addDoc(collection(db, `documents`), data);
@@ -97,8 +99,6 @@ export const getDocumentByUserId = async (uid, docType) => {
         const querySnapshot = await getDocs(q);
         let docId;
         querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            // console.log(doc.id, " => ", doc.data());
             docId = doc.data()?.doc_id;
         });
 
@@ -107,10 +107,8 @@ export const getDocumentByUserId = async (uid, docType) => {
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
-                console.log("Document data:", docSnap.data());
                 return [docSnap.id, docSnap.data()];
             } else {
-                // docSnap.data() will be undefined in this case
                 console.log("No such document!");
             }
         }
@@ -120,3 +118,15 @@ export const getDocumentByUserId = async (uid, docType) => {
         return null;
     }
 };
+
+// Storage
+export const uploadToStorage = async (data) => {
+    const name = `sig_${Date.now()}`;
+    const storageRef = ref(storage, `signatures/${name}`);
+
+    uploadString(storageRef, data, "data_url").then((snapshot) => {
+        console.log("Uploaded a data_url string!");
+    });
+};
+
+// https://firebasestorage.googleapis.com/v0/b/react-f-b9ab0.appspot.com/o/some-child?alt=media&token=2ecced58-ae07-45ac-a9db-b1001477beb7

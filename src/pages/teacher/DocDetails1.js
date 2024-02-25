@@ -7,6 +7,8 @@ import SignatureCanvas from "react-signature-canvas";
 import "./signture.css";
 import { useState } from "react";
 
+import { uploadToStorage } from "../../libs/Firebase";
+
 const DocDetails1 = () => {
     const [signCanvas, setSignCanvas] = useState("");
     const [url, setUrl] = useState("");
@@ -16,16 +18,17 @@ const DocDetails1 = () => {
     };
 
     // ใช้งาน
-    // const handleSave = () => {
-    //     setUrl(signCanvas.getTrimmedCanvas().toDataURL('signCanvas'))
-    // };
+    const handleSave = () => {
+        setUrl(signCanvas.getTrimmedCanvas().toDataURL("signCanvas"));
+        uploadToStorage(signCanvas.getTrimmedCanvas().toDataURL("signCanvas"));
+    };
 
     return (
         <div>
             <Header />
             <div className="from">
                 <div className="frame">
-                    <div className="title"> กรอกเอกสาร ป.1</div>
+                    <div className="title">กรอกเอกสาร ป.1</div>
                     <div className="formcheck">
                         <MDBCheckbox
                             name="checkGroup1"
@@ -130,7 +133,6 @@ const DocDetails1 = () => {
                         />
                         &nbsp;&nbsp;<label>ลายเซ็นอาจารย์ที่ปรึกษา</label>
                         <div className="signture">
-                            {" "}
                             <SignatureCanvas
                                 penColor="black"
                                 canvasProps={{
@@ -189,7 +191,11 @@ const DocDetails1 = () => {
                     </div>
                     <div className="button">
                         <div>
-                            <Button variant="success" className="button-1">
+                            <Button
+                                variant="success"
+                                className="button-1"
+                                onClick={handleSave}
+                            >
                                 Submit
                             </Button>
                         </div>
