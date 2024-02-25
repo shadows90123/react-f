@@ -3,7 +3,84 @@ import { MDBInput } from "mdbreact";
 import { MDBCheckbox, MDBRadio } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
 
-const Docx2 = () => {
+import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
+import {
+    auth,
+    createDocument,
+    updateDocument,
+    getDocumentByUserId,
+} from "../../libs/Firebase";
+
+const Docx2 = ({ action }) => {
+    const navigate = useNavigate();
+    const [_action] = useState(action);
+    const [user] = useAuthState(auth);
+    const [documentType] = useState("document_2");
+    const [docId, setDocId] = useState(null);
+
+    const [formData, setFromData] = useState({
+        checkGroup1: false,
+        checkGroup2: false,
+        checkGroup3: false,
+        checkGroup4: false,
+        checkGroup5: false,
+        checkGroup6: false,
+        checkGroup7: false,
+        checkGroup8: false,
+        checkGroup9: false,
+        name1: "",
+        pass1: "",
+        number1: "",
+        name2: "",
+        pass2: "",
+        number2: "",
+        name3: "",
+        pass3: "",
+        number3: "",
+        project: "",
+        student: "",
+        sec: "",
+        year: "",
+    });
+
+    const onFormDataChange = (e) => {
+        const { name, value, type } = e.target;
+        setFromData({
+            ...formData,
+            [name]: type === "checkbox" ? !formData[name] : value,
+        });
+    };
+
+    const onSave = async () => {
+        if (_action === "create") {
+            alert("Saved!");
+            await createDocument(user.uid, documentType, formData);
+            navigate(`/student/${documentType}`);
+        } else if (_action === "edit") {
+            alert("Updated!");
+            await updateDocument(docId, formData);
+            navigate(`/student/${documentType}`);
+        }
+    };
+
+    useEffect(() => {
+        if (_action === "edit" && user) {
+            const getData = async () => {
+                const [id, data] = await getDocumentByUserId(
+                    user.uid,
+                    documentType
+                );
+                if (id && data) {
+                    setDocId(id);
+                    setFromData(data);
+                }
+            };
+            getData();
+        }
+    }, [user]);
+
     return (
         <div>
             <HeaderStudent />
@@ -13,37 +90,37 @@ const Docx2 = () => {
                     <div className="formcheck">
                         <MDBCheckbox
                             name="checkGroup1"
-                            // value={formData.checkGroup1}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
+                            value={formData.checkGroup1}
+                            checked={formData.checkGroup1}
+                            onChange={onFormDataChange}
                             label="&nbsp;โยธา"
                         />
                         <MDBCheckbox
                             name="checkGroup2"
-                            // value={formData.checkGroup2}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
+                            value={formData.checkGroup2}
+                            checked={formData.checkGroup2}
+                            onChange={onFormDataChange}
                             label="&nbsp;อุสาหการ"
                         />
                         <MDBCheckbox
                             name="checkGroup3"
-                            // value={formData.checkGroup3}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
+                            value={formData.checkGroup3}
+                            checked={formData.checkGroup3}
+                            onChange={onFormDataChange}
                             label="&nbsp;สิ่งเเวดล้อม"
                         />
                         <MDBCheckbox
                             name="checkGroup4"
-                            // value={formData.checkGroup4}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
+                            value={formData.checkGroup4}
+                            checked={formData.checkGroup4}
+                            onChange={onFormDataChange}
                             label="&nbsp;คอมพิวเตอร์"
                         />
                         <MDBCheckbox
                             name="checkGroup5"
-                            // value={formData.checkGroup5}
-                            // onChange={onFormDataChange}
-                            id="flexCheckDefault"
+                            value={formData.checkGroup5}
+                            checked={formData.checkGroup5}
+                            onChange={onFormDataChange}
                             label="&nbsp;พลังงาน"
                         />
                     </div>
@@ -52,17 +129,19 @@ const Docx2 = () => {
                         <label>1.บัดนี้ ได้ดำเนินการจัดทำโครงงานวิศวกรรม</label>
                         &nbsp;&nbsp;&nbsp;
                         <MDBCheckbox
-                            name="checkGroup7"
-                            // value={formData.checkGroup7}
-                            // onChange={onFormDataChange}
+                            name="checkGroup6"
+                            value={formData.checkGroup6}
+                            checked={formData.checkGroup6}
+                            onChange={onFormDataChange}
                             id="flexCheckDefault"
                             label="&nbsp;&nbsp;โครงงานฯ 1"
                         />
                         &nbsp;&nbsp;&nbsp;
                         <MDBCheckbox
-                            name="checkGroup8"
-                            // value={formData.checkGroup8}
-                            // onChange={onFormDataChange}
+                            name="checkGroup7"
+                            value={formData.checkGroup7}
+                            checked={formData.checkGroup7}
+                            onChange={onFormDataChange}
                             id="flexCheckDefault"
                             label="&nbsp;&nbsp;โครงงานฯ 2"
                         />
@@ -70,17 +149,19 @@ const Docx2 = () => {
                         <label>2.มีความประสงค์ขอสอบ</label>
                         &nbsp;&nbsp;&nbsp;
                         <MDBCheckbox
-                            name="checkGroup13"
-                            // value={formData.checkGroup13}
-                            // onChange={onFormDataChange}
+                            name="checkGroup8"
+                            value={formData.checkGroup8}
+                            checked={formData.checkGroup8}
+                            onChange={onFormDataChange}
                             id="flexCheckDefault"
                             label="&nbsp;&nbsp;ความก้าวหน้า"
                         />
                         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
                         <MDBCheckbox
-                            name="checkGroup13"
-                            // value={formData.checkGroup13}
-                            // onChange={onFormDataChange}
+                            name="checkGroup9"
+                            value={formData.checkGroup9}
+                            checked={formData.checkGroup9}
+                            onChange={onFormDataChange}
                             id="flexCheckDefault"
                             label="&nbsp;&nbsp;ปริญญานิพนธ์ขั้นทุดท้าย"
                         />
@@ -93,8 +174,8 @@ const Docx2 = () => {
                             type="text"
                             id="name1"
                             name="name1"
-                            // value={formData.name1}
-                            // onChange={onFormDataChange}
+                            value={formData.name1}
+                            onChange={onFormDataChange}
                         />
                         &nbsp;
                         <label>รหัสนักศึกษา&nbsp;</label>
@@ -103,8 +184,8 @@ const Docx2 = () => {
                             type="text"
                             id="pass1"
                             name="pass1"
-                            // value={formData.pass1}
-                            // onChange={onFormDataChange}
+                            value={formData.pass1}
+                            onChange={onFormDataChange}
                         />
                         &nbsp;
                         <label>เบอร์โทรติดต่อ&nbsp;</label>
@@ -113,8 +194,8 @@ const Docx2 = () => {
                             id="number1"
                             name="number1"
                             type="text"
-                            // value={formData.number1}
-                            // onChange={onFormDataChange}
+                            value={formData.number1}
+                            onChange={onFormDataChange}
                         />
                         &nbsp;
                     </div>
@@ -124,8 +205,8 @@ const Docx2 = () => {
                             name="name2"
                             id="name2"
                             type="text"
-                            // value={formData.name2}
-                            // onChange={onFormDataChange}
+                            value={formData.name2}
+                            onChange={onFormDataChange}
                         />
                         &nbsp;
                         <label>รหัสนักศึกษา&nbsp;</label>
@@ -133,8 +214,8 @@ const Docx2 = () => {
                             name="pass2"
                             id="pass2"
                             type="text"
-                            // value={formData.pass2}
-                            // onChange={onFormDataChange}
+                            value={formData.pass2}
+                            onChange={onFormDataChange}
                         />
                         &nbsp;
                         <label>เบอร์โทรติดต่อ&nbsp;</label>
@@ -142,8 +223,8 @@ const Docx2 = () => {
                             name="number2"
                             id="number2"
                             type="text"
-                            // value={formData.number2}
-                            // onChange={onFormDataChange}
+                            value={formData.number2}
+                            onChange={onFormDataChange}
                         />
                         &nbsp;
                     </div>
@@ -153,8 +234,8 @@ const Docx2 = () => {
                             name="name3"
                             id="name3"
                             type="text"
-                            // value={formData.name3}
-                            // onChange={onFormDataChange}
+                            value={formData.name3}
+                            onChange={onFormDataChange}
                         />
                         &nbsp;
                         <label>รหัสนักศึกษา&nbsp;</label>
@@ -162,8 +243,8 @@ const Docx2 = () => {
                             name="pass3"
                             id="pass3"
                             type="text"
-                            // value={formData.pass3}
-                            // onChange={onFormDataChange}
+                            value={formData.pass3}
+                            onChange={onFormDataChange}
                         />
                         &nbsp;
                         <label>เบอร์โทรติดต่อ&nbsp;</label>
@@ -171,8 +252,8 @@ const Docx2 = () => {
                             name="number3"
                             id="number3"
                             type="text"
-                            // value={formData.number3}
-                            // onChange={onFormDataChange}
+                            value={formData.number3}
+                            onChange={onFormDataChange}
                         />
                         &nbsp;
                     </div>
@@ -184,39 +265,35 @@ const Docx2 = () => {
                         </label>
                         <MDBInput
                             name="project"
-                            id="project"
-                            type="text1"
-                            // value={formData.project}
-                            // onChange={onFormDataChange}
+                            type="text"
+                            value={formData.project}
+                            onChange={onFormDataChange}
                         />
                         &nbsp; &nbsp;
                     </div>
                     <div className="input">
                         <label>7.ลงชื่อนักศึกษา</label>
                         <MDBInput
-                            name="student1"
-                            id="student1"
+                            name="student"
                             type="text"
-                            // value={formData.student1}
-                            // onChange={onFormDataChange}
+                            value={formData.student}
+                            onChange={onFormDataChange}
                         />
                         &nbsp;<label>ภาคเรียนที่ &nbsp;</label>
                         <MDBInput
                             background
                             type="text"
-                            id="sec"
                             name="sec"
-                            // value={formData.name1}
-                            // onChange={onFormDataChange}
+                            value={formData.sec}
+                            onChange={onFormDataChange}
                         />
                         &nbsp;<label>ปีการศึกษา &nbsp;</label>
                         <MDBInput
                             background
                             type="text"
-                            id="year"
                             name="year"
-                            // value={formData.name1}
-                            // onChange={onFormDataChange}
+                            value={formData.year}
+                            onChange={onFormDataChange}
                         />
                     </div>
                     <div className="button">
@@ -224,7 +301,7 @@ const Docx2 = () => {
                             <Button
                                 variant="success"
                                 className="button-1"
-                                // onClick={onSave}
+                                onClick={onSave}
                             >
                                 Save
                             </Button>

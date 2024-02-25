@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Docx1.css";
 import { MDBInput } from "mdbreact";
 import { MDBCheckbox, MDBRadio } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
-
-import { collection, addDoc } from "firebase/firestore";
-import { auth, db } from "../../libs/Firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 import HeaderStudent from "../../components/Student/Header";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
+import {
+    auth,
+    createDocument,
+    updateDocument,
+    getDocumentByUserId,
+} from "../../libs/Firebase";
 
-const Docx1 = () => {
+const Docx1 = ({ action }) => {
     const navigate = useNavigate();
-    const [user, loading, error] = useAuthState(auth);
+    const [_action] = useState(action);
+    const [user] = useAuthState(auth);
+    const [documentType] = useState("document_1");
+    const [docId, setDocId] = useState(null);
     const [formData, setFromData] = useState({
         name1: "",
         name2: "",
@@ -47,10 +53,33 @@ const Docx1 = () => {
     };
 
     const onSave = async () => {
-        alert("Save");
-        await addDoc(collection(db, `documents`), formData);
-        navigate("/DocDetailsStudents");
+        if (_action === "create") {
+            alert("Saved!");
+            await createDocument(user.uid, documentType, formData);
+            navigate(`/student/${documentType}`);
+        } else if (_action === "edit") {
+            alert("Updated!");
+            await updateDocument(docId, formData);
+            navigate(`/student/${documentType}`);
+        }
     };
+
+    useEffect(() => {
+        if (_action === "edit" && user) {
+            const getData = async () => {
+                const [id, data] = await getDocumentByUserId(
+                    user.uid,
+                    documentType
+                );
+                if (id && data) {
+                    setDocId(id);
+                    setFromData(data);
+                }
+            };
+
+            getData();
+        }
+    }, [user]);
 
     return (
         <div>
@@ -62,6 +91,7 @@ const Docx1 = () => {
                         <MDBCheckbox
                             name="checkGroup1"
                             value={formData.checkGroup1}
+                            checked={formData.checkGroup1}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
                             label="&nbsp;โยธา"
@@ -69,6 +99,7 @@ const Docx1 = () => {
                         <MDBCheckbox
                             name="checkGroup2"
                             value={formData.checkGroup2}
+                            checked={formData.checkGroup2}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
                             label="&nbsp;อุสาหการ"
@@ -76,6 +107,7 @@ const Docx1 = () => {
                         <MDBCheckbox
                             name="checkGroup3"
                             value={formData.checkGroup3}
+                            checked={formData.checkGroup3}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
                             label="&nbsp;สิ่งเเวดล้อม"
@@ -83,6 +115,7 @@ const Docx1 = () => {
                         <MDBCheckbox
                             name="checkGroup4"
                             value={formData.checkGroup4}
+                            checked={formData.checkGroup4}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
                             label="&nbsp;คอมพิวเตอร์"
@@ -90,6 +123,7 @@ const Docx1 = () => {
                         <MDBCheckbox
                             name="checkGroup5"
                             value={formData.checkGroup5}
+                            checked={formData.checkGroup5}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
                             label="&nbsp;พลังงาน"
@@ -191,6 +225,7 @@ const Docx1 = () => {
                         <MDBRadio
                             name="radioGroup"
                             value="group1"
+                            checked={formData.radioGroup === "group1"}
                             label="กลุ่ม 1"
                             onChange={onFormDataChange}
                             inline
@@ -198,6 +233,7 @@ const Docx1 = () => {
                         <MDBRadio
                             name="radioGroup"
                             value="group2"
+                            checked={formData.radioGroup === "group2"}
                             label="กลุ่ม 2"
                             onChange={onFormDataChange}
                             inline
@@ -205,6 +241,7 @@ const Docx1 = () => {
                         <MDBRadio
                             name="radioGroup"
                             value="group3"
+                            checked={formData.radioGroup === "group3"}
                             label="กลุ่ม 3"
                             onChange={onFormDataChange}
                             inline
@@ -212,6 +249,7 @@ const Docx1 = () => {
                         <MDBRadio
                             name="radioGroup"
                             value="group4"
+                            checked={formData.radioGroup === "group4"}
                             label="กลุ่ม อื่นๆ................................................."
                             onChange={onFormDataChange}
                             inline
@@ -240,6 +278,7 @@ const Docx1 = () => {
                         <MDBCheckbox
                             name="checkGroup6"
                             value={formData.checkGroup6}
+                            checked={formData.checkGroup6}
                             onChange={onFormDataChange}
                             label="เเต่งตั้ง"
                             inline

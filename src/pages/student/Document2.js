@@ -16,11 +16,17 @@ const Document2 = () => {
                         to="create"
                         className="text-white  text-decoration-none"
                     >
-                        {" "}
                         กรอกเอกสารป.2
                     </Link>
                 </button>
-                <button class="button1 button2">เเก้ไขเอกสารป.2</button>
+                <button class="button1 button2">
+                    <Link
+                        to="edit"
+                        className="text-white  text-decoration-none"
+                    >
+                        เเก้ไขเอกสารป.2
+                    </Link>
+                </button>
                 <button class="button1 button2">Download</button>
             </div>
         </div>

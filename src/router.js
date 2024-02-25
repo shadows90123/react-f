@@ -70,7 +70,11 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "create",
-                        element: <AuthDocx1 />,
+                        element: <AuthDocx1 action={"create"} />,
+                    },
+                    {
+                        path: "edit",
+                        element: <AuthDocx1 action={"edit"} />,
                     },
                 ],
             },
@@ -83,7 +87,11 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "create",
-                        element: <AuthDocx2 />,
+                        element: <AuthDocx2 action={"create"} />,
+                    },
+                    {
+                        path: "edit",
+                        element: <AuthDocx2 action={"edit"} />,
                     },
                 ],
             },
@@ -96,7 +104,11 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "create",
-                        element: <AuthDocx3 />,
+                        element: <AuthDocx3 action={"create"} />,
+                    },
+                    {
+                        path: "edit",
+                        element: <AuthDocx3 action={"edit"} />,
                     },
                 ],
             },
@@ -109,7 +121,11 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "create",
-                        element: <AuthDocx4 />,
+                        element: <AuthDocx4 action={"create"} />,
+                    },
+                    {
+                        path: "edit",
+                        element: <AuthDocx4 action={"edit"} />,
                     },
                 ],
             },
