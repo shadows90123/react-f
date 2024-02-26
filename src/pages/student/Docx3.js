@@ -9,8 +9,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import {
     auth,
-    createDocument,
-    updateDocument,
+    addNewDocument,
+    updateDocumentById,
     getDocumentByUserId,
 } from "../../libs/Firebase";
 
@@ -50,12 +50,24 @@ const Docx3 = ({ action }) => {
 
     const onSave = async () => {
         if (_action === "create") {
+            const docRef = await addNewDocument(`documents`, formData);
+            await addNewDocument(`document_lists`, {
+                student_uid: user.uid,
+                doc_type: documentType,
+                doc_id: docRef.id,
+                request_state: false,
+                verify_state: false,
+                created_at: new Date(),
+                updated_at: new Date(),
+            });
             alert("Saved!");
-            await createDocument(user.uid, documentType, formData);
             navigate(`/student/${documentType}`);
         } else if (_action === "edit") {
+            await updateDocumentById(`documents`, {
+                id: docId,
+                data: formData,
+            });
             alert("Updated!");
-            await updateDocument(docId, formData);
             navigate(`/student/${documentType}`);
         }
     };

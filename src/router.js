@@ -146,7 +146,7 @@ export const router = createBrowserRouter([
                         element: <AuthTableDoc1 />,
                     },
                     {
-                        path: "detail",
+                        path: "detail/:reqId",
                         element: <AuthDocDetails1 />,
                     },
                 ],

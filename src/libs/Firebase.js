@@ -62,6 +62,27 @@ export const registerWithPassword = async (email, password) => {
         });
 };
 
+// New FireStore
+export const addNewDocument = async (collect, data) => {
+    try {
+        const docRef = await addDoc(collection(db, collect), data);
+        return docRef;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+export const updateDocumentById = async (collect, { id, data }) => {
+    try {
+        const updatedRef = await updateDoc(doc(db, collect, id), data);
+        return updatedRef;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
 // FireStore
 export const createDocument = async (uid, docType, data) => {
     try {
@@ -85,6 +106,22 @@ export const updateDocument = async (id, data) => {
         await updateDoc(doc(db, "documents", id), data);
     } catch (error) {
         console.error(error);
+    }
+};
+
+export const getDocumentById = async (id) => {
+    try {
+        const docRef = doc(db, "documents", id);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            return docSnap.data();
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
     }
 };
 
@@ -115,6 +152,85 @@ export const getDocumentByUserId = async (uid, docType) => {
         return null;
     } catch (error) {
         console.error(error);
+        return null;
+    }
+};
+
+export const getTeachers = async () => {
+    const q = query(
+        collection(db, "users"),
+        where("user_type", "==", "teacher")
+    );
+    const teachers = {};
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        teachers[doc.id] = doc.data();
+    });
+    return teachers;
+};
+
+export const createRequestSig = async (uid, docType, docId, tid) => {
+    try {
+        // const docRef = await addDoc(collection(db, `document_request`), data);
+        await addDoc(collection(db, `document_request`), {
+            student_uid: uid,
+            doc_type: docType,
+            doc_id: docId,
+            teacher_id: tid,
+            verify_state: false,
+            created_at: new Date(),
+            updated_at: new Date(),
+            signature: null,
+        });
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export const getDocReq = async (uid, docType, docId) => {
+    const q = query(
+        collection(db, "document_request"),
+        where("student_uid", "==", uid),
+        where("doc_type", "==", docType),
+        where("doc_id", "==", docId)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    const data = {};
+    querySnapshot.forEach((doc) => {
+        data[doc.id] = doc.data();
+    });
+
+    return data;
+};
+
+export const getTeacherDocReq = async (uid, docType) => {
+    const q = query(
+        collection(db, "document_request"),
+        where("teacher_id", "==", uid),
+        where("doc_type", "==", docType),
+        where("verify_state", "==", false)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    const data = {};
+    querySnapshot.forEach((doc) => {
+        data[doc.id] = doc.data();
+    });
+
+    return data;
+};
+
+export const getStudentById = async (uid) => {
+    const docRef = doc(db, "users", uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        // docSnap.data() will be undefined in this case
         return null;
     }
 };

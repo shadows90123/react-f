@@ -5,11 +5,14 @@ import Button from "react-bootstrap/Button";
 import Header from "../../components/Teacher/Header";
 import SignatureCanvas from "react-signature-canvas";
 import "./signture.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import { uploadToStorage } from "../../libs/Firebase";
+import { uploadToStorage, getDocumentById } from "../../libs/Firebase";
+import { useParams } from "react-router-dom";
 
 const DocDetails1 = () => {
+    let { reqId } = useParams();
+
     const [signCanvas, setSignCanvas] = useState("");
     const [url, setUrl] = useState("");
     const [data, setData] = useState("");
@@ -22,6 +25,31 @@ const DocDetails1 = () => {
         setUrl(signCanvas.getTrimmedCanvas().toDataURL("signCanvas"));
         uploadToStorage(signCanvas.getTrimmedCanvas().toDataURL("signCanvas"));
     };
+
+    const [formData, setFromData] = useState({
+        checkGroup1: false,
+        checkGroup2: false,
+        checkGroup3: false,
+        checkGroup4: false,
+        checkGroup5: false,
+        radioGroup: "group1",
+        name1: "",
+        pass1: "",
+        number1: "",
+        name2: "",
+        pass2: "",
+        number2: "",
+        name3: "",
+        pass3: "",
+        number3: "",
+        project: "",
+    });
+
+    useEffect(() => {
+        const fetchDocument = async () => {
+            await getDocumentById();
+        };
+    }, [reqId]);
 
     return (
         <div>
