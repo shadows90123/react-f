@@ -156,10 +156,10 @@ export const getDocumentByUserId = async (uid, docType) => {
                 console.log("No such document!");
             }
         }
-        return null;
+        return [null, null, null];
     } catch (error) {
         console.error(error);
-        return null;
+        return [null, null, null];
     }
 };
 
@@ -268,7 +268,6 @@ export const uploadToStorage = async (data) => {
 };
 
 export const getFromStorage = async (path) => {
-
     const url = await getDownloadURL(ref(storage, path))
         .then((url) => {
             return url;
