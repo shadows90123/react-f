@@ -126,7 +126,7 @@ export default function CreatePDF({ docData, sigLink }) {
             }
 
             ////////////////////////////////////////
-            if (data.radioGoup === "group1") {
+            if (data.radioGroup === "group1") {
                 doc.addImage(img1, "png", 75, 90.5, 5, 5);
             } else if (data.radioGroup === "group2") {
                 doc.addImage(img1, "png", 95, 90.5, 5, 5);
