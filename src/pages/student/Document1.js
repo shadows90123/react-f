@@ -7,13 +7,18 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
+import CreatePDF from "../../components/CreatePDF.js";
+
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
     auth,
+    addNewDocument,
+    updateDocumentById,
     getTeachers,
-    createRequestSig,
     getDocumentByUserId,
     getDocReq,
+    getSignatureById,
+    getFromStorage,
 } from "../../libs/Firebase";
 
 const Document1 = () => {
@@ -26,6 +31,9 @@ const Document1 = () => {
     const [teachers, setTeachers] = useState({});
     const [teacherSelect, setTeacherSelect] = useState("");
 
+    const [data, setData] = useState(null);
+    const [sigUrl, setSigUrl] = useState(null);
+
     const onSelectTeacherChange = (e) => {
         setTeacherSelect(e.target.value);
     };
@@ -36,18 +44,30 @@ const Document1 = () => {
             return;
         }
 
-        const [docId, docData] = await getDocumentByUserId(
+        const [listId, docId, docData] = await getDocumentByUserId(
             user.uid,
             "document_1"
         );
 
         if (await isAlreadyRequest(user.uid, "document_1", docId)) {
-            await createRequestSig(
-                user.uid,
-                "document_1",
-                docId,
-                teacherSelect
-            );
+            await updateDocumentById("document_lists", {
+                id: listId,
+                data: {
+                    request_state: true,
+                    updated_at: new Date(),
+                },
+            });
+            await addNewDocument("document_request", {
+                student_uid: user.uid,
+                doc_type: "document_1",
+                doc_id: docId,
+                list_id: listId,
+                teacher_id: teacherSelect,
+                verify_state: false,
+                created_at: new Date(),
+                updated_at: new Date(),
+                signature: null,
+            });
             alert("ยื่นขอลายเซ็นสำเร็จ");
         } else {
             alert("ไม่สามารถยื่นขอลายเซ็นซ้ำได้");
@@ -66,8 +86,21 @@ const Document1 = () => {
             const t = await getTeachers();
             setTeachers(t);
         };
+
+        const fetchDocument = async () => {
+            const [listId, docId, docData] = await getDocumentByUserId(
+                user.uid,
+                "document_1"
+            );
+
+            const reqData = await getSignatureById(docId);
+            // const newUrl = await getFromStorage(reqData);
+            setData(docData);
+            // setSigUrl(newUrl);
+        };
         fetchTeachers();
-    }, []);
+        fetchDocument();
+    }, [user]);
 
     return (
         <div>
@@ -95,7 +128,8 @@ const Document1 = () => {
                 <button class="button1 button2" onClick={handleShow}>
                     ยื่นขอลายเซ็น
                 </button>
-                <button class="button1 button2">Download</button>
+                {/* <button class="button1 button2">Download</button> */}
+                <CreatePDF docData={data} sigLink={sigUrl} />
             </div>
 
             <Modal show={showReqSig} onHide={handleClose} centered>
@@ -121,10 +155,6 @@ const Document1 = () => {
                                     </option>
                                 );
                             })}
-                            {/* <option>เลือกอาจารย์ที่ปรึกษา</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option> */}
                         </Form.Select>
                     </Form.Group>
                 </Modal.Body>

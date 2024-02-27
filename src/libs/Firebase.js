@@ -17,7 +17,12 @@ import {
     updateDoc,
 } from "firebase/firestore";
 
-import { getStorage, ref, uploadBytes, uploadString } from "firebase/storage";
+import {
+    getStorage,
+    ref,
+    uploadString,
+    getDownloadURL,
+} from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBrpJ5S7qkpTHk38BEu9y0GKDL4ChTKDAA",
@@ -109,9 +114,9 @@ export const updateDocument = async (id, data) => {
     }
 };
 
-export const getDocumentById = async (id) => {
+export const getDocumentById = async (collect, id) => {
     try {
-        const docRef = doc(db, "documents", id);
+        const docRef = doc(db, collect, id);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -135,8 +140,10 @@ export const getDocumentByUserId = async (uid, docType) => {
 
         const querySnapshot = await getDocs(q);
         let docId;
+        let listId;
         querySnapshot.forEach((doc) => {
             docId = doc.data()?.doc_id;
+            listId = doc.id;
         });
 
         if (docId) {
@@ -144,7 +151,7 @@ export const getDocumentByUserId = async (uid, docType) => {
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
-                return [docSnap.id, docSnap.data()];
+                return [listId, docSnap.id, docSnap.data()];
             } else {
                 console.log("No such document!");
             }
@@ -204,6 +211,22 @@ export const getDocReq = async (uid, docType, docId) => {
 
     return data;
 };
+export const getSignatureById = async (docId) => {
+    const q = query(
+        collection(db, "document_request"),
+        where("doc_id", "==", docId)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    let data = null;
+    querySnapshot.forEach((doc) => {
+        // data[doc.id] = doc.data();
+        data = doc.data().signature;
+    });
+
+    return data;
+};
 
 export const getTeacherDocReq = async (uid, docType) => {
     const q = query(
@@ -238,11 +261,22 @@ export const getStudentById = async (uid) => {
 // Storage
 export const uploadToStorage = async (data) => {
     const name = `sig_${Date.now()}`;
-    const storageRef = ref(storage, `signatures/${name}`);
+    const storageRef = ref(storage, `signatures/${name}.png`);
 
-    uploadString(storageRef, data, "data_url").then((snapshot) => {
-        console.log("Uploaded a data_url string!");
-    });
+    const uploaded = await uploadString(storageRef, data, "data_url");
+    return uploaded;
 };
 
-// https://firebasestorage.googleapis.com/v0/b/react-f-b9ab0.appspot.com/o/some-child?alt=media&token=2ecced58-ae07-45ac-a9db-b1001477beb7
+export const getFromStorage = async (path) => {
+
+    const url = await getDownloadURL(ref(storage, path))
+        .then((url) => {
+            return url;
+        })
+        .catch((error) => {
+            // Handle any errors
+        });
+
+    return url;
+};
+// https://firebasestorage.googleapis.com/v0/b/react-f-b9ab0.appspot.com/o/signatures%2Fsig_1708966466746?alt=media&token=8059544b-3ea4-4254-9f2b-dafced3d1bde

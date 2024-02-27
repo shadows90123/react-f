@@ -2,41 +2,34 @@ import React, { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import { THSarabunNewNormal } from "../assets/font/THSarabunNew-normal";
 import { THSarabunNewBold } from "../assets/font/THSarabunNew Bold-normal";
-import Button from "react-bootstrap/Button";
 
-import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../libs/Firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-
-const CreatePDF = () => {
-    const [user, loading] = useAuthState(auth);
-
-    const [data, setData] = useState(null);
+// import { useAuthState } from "react-firebase-hooks/auth";
+import html2canvas from "html2canvas";
+export default function CreatePDF({ docData, sigLink }) {
+    // const [user, loading] = useAuthState(auth);
+    const [data, setData] = useState(docData);
+    const [sigUrl, setSigUrl] = useState(sigLink);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const docRef = doc(db, "documents", "zZOj2SI6fot6lPbUKYlP");
-            const docSnap = await getDoc(docRef);
-
-            if (docSnap.exists()) {
-                console.log("Document data:", docSnap.data());
-                setData(docSnap.data());
-            } else {
-                // docSnap.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        };
-
-        fetchData();
-    }, [user]);
+        setData(docData);
+        setSigUrl(sigLink);
+    }, [docData]);
 
     const handdlePDF = () => {
+        // if (data == null) {
+        //     alert("ไม่พบข้อมูล!!!");
+        //     return;
+        // }
+        console.log(sigUrl);
         const doc = new jsPDF();
         var img = new Image();
         var img1 = new Image();
+
         img.src = require("../assets/images/Ramkhamhaeng.png");
-        // img1.src = require("./check.png");
         img1.src = require("../assets/images/check.png");
+        // var img2 = new Image();
+        // img2.src = sigUrl;
+
         img.onload = () => {
             doc.addFileToVFS("THSarabunNewNormal.ttf", THSarabunNewNormal);
             doc.addFont(
@@ -51,6 +44,9 @@ const CreatePDF = () => {
             // doc.setFont("MyFont1");
 
             let width = doc.internal.pageSize.getWidth();
+
+            // doc.addImage(img2, "png", 1, 1, 25, 25);
+
             //---------------------------> input name
             doc.text(data.name1, 62, 74, {
                 align: "left",
@@ -455,17 +451,11 @@ const CreatePDF = () => {
         };
     };
 
-    if (loading || data == null) {
-        return <>loading</>;
-    }
-
     return (
-        <div>
-            <Button variant="success" className="button-1" onClick={handdlePDF}>
-                Save
-            </Button>
-        </div>
+        <>
+            <button onClick={handdlePDF} class="button1 button2">
+                Download
+            </button>
+        </>
     );
-};
-
-export default CreatePDF;
+}
