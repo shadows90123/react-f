@@ -1,9 +1,18 @@
 import { jsPDF } from "jspdf";
 import { THSarabunNewNormal } from "../assets/font/THSarabunNew-normal";
 import { THSarabunNewBold } from "../assets/font/THSarabunNew Bold-normal";
-import Button from "react-bootstrap/Button";
 
-const CreatePDF3 = () => {
+import React, { useState, useEffect } from "react";
+
+const CreatePDF3 = ({ docData, sigLink }) => {
+    const [data, setData] = useState(docData);
+    const [sigUrl, setSigUrl] = useState(sigLink);
+
+    useEffect(() => {
+        setData(docData);
+        setSigUrl(sigLink);
+    }, [docData]);
+
     const handdlePDF = () => {
         const doc = new jsPDF();
         var img = new Image();
@@ -26,39 +35,39 @@ const CreatePDF3 = () => {
 
             let width = doc.internal.pageSize.getWidth();
             //---------------------------> input name
-            // doc.text(data.name1, 62, 74, {
-            //     align: "left",
-            // });
-            // doc.text(data.name2, 62, 81, {
-            //     align: "left",
-            // });
-            // doc.text(data.name3, 62, 88, {
-            //     align: "left",
-            // });
+            doc.text(data.name1, 48, 74, {
+                align: "left",
+            });
+            doc.text(data.name2, 48, 81, {
+                align: "left",
+            });
+            doc.text(data.name3, 48, 88, {
+                align: "left",
+            });
             //---------------------------> input pass
-            // doc.text(data.pass1, 127, 74, {
-            //     align: "left",
-            // });
-            // doc.text(data.pass2, 127, 81, {
-            //     align: "left",
-            // });
-            // doc.text(data.pass3, 127, 88, {
-            //     align: "left",
-            // });
+            doc.text(data.pass1, 109, 74, {
+                align: "left",
+            });
+            doc.text(data.pass2, 109, 81, {
+                align: "left",
+            });
+            doc.text(data.pass3, 109, 88, {
+                align: "left",
+            });
             //---------------------------> input number
-            // doc.text(data.number1, 175, 74, {
-            //     align: "left",
-            // });
-            // doc.text(data.number2, 175, 81, {
-            //     align: "left",
-            // });
-            // doc.text(data.number3, 175, 88, {
-            //     align: "left",
-            // });
+            doc.text(data.number1, 152, 74, {
+                align: "left",
+            });
+            doc.text(data.number2, 152, 81, {
+                align: "left",
+            });
+            doc.text(data.number3, 152, 88, {
+                align: "left",
+            });
             //---------------------------> input Project
-            // doc.text(data.project, 70, 102, {
-            //     align: "left",
-            // });
+            doc.text(data.project, 55, 95, {
+                align: "left",
+            });
             // doc.text(data.teacher1, 95, 137, {
             //     align: "left",
             // });
@@ -87,32 +96,32 @@ const CreatePDF3 = () => {
 
             doc.addImage(img, "png", 95, 10, 25, 25);
             ////////////////////////////////////////
-            // if (data.checkGroup1) {
-            //     doc.addImage(img1, "png", 67, 54, 5, 5);
-            // }
-            // if (data.checkGroup2) {
-            //     doc.addImage(img1, "png", 84, 54, 5, 5);
-            // }
-            // if (data.checkGroup3) {
-            //     doc.addImage(img1, "png", 107, 54, 5, 5);
-            // }
-            // if (data.checkGroup4) {
-            //     doc.addImage(img1, "png", 134, 54, 5, 5);
-            // }
-            // if (data.checkGroup5) {
-            //     doc.addImage(img1, "png", 162, 54, 5, 5);
-            // }
+            if (data.checkGroup1) {
+                doc.addImage(img1, "png", 62, 54, 5, 5);
+            }
+            if (data.checkGroup2) {
+                doc.addImage(img1, "png", 80, 54, 5, 5);
+            }
+            if (data.checkGroup3) {
+                doc.addImage(img1, "png", 107, 54, 5, 5);
+            }
+            if (data.checkGroup4) {
+                doc.addImage(img1, "png", 137, 54, 5, 5);
+            }
+            if (data.checkGroup5) {
+                doc.addImage(img1, "png", 168, 54, 5, 5);
+            }
 
             ////////////////////////////////////////
-            // if (data.radioGoup === "group1") {
-            //     doc.addImage(img1, "png", 75, 90.5, 5, 5);
-            // } else if (data.radioGroup === "group2") {
-            //     doc.addImage(img1, "png", 95, 90.5, 5, 5);
-            // } else if (data.radioGroup === "group3") {
-            //     doc.addImage(img1, "png", 114, 90.5, 5, 5);
-            // } else if (data.radioGroup === "group4") {
-            //     doc.addImage(img1, "png", 134, 90.5, 5, 5);
-            // }
+            if (data.radioGroup === "group1") {
+                doc.addImage(img1, "png", 54, 63, 5, 5);
+            } else if (data.radioGroup === "group2") {
+                doc.addImage(img1, "png", 82.5, 63, 5, 5);
+            } else if (data.radioGroup === "group3") {
+                doc.addImage(img1, "png", 112, 63, 5, 5);
+            } else if (data.radioGroup === "group4") {
+                doc.addImage(img1, "png", 139.5, 63, 5, 5);
+            }
 
             ////////////////////////////////////////
             // if (data.checkGroup6) {
@@ -120,16 +129,8 @@ const CreatePDF3 = () => {
             // }
 
             ///////////////////////////////////////
-            doc.addImage(img1, "png", 62, 54, 5, 5);
-            doc.addImage(img1, "png", 80, 54, 5, 5);
-            doc.addImage(img1, "png", 107, 54, 5, 5);
-            doc.addImage(img1, "png", 137, 54, 5, 5);
-            doc.addImage(img1, "png", 168, 54, 5, 5);
+
             ////////////////////////////////////////
-            doc.addImage(img1, "png", 54, 63, 5, 5);
-            doc.addImage(img1, "png", 82.5, 63, 5, 5);
-            doc.addImage(img1, "png", 112, 63, 5, 5);
-            doc.addImage(img1, "png", 139.5, 63, 5, 5);
 
             doc.setFont("THSarabunNewBold");
             doc.text("(แบบ ป.3)", 185, 10);
@@ -499,16 +500,14 @@ const CreatePDF3 = () => {
     return (
         <div>
             <div>
-                <Button
-                    variant="success"
-                    className="button-1"
-                    onClick={handdlePDF}
-                >
-                    Save
-                </Button>
+                <button onClick={handdlePDF} class="button1 button2">
+                    Download
+                </button>
             </div>
         </div>
     );
 };
 
 export default CreatePDF3;
+
+//

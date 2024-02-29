@@ -2,10 +2,23 @@ import { MDBInput } from "mdbreact";
 import Button from "react-bootstrap/Button";
 import SignatureCanvas from "react-signature-canvas";
 import "./signture.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../../components/Teacher/Header";
 
+import {
+    updateDocumentById,
+    uploadToStorage,
+    getFromStorage,
+    getDocumentById,
+} from "../../libs/Firebase";
+import { useParams, useNavigate } from "react-router-dom";
+
 const DocDetails4 = () => {
+    let { reqId } = useParams();
+    const navigate = useNavigate();
+
+    const [reqData, setReqData] = useState({});
+
     const [signCanvas, setSignCanvas] = useState("");
     const [url, setUrl] = useState("");
     const [data, setData] = useState("");
@@ -13,9 +26,64 @@ const DocDetails4 = () => {
         signCanvas.clear();
     };
     // ใช้งาน
-    // const handleSave = () => {
-    //     setUrl(signCanvas.getTrimmedCanvas().toDataURL('signCanvas'))
-    // };
+    const handleSave = async () => {
+        const uploaded = await uploadToStorage(
+            signCanvas.getTrimmedCanvas().toDataURL("signCanvas")
+        );
+
+        const sigPath = uploaded?.metadata.fullPath;
+        await updateDocumentById("document_request", {
+            id: reqId,
+            data: {
+                signature: sigPath,
+                verify_state: true,
+                updated_at: new Date(),
+            },
+        });
+
+        await updateDocumentById("document_lists", {
+            id: reqData.list_id,
+            data: {
+                verify_state: true,
+                updated_at: new Date(),
+            },
+        });
+
+        alert("Success!!");
+        navigate("/teacher/document_4");
+    };
+    const [formData, setFromData] = useState({
+        name1: "",
+        pass1: "",
+        number1: "",
+        name2: "",
+        pass2: "",
+        number2: "",
+        name3: "",
+        pass3: "",
+        number3: "",
+        project: "",
+        major: "",
+        money: "",
+        money1: "",
+    });
+
+    useEffect(() => {
+        const fetchDocument = async () => {
+            const _reqData = await getDocumentById("document_request", reqId);
+            setReqData(_reqData);
+
+            const _docData = await getDocumentById(
+                "documents",
+                _reqData.doc_id
+            );
+            setReqData(_reqData);
+            setFromData(_docData);
+        };
+
+        fetchDocument();
+    }, [reqId]);
+
     return (
         <div>
             <Header />
@@ -29,8 +97,8 @@ const DocDetails4 = () => {
                             type="text"
                             id="name1"
                             name="name1"
-                            // value={formData.name1}
-                            // onChange={onFormDataChange}
+                            value={formData.name1}
+                            disabled
                         />
                         &nbsp;
                         <label>รหัสนักศึกษา&nbsp;</label>
@@ -39,8 +107,8 @@ const DocDetails4 = () => {
                             type="text"
                             id="pass1"
                             name="pass1"
-                            // value={formData.pass1}
-                            // onChange={onFormDataChange}
+                            value={formData.pass1}
+                            disabled
                         />
                         &nbsp;
                         <label>เบอร์โทรติดต่อ&nbsp;</label>
@@ -49,8 +117,8 @@ const DocDetails4 = () => {
                             id="number1"
                             name="number1"
                             type="text"
-                            // value={formData.number1}
-                            // onChange={onFormDataChange}
+                            value={formData.number1}
+                            disabled
                         />
                         &nbsp;
                     </div>
@@ -60,8 +128,8 @@ const DocDetails4 = () => {
                             name="name2"
                             id="name2"
                             type="text"
-                            // value={formData.name2}
-                            // onChange={onFormDataChange}
+                            value={formData.name2}
+                            disabled
                         />
                         &nbsp;
                         <label>รหัสนักศึกษา&nbsp;</label>
@@ -69,8 +137,8 @@ const DocDetails4 = () => {
                             name="pass2"
                             id="pass2"
                             type="text"
-                            // value={formData.pass2}
-                            // onChange={onFormDataChange}
+                            value={formData.pass2}
+                            disabled
                         />
                         &nbsp;
                         <label>เบอร์โทรติดต่อ&nbsp;</label>
@@ -78,8 +146,8 @@ const DocDetails4 = () => {
                             name="number2"
                             id="number2"
                             type="text"
-                            // value={formData.number2}
-                            // onChange={onFormDataChange}
+                            value={formData.number2}
+                            disabled
                         />
                         &nbsp;
                     </div>
@@ -89,8 +157,8 @@ const DocDetails4 = () => {
                             name="name3"
                             id="name3"
                             type="text"
-                            // value={formData.name3}
-                            // onChange={onFormDataChange}
+                            value={formData.name3}
+                            disabled
                         />
                         &nbsp;
                         <label>รหัสนักศึกษา&nbsp;</label>
@@ -98,8 +166,8 @@ const DocDetails4 = () => {
                             name="pass3"
                             id="pass3"
                             type="text"
-                            // value={formData.pass3}
-                            // onChange={onFormDataChange}
+                            value={formData.pass3}
+                            disabled
                         />
                         &nbsp;
                         <label>เบอร์โทรติดต่อ&nbsp;</label>
@@ -107,8 +175,8 @@ const DocDetails4 = () => {
                             name="number3"
                             id="number3"
                             type="text"
-                            // value={formData.number3}
-                            // onChange={onFormDataChange}
+                            value={formData.number3}
+                            disabled
                         />
                         &nbsp;
                     </div>
@@ -119,8 +187,8 @@ const DocDetails4 = () => {
                             name="project"
                             id="project"
                             type="text4"
-                            // value={formData.project}
-                            // onChange={onFormDataChange}
+                            value={formData.project}
+                            disabled
                         />
                         <label>ลายเซ็นอาจารย์ที่ปรึกษา</label>&nbsp; &nbsp;
                         <div className="signture">
@@ -149,8 +217,8 @@ const DocDetails4 = () => {
                             name="fieldofstudy"
                             id="fieldofstudy"
                             type="text"
-                            // value={formData.project}
-                            // onChange={onFormDataChange}
+                            value={formData.major}
+                            disabled
                         />
                         &nbsp; &nbsp;
                         <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.จำนวนเงิน</label>
@@ -158,8 +226,8 @@ const DocDetails4 = () => {
                             name="money"
                             id="money"
                             type="text"
-                            // value={formData.project}
-                            // onChange={onFormDataChange}
+                            value={formData.money}
+                            disabled
                         />
                         <label>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.จำนวนเงินภาษาไทย&nbsp;&nbsp;
@@ -168,8 +236,8 @@ const DocDetails4 = () => {
                             name="money1"
                             id="money1"
                             type="text"
-                            // value={formData.project}
-                            // onChange={onFormDataChange}
+                            value={formData.money1}
+                            disabled
                         />
                     </div>
 
@@ -178,7 +246,7 @@ const DocDetails4 = () => {
                             <Button
                                 variant="success"
                                 className="button-1"
-                                // onClick={onSave}
+                                onClick={handleSave}
                             >
                                 Submit
                             </Button>

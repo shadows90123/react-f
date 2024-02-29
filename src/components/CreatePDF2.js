@@ -1,9 +1,17 @@
 import { jsPDF } from "jspdf";
 import { THSarabunNewNormal } from "../assets/font/THSarabunNew-normal";
 import { THSarabunNewBold } from "../assets/font/THSarabunNew Bold-normal";
-import Button from "react-bootstrap/Button";
+import React, { useState, useEffect } from "react";
 
-const CreatePDF2 = () => {
+const CreatePDF2 = ({ docData, sigLink }) => {
+    const [data, setData] = useState(docData);
+    const [sigUrl, setSigUrl] = useState(sigLink);
+
+    useEffect(() => {
+        setData(docData);
+        setSigUrl(sigLink);
+    }, [docData]);
+
     const handdlePDF = () => {
         const doc = new jsPDF();
         var img = new Image();
@@ -25,112 +33,90 @@ const CreatePDF2 = () => {
             // doc.setFont("MyFont1");
 
             let width = doc.internal.pageSize.getWidth();
+            //---------------------------> sec
+            doc.text(data.sec, 95, 51, {
+                align: "left",
+            });
+
+            //---------------------------> year
+            doc.text(data.year, 125, 51, {
+                align: "left",
+            });
+
             //---------------------------> input name
-            // doc.text(data.name1, 62, 74, {
-            //     align: "left",
-            // });
-            // doc.text(data.name2, 62, 81, {
-            //     align: "left",
-            // });
-            // doc.text(data.name3, 62, 88, {
-            //     align: "left",
-            // });
+            doc.text(data.name1, 42, 102, {
+                align: "left",
+            });
+            doc.text(data.name2, 42, 109, {
+                align: "left",
+            });
+            doc.text(data.name3, 42, 116, {
+                align: "left",
+            });
             //---------------------------> input pass
-            // doc.text(data.pass1, 127, 74, {
-            //     align: "left",
-            // });
-            // doc.text(data.pass2, 127, 81, {
-            //     align: "left",
-            // });
-            // doc.text(data.pass3, 127, 88, {
-            //     align: "left",
-            // });
+            doc.text(data.pass1, 101, 102, {
+                align: "left",
+            });
+            doc.text(data.pass2, 101, 109, {
+                align: "left",
+            });
+            doc.text(data.pass3, 101, 116, {
+                align: "left",
+            });
             //---------------------------> input number
-            // doc.text(data.number1, 175, 74, {
-            //     align: "left",
-            // });
-            // doc.text(data.number2, 175, 81, {
-            //     align: "left",
-            // });
-            // doc.text(data.number3, 175, 88, {
-            //     align: "left",
-            // });
+            doc.text(data.number1, 144, 102, {
+                align: "left",
+            });
+            doc.text(data.number2, 144, 109, {
+                align: "left",
+            });
+            doc.text(data.number3, 144, 116, {
+                align: "left",
+            });
             //---------------------------> input Project
-            // doc.text(data.project, 70, 102, {
-            //     align: "left",
-            // });
-            // doc.text(data.teacher1, 95, 137, {
-            //     align: "left",
-            // });
-            // doc.text(data.teacher2, 95, 144, {
-            //     align: "left",
-            // });
+            doc.text(data.project, 65, 81, {
+                align: "left",
+            });
+
             //---------------------------> input Studens
-            // doc.text(data.student1, 65, 180, {
-            //     align: "left",
-            // });
-            // doc.text(data.student1, 65, 187, {
-            //     align: "left",
-            // });
-            // doc.text(data.student2, 135, 180, {
-            //     align: "left",
-            // });
-            // doc.text(data.student2, 135, 187, {
-            //     align: "left",
-            // });
-            // doc.text(data.student3, 105, 194, {
-            //     align: "left",
-            // });
-            // doc.text(data.student3, 105, 201, {
-            //     align: "left",
-            // });
+            doc.text(data.student, 80, 134, {
+                align: "left",
+            });
+            doc.text(data.student, 80, 141, {
+                align: "left",
+            });
 
             doc.addImage(img, "png", 95, 10, 25, 25);
             ////////////////////////////////////////
-            // if (data.checkGroup1) {
-            //     doc.addImage(img1, "png", 67, 54, 5, 5);
-            // }
-            // if (data.checkGroup2) {
-            //     doc.addImage(img1, "png", 84, 54, 5, 5);
-            // }
-            // if (data.checkGroup3) {
-            //     doc.addImage(img1, "png", 107, 54, 5, 5);
-            // }
-            // if (data.checkGroup4) {
-            //     doc.addImage(img1, "png", 134, 54, 5, 5);
-            // }
-            // if (data.checkGroup5) {
-            //     doc.addImage(img1, "png", 162, 54, 5, 5);
-            // }
-
-            ////////////////////////////////////////
-            // if (data.radioGoup === "group1") {
-            //     doc.addImage(img1, "png", 75, 90.5, 5, 5);
-            // } else if (data.radioGroup === "group2") {
-            //     doc.addImage(img1, "png", 95, 90.5, 5, 5);
-            // } else if (data.radioGroup === "group3") {
-            //     doc.addImage(img1, "png", 114, 90.5, 5, 5);
-            // } else if (data.radioGroup === "group4") {
-            //     doc.addImage(img1, "png", 134, 90.5, 5, 5);
-            // }
-
-            ////////////////////////////////////////
-            // if (data.checkGroup6) {
-            //     doc.addImage(img1, "png", 88.5, 118.5, 5, 5);
-
-            // }
-
-            doc.addImage(img1, "png", 61, 54, 5, 5);
-            doc.addImage(img1, "png", 79, 54, 5, 5);
-            doc.addImage(img1, "png", 106, 54, 5, 5);
-            doc.addImage(img1, "png", 135, 54, 5, 5);
-            doc.addImage(img1, "png", 167, 54, 5, 5);
-            ////////////////////////////////////////
-            doc.addImage(img1, "png", 96, 70, 5, 5);
-            doc.addImage(img1, "png", 129, 70, 5, 5);
-            /////////////////////////////////////////
-            doc.addImage(img1, "png", 85, 119, 5, 5);
-            doc.addImage(img1, "png", 114, 119, 5, 5);
+            if (data.checkGroup1) {
+                doc.addImage(img1, "png", 61, 54, 5, 5);
+            }
+            if (data.checkGroup2) {
+                doc.addImage(img1, "png", 79, 54, 5, 5);
+            }
+            if (data.checkGroup3) {
+                doc.addImage(img1, "png", 106, 54, 5, 5);
+            }
+            if (data.checkGroup4) {
+                doc.addImage(img1, "png", 135, 54, 5, 5);
+            }
+            if (data.checkGroup5) {
+                doc.addImage(img1, "png", 167, 54, 5, 5);
+            }
+            //////////////////////////////////////////////
+            if (data.checkGroup6) {
+                doc.addImage(img1, "png", 96, 70, 5, 5);
+            }
+            if (data.checkGroup7) {
+                doc.addImage(img1, "png", 129, 70, 5, 5);
+            }
+            //////////////////////////////////////////////
+            if (data.checkGroup8) {
+                doc.addImage(img1, "png", 85, 119, 5, 5);
+            }
+            if (data.checkGroup9) {
+                doc.addImage(img1, "png", 114, 119, 5, 5);
+            }
 
             doc.setFont("THSarabunNewBold");
             doc.text("(แบบ ป.2)", 185, 10);
@@ -439,9 +425,9 @@ const CreatePDF2 = () => {
     };
     return (
         <div>
-            <Button variant="success" className="button-1" onClick={handdlePDF}>
-                Save
-            </Button>
+            <button onClick={handdlePDF} class="button1 button2">
+                Download
+            </button>
         </div>
     );
 };

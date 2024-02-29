@@ -80,7 +80,7 @@ const Docx2 = ({ action }) => {
     useEffect(() => {
         if (_action === "edit" && user) {
             const getData = async () => {
-                const [id, data] = await getDocumentByUserId(
+                const [listId, id, data] = await getDocumentByUserId(
                     user.uid,
                     documentType
                 );
@@ -105,6 +105,7 @@ const Docx2 = ({ action }) => {
                             value={formData.checkGroup1}
                             checked={formData.checkGroup1}
                             onChange={onFormDataChange}
+                            id="flexCheckDefault"
                             label="&nbsp;โยธา"
                         />
                         <MDBCheckbox
@@ -112,6 +113,7 @@ const Docx2 = ({ action }) => {
                             value={formData.checkGroup2}
                             checked={formData.checkGroup2}
                             onChange={onFormDataChange}
+                            id="flexCheckDefault"
                             label="&nbsp;อุสาหการ"
                         />
                         <MDBCheckbox
@@ -119,6 +121,7 @@ const Docx2 = ({ action }) => {
                             value={formData.checkGroup3}
                             checked={formData.checkGroup3}
                             onChange={onFormDataChange}
+                            id="flexCheckDefault"
                             label="&nbsp;สิ่งเเวดล้อม"
                         />
                         <MDBCheckbox
@@ -126,6 +129,7 @@ const Docx2 = ({ action }) => {
                             value={formData.checkGroup4}
                             checked={formData.checkGroup4}
                             onChange={onFormDataChange}
+                            id="flexCheckDefault"
                             label="&nbsp;คอมพิวเตอร์"
                         />
                         <MDBCheckbox
@@ -133,6 +137,7 @@ const Docx2 = ({ action }) => {
                             value={formData.checkGroup5}
                             checked={formData.checkGroup5}
                             onChange={onFormDataChange}
+                            id="flexCheckDefault"
                             label="&nbsp;พลังงาน"
                         />
                     </div>

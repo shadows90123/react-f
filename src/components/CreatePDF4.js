@@ -1,9 +1,18 @@
 import { jsPDF } from "jspdf";
+import React, { useState, useEffect } from "react";
 import { THSarabunNewNormal } from "../assets/font/THSarabunNew-normal";
 import { THSarabunNewBold } from "../assets/font/THSarabunNew Bold-normal";
 import Button from "react-bootstrap/Button";
 
-const CreatePDF4 = () => {
+const CreatePDF4 = ({ docData, sigLink }) => {
+    const [data, setData] = useState(docData);
+    const [sigUrl, setSigUrl] = useState(sigLink);
+
+    useEffect(() => {
+        setData(docData);
+        setSigUrl(sigLink);
+    }, [docData]);
+
     const handdlePDF = () => {
         const doc = new jsPDF();
         var img = new Image();
@@ -26,42 +35,48 @@ const CreatePDF4 = () => {
 
             let width = doc.internal.pageSize.getWidth();
             //---------------------------> input name
-            // doc.text(data.name1, 62, 74, {
-            //     align: "left",
-            // });
-            // doc.text(data.name2, 62, 81, {
-            //     align: "left",
-            // });
-            // doc.text(data.name3, 62, 88, {
-            //     align: "left",
-            // });
+            doc.text(data.name1, 52, 100, {
+                align: "left",
+            });
+            doc.text(data.name2, 52, 107, {
+                align: "left",
+            });
+            doc.text(data.name3, 52, 114, {
+                align: "left",
+            });
             //---------------------------> input pass
-            // doc.text(data.pass1, 127, 74, {
-            //     align: "left",
-            // });
-            // doc.text(data.pass2, 127, 81, {
-            //     align: "left",
-            // });
-            // doc.text(data.pass3, 127, 88, {
-            //     align: "left",
-            // });
+            doc.text(data.pass1, 114, 100, {
+                align: "left",
+            });
+            doc.text(data.pass2, 114, 107, {
+                align: "left",
+            });
+            doc.text(data.pass3, 114, 114, {
+                align: "left",
+            });
             //---------------------------> input number
-            // doc.text(data.number1, 175, 74, {
-            //     align: "left",
-            // });
-            // doc.text(data.number2, 175, 81, {
-            //     align: "left",
-            // });
-            // doc.text(data.number3, 175, 88, {
-            //     align: "left",
-            // });
+            doc.text(data.number1, 160, 100, {
+                align: "left",
+            });
+            doc.text(data.number2, 160, 107, {
+                align: "left",
+            });
+            doc.text(data.number3, 160, 114, {
+                align: "left",
+            });
             //---------------------------> input Project
-            // doc.text(data.project, 70, 102, {
-            //     align: "left",
-            // });
-            // doc.text(data.teacher1, 95, 137, {
-            //     align: "left",
-            // });
+            doc.text(data.major, 35, 86, {
+                align: "left",
+            });
+            doc.text(data.project, 73, 86, {
+                align: "left",
+            });
+            doc.text(data.money, 92, 128, {
+                align: "left",
+            });
+            doc.text(data.money1, 123, 128, {
+                align: "left",
+            });
             // doc.text(data.teacher2, 95, 144, {
             //     align: "left",
             // });
@@ -299,9 +314,9 @@ const CreatePDF4 = () => {
     };
     return (
         <div>
-            <Button variant="success" className="button-1" onClick={handdlePDF}>
-                Save
-            </Button>
+            <button onClick={handdlePDF} class="button1 button2">
+                Download
+            </button>
         </div>
     );
 };

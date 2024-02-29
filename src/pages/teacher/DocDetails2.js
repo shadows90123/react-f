@@ -3,10 +3,23 @@ import { MDBCheckbox } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button";
 import SignatureCanvas from "react-signature-canvas";
 import "./signture.css";
-import { useState } from "react";
 import Header from "../../components/Teacher/Header";
+import { useState, useEffect } from "react";
+
+import {
+    updateDocumentById,
+    uploadToStorage,
+    getFromStorage,
+    getDocumentById,
+} from "../../libs/Firebase";
+import { useParams, useNavigate } from "react-router-dom";
 
 const DocDetails2 = () => {
+    let { reqId } = useParams();
+    const navigate = useNavigate();
+
+    const [reqData, setReqData] = useState({});
+
     const [signCanvas, setSignCanvas] = useState("");
     const [url, setUrl] = useState("");
     const [data, setData] = useState("");
@@ -14,9 +27,75 @@ const DocDetails2 = () => {
         signCanvas.clear();
     };
     // ใช้งาน
-    // const handleSave = () => {
-    //     setUrl(signCanvas.getTrimmedCanvas().toDataURL('signCanvas'))
-    // };
+    const handleSave = async () => {
+        // setUrl(signCanvas.getTrimmedCanvas().toDataURL("signCanvas"));
+        const uploaded = await uploadToStorage(
+            signCanvas.getTrimmedCanvas().toDataURL("signCanvas")
+        );
+
+        const sigPath = uploaded?.metadata.fullPath;
+        await updateDocumentById("document_request", {
+            id: reqId,
+            data: {
+                signature: sigPath,
+                verify_state: true,
+                updated_at: new Date(),
+            },
+        });
+
+        await updateDocumentById("document_lists", {
+            id: reqData.list_id,
+            data: {
+                verify_state: true,
+                updated_at: new Date(),
+            },
+        });
+
+        alert("Success!!");
+        navigate("/teacher/document_2");
+    };
+
+    const [formData, setFromData] = useState({
+        checkGroup1: false,
+        checkGroup2: false,
+        checkGroup3: false,
+        checkGroup4: false,
+        checkGroup5: false,
+        checkGroup6: false,
+        checkGroup7: false,
+        checkGroup8: false,
+        checkGroup9: false,
+        name1: "",
+        pass1: "",
+        number1: "",
+        name2: "",
+        pass2: "",
+        number2: "",
+        name3: "",
+        pass3: "",
+        number3: "",
+        project: "",
+        student: "",
+        sec: "",
+        year: "",
+    });
+
+    useEffect(() => {
+        const fetchDocument = async () => {
+            const _reqData = await getDocumentById("document_request", reqId);
+            setReqData(_reqData);
+
+            const _docData = await getDocumentById(
+                "documents",
+                _reqData.doc_id
+            );
+            setReqData(_reqData);
+            setFromData(_docData);
+        };
+
+        fetchDocument();
+    }, [reqId]);
+
     return (
         <div>
             <Header />
@@ -26,36 +105,41 @@ const DocDetails2 = () => {
                     <div className="formcheck">
                         <MDBCheckbox
                             name="checkGroup1"
-                            // value={formData.checkGroup1}
-                            // onChange={onFormDataChange}
+                            disabled
+                            value={formData.checkGroup1}
+                            checked={formData.checkGroup1}
                             id="flexCheckDefault"
                             label="&nbsp;โยธา"
                         />
                         <MDBCheckbox
                             name="checkGroup2"
-                            // value={formData.checkGroup2}
-                            // onChange={onFormDataChange}
+                            disabled
+                            value={formData.checkGroup2}
+                            checked={formData.checkGroup2}
                             id="flexCheckDefault"
                             label="&nbsp;อุสาหการ"
                         />
                         <MDBCheckbox
                             name="checkGroup3"
-                            // value={formData.checkGroup3}
-                            // onChange={onFormDataChange}
+                            disabled
+                            value={formData.checkGroup3}
+                            checked={formData.checkGroup3}
                             id="flexCheckDefault"
                             label="&nbsp;สิ่งเเวดล้อม"
                         />
                         <MDBCheckbox
                             name="checkGroup4"
-                            // value={formData.checkGroup4}
-                            // onChange={onFormDataChange}
+                            disabled
+                            value={formData.checkGroup4}
+                            checked={formData.checkGroup4}
                             id="flexCheckDefault"
                             label="&nbsp;คอมพิวเตอร์"
                         />
                         <MDBCheckbox
                             name="checkGroup5"
-                            // value={formData.checkGroup5}
-                            // onChange={onFormDataChange}
+                            disabled
+                            value={formData.checkGroup5}
+                            checked={formData.checkGroup5}
                             id="flexCheckDefault"
                             label="&nbsp;พลังงาน"
                         />
@@ -64,17 +148,19 @@ const DocDetails2 = () => {
                         <label>1.บัดนี้ ได้ดำเนินการจัดทำโครงงานวิศวกรรม</label>
                         &nbsp;&nbsp;&nbsp;
                         <MDBCheckbox
-                            name="checkGroup7"
-                            // value={formData.checkGroup7}
-                            // onChange={onFormDataChange}
+                            name="checkGroup6"
+                            disabled
+                            value={formData.checkGroup6}
+                            checked={formData.checkGroup6}
                             id="flexCheckDefault"
                             label="&nbsp;&nbsp;โครงงานฯ 1"
                         />
                         &nbsp;&nbsp;&nbsp;
                         <MDBCheckbox
-                            name="checkGroup8"
-                            // value={formData.checkGroup8}
-                            // onChange={onFormDataChange}
+                            name="checkGroup7"
+                            disabled
+                            value={formData.checkGroup7}
+                            checked={formData.checkGroup7}
                             id="flexCheckDefault"
                             label="&nbsp;&nbsp;โครงงานฯ 2"
                         />
@@ -82,17 +168,19 @@ const DocDetails2 = () => {
                         <label>2.มีความประสงค์ขอสอบ</label>
                         &nbsp;&nbsp;&nbsp;
                         <MDBCheckbox
-                            name="checkGroup13"
-                            // value={formData.checkGroup13}
-                            // onChange={onFormDataChange}
+                            name="checkGroup8"
+                            disabled
+                            value={formData.checkGroup8}
+                            checked={formData.checkGroup8}
                             id="flexCheckDefault"
                             label="&nbsp;&nbsp;ความก้าวหน้า"
                         />
                         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
                         <MDBCheckbox
-                            name="checkGroup13"
-                            // value={formData.checkGroup13}
-                            // onChange={onFormDataChange}
+                            name="checkGroup9"
+                            disabled
+                            value={formData.checkGroup9}
+                            checked={formData.checkGroup9}
                             id="flexCheckDefault"
                             label="&nbsp;&nbsp;ปริญญานิพนธ์ขั้นทุดท้าย"
                         />
@@ -105,8 +193,8 @@ const DocDetails2 = () => {
                             type="text"
                             id="name1"
                             name="name1"
-                            // value={formData.name1}
-                            // onChange={onFormDataChange}
+                            value={formData.name1}
+                            disabled
                         />
                         &nbsp;
                         <label>รหัสนักศึกษา&nbsp;</label>
@@ -115,8 +203,8 @@ const DocDetails2 = () => {
                             type="text"
                             id="pass1"
                             name="pass1"
-                            // value={formData.pass1}
-                            // onChange={onFormDataChange}
+                            value={formData.pass1}
+                            disabled
                         />
                         &nbsp;
                         <label>เบอร์โทรติดต่อ&nbsp;</label>
@@ -125,8 +213,8 @@ const DocDetails2 = () => {
                             id="number1"
                             name="number1"
                             type="text"
-                            // value={formData.number1}
-                            // onChange={onFormDataChange}
+                            value={formData.number1}
+                            disabled
                         />
                         &nbsp;
                     </div>
@@ -136,8 +224,8 @@ const DocDetails2 = () => {
                             name="name2"
                             id="name2"
                             type="text"
-                            // value={formData.name2}
-                            // onChange={onFormDataChange}
+                            value={formData.name2}
+                            disabled
                         />
                         &nbsp;
                         <label>รหัสนักศึกษา&nbsp;</label>
@@ -145,8 +233,8 @@ const DocDetails2 = () => {
                             name="pass2"
                             id="pass2"
                             type="text"
-                            // value={formData.pass2}
-                            // onChange={onFormDataChange}
+                            value={formData.pass2}
+                            disabled
                         />
                         &nbsp;
                         <label>เบอร์โทรติดต่อ&nbsp;</label>
@@ -154,8 +242,8 @@ const DocDetails2 = () => {
                             name="number2"
                             id="number2"
                             type="text"
-                            // value={formData.number2}
-                            // onChange={onFormDataChange}
+                            value={formData.number2}
+                            disabled
                         />
                         &nbsp;
                     </div>
@@ -165,8 +253,8 @@ const DocDetails2 = () => {
                             name="name3"
                             id="name3"
                             type="text"
-                            // value={formData.name3}
-                            // onChange={onFormDataChange}
+                            value={formData.name3}
+                            disabled
                         />
                         &nbsp;
                         <label>รหัสนักศึกษา&nbsp;</label>
@@ -174,8 +262,8 @@ const DocDetails2 = () => {
                             name="pass3"
                             id="pass3"
                             type="text"
-                            // value={formData.pass3}
-                            // onChange={onFormDataChange}
+                            value={formData.pass3}
+                            disabled
                         />
                         &nbsp;
                         <label>เบอร์โทรติดต่อ&nbsp;</label>
@@ -183,8 +271,8 @@ const DocDetails2 = () => {
                             name="number3"
                             id="number3"
                             type="text"
-                            // value={formData.number3}
-                            // onChange={onFormDataChange}
+                            value={formData.number3}
+                            disabled
                         />
                         &nbsp;
                     </div>
@@ -194,8 +282,8 @@ const DocDetails2 = () => {
                             name="project"
                             id="project"
                             type="text4"
-                            // value={formData.project}
-                            // onChange={onFormDataChange}
+                            value={formData.project}
+                            disabled
                         />
                         <label>ลายเซ็นอาจารย์ที่ปรึกษา</label>&nbsp; &nbsp;
                         <div className="signture">
@@ -221,11 +309,11 @@ const DocDetails2 = () => {
                     <div className="input">
                         <label>7.ลงชื่อนักศึกษา</label>&nbsp; &nbsp;
                         <MDBInput
-                            name="student1"
-                            id="student1"
+                            name="student"
+                            id="student"
                             type="text"
-                            // value={formData.student1}
-                            // onChange={onFormDataChange}
+                            value={formData.student}
+                            disabled
                         />
                         &nbsp;<label>ภาคเรียนที่ &nbsp;</label>
                         <MDBInput
@@ -233,8 +321,8 @@ const DocDetails2 = () => {
                             type="text"
                             id="sec"
                             name="sec"
-                            // value={formData.name1}
-                            // onChange={onFormDataChange}
+                            value={formData.sec}
+                            disabled
                         />
                         &nbsp;<label>ปีการศึกษา &nbsp;</label>
                         <MDBInput
@@ -242,8 +330,8 @@ const DocDetails2 = () => {
                             type="text"
                             id="year"
                             name="year"
-                            // value={formData.name1}
-                            // onChange={onFormDataChange}
+                            value={formData.year}
+                            disabled
                         />
                     </div>
 
@@ -252,7 +340,7 @@ const DocDetails2 = () => {
                             <Button
                                 variant="success"
                                 className="button-1"
-                                // onClick={onSave}
+                                onClick={handleSave}
                             >
                                 Submit
                             </Button>

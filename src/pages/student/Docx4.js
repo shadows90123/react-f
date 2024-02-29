@@ -71,7 +71,7 @@ const Docx4 = ({ action }) => {
     useEffect(() => {
         if (_action === "edit" && user) {
             const getData = async () => {
-                const [id, data] = await getDocumentByUserId(
+                const [listId, id, data] = await getDocumentByUserId(
                     user.uid,
                     documentType
                 );

@@ -159,7 +159,7 @@ export const router = createBrowserRouter([
                         element: <AuthTableDoc2 />,
                     },
                     {
-                        path: "detail",
+                        path: "detail/:reqId",
                         element: <AuthDocDetails2 />,
                     },
                 ],
@@ -172,7 +172,7 @@ export const router = createBrowserRouter([
                         element: <AuthTableDoc3 />,
                     },
                     {
-                        path: "detail",
+                        path: "detail/:reqId",
                         element: <AuthDocDetails3 />,
                     },
                 ],
@@ -185,7 +185,7 @@ export const router = createBrowserRouter([
                         element: <AuthTableDoc4 />,
                     },
                     {
-                        path: "detail",
+                        path: "detail/:reqId",
                         element: <AuthDocDetails4 />,
                     },
                 ],
