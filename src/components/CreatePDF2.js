@@ -77,8 +77,8 @@ const CreatePDF2 = ({ docData, sigLink }) => {
                 let width = doc.internal.pageSize.getWidth();
 
                 // ลายเซนอาจารย์
-                doc.addImage(imgData, "JPEG", 82, 144, 50, 20);
-                doc.addImage(imgData, "JPEG", 82, 151, 50, 20);
+                doc.addImage(imgData, "JPEG", 95, 144, 50, 20);
+                doc.addImage(imgData, "JPEG", 95, 151, 50, 20);
 
                 //---------------------------> sec
                 doc.text(data.sec, 95, 51, {
