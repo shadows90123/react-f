@@ -7,19 +7,32 @@ import "./HomeTeacher.css";
 import { Link } from "react-router-dom";
 
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, getTeacherDocReq, getStudentById } from "../../libs/Firebase";
+import { auth, getTeacherDocReq, getUserByRole } from "../../libs/Firebase";
 
 const TableDoc1 = () => {
     const [user] = useAuthState(auth);
     const [docList, setDocList] = useState({});
+    const [userList, setUserList] = useState({});
+
+    const [docLabel] = useState({
+        document_1: "ป.1",
+        document_2: "ป.2",
+        document_3: "ป.3",
+        document_4: "ป.4",
+    });
 
     useEffect(() => {
         const fetchDocList = async () => {
             const data = await getTeacherDocReq(user.uid, "document_1");
             setDocList(data);
         };
+        const fetchUserList = async () => {
+            const data = await getUserByRole("student");
+            setUserList(data);
+        };
 
         fetchDocList();
+        fetchUserList();
     }, []);
 
     return (
@@ -32,7 +45,6 @@ const TableDoc1 = () => {
                         <th scope="col">ลำดับ</th>
                         <th scope="col">Email</th>
                         <th scope="col">เอกสาร</th>
-                        <th scope="col">สถานะ</th>
                         <th scope="col">Action</th>
                     </tr>
                 </MDBTableHead>
@@ -41,9 +53,10 @@ const TableDoc1 = () => {
                         return (
                             <tr key={index}>
                                 <th scope="row">{index + 1}</th>
-                                <td>{docList[d].student_uid}</td>
-                                <td></td>
-                                <td></td>
+                                <td>
+                                    {userList[docList[d].student_uid]?.email}
+                                </td>
+                                <td>{docLabel[docList[d].doc_type]}</td>
                                 <td>
                                     <Button
                                         variant="success"

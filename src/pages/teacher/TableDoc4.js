@@ -4,12 +4,20 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import "./HomeTeacher.css";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, getTeacherDocReq, getStudentById } from "../../libs/Firebase";
+import { auth, getTeacherDocReq, getUserByRole } from "../../libs/Firebase";
 import React, { useState, useEffect } from "react";
 
 const TableDoc4 = () => {
     const [user] = useAuthState(auth);
     const [docList, setDocList] = useState({});
+    const [userList, setUserList] = useState({});
+
+    const [docLabel] = useState({
+        document_1: "ป.1",
+        document_2: "ป.2",
+        document_3: "ป.3",
+        document_4: "ป.4",
+    });
 
     useEffect(() => {
         const fetchDocList = async () => {
@@ -17,7 +25,13 @@ const TableDoc4 = () => {
             setDocList(data);
         };
 
+        const fetchUserList = async () => {
+            const data = await getUserByRole("student");
+            setUserList(data);
+        };
+
         fetchDocList();
+        fetchUserList();
     }, []);
 
     return (

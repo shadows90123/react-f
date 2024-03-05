@@ -27,7 +27,7 @@ const SignUp = () => {
         }
         const user = await registerWithPassword(email, password);
 
-        if (user) {
+        if (user?.uid) {
             await setDoc(doc(db, "users", user.uid), {
                 email: user.email,
                 name: user.displayName,

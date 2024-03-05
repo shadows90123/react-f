@@ -89,6 +89,19 @@ export const updateDocumentById = async (collect, { id, data }) => {
 };
 
 // FireStore
+
+export const getUserByRole = async (role) => {
+    const q = query(collection(db, "users"), where("user_type", "==", role));
+
+    const querySnapshot = await getDocs(q);
+
+    const data = {};
+    querySnapshot.forEach((doc) => {
+        data[doc.id] = doc.data();
+    });
+    return data;
+};
+
 export const createDocument = async (uid, docType, data) => {
     try {
         const docRef = await addDoc(collection(db, `documents`), data);
