@@ -594,7 +594,7 @@ const CreatePDF3 = ({ docData, sigLink }) => {
     return (
         <div>
             <div>
-                <button onClick={handdlePDF} class="button1 button2">
+                <button onClick={handdlePDF} className="button1 button2">
                     Download
                 </button>
             </div>

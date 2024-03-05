@@ -114,7 +114,7 @@ const Document1 = () => {
             <br></br>
             <hr></hr>
             <div className="DocDetails">
-                <button class="button1 button2 ">
+                <button className="button1 button2 ">
                     <Link
                         to="create"
                         className="text-white  text-decoration-none"
@@ -122,7 +122,7 @@ const Document1 = () => {
                         กรอกเอกสารป.1
                     </Link>
                 </button>
-                <button class="button1 button2">
+                <button className="button1 button2">
                     <Link
                         to="edit"
                         className="text-white  text-decoration-none"
@@ -130,10 +130,10 @@ const Document1 = () => {
                         เเก้ไขเอกสารป.1
                     </Link>
                 </button>
-                <button class="button1 button2" onClick={handleShow}>
+                <button className="button1 button2" onClick={handleShow}>
                     ยื่นขอลายเซ็น
                 </button>
-                {/* <button class="button1 button2">Download</button> */}
+                {/* <button className="button1 button2">Download</button> */}
                 <CreatePDF docData={data} sigLink={sigUrl} />
             </div>
 
@@ -155,7 +155,7 @@ const Document1 = () => {
                             <option value="">เลือกอาจารย์ที่ปรึกษา</option>
                             {Object.keys(teachers).map((t) => {
                                 return (
-                                    <option value={t}>
+                                    <option key={t} value={t}>
                                         {teachers[t].email}
                                     </option>
                                 );

@@ -43,7 +43,7 @@ export default function CreatePDF({ docData, sigLink }) {
             document.body.removeChild(canvas);
             ret["data"] = data;
             ret["pending"] = false;
-            console.log("data", data);
+            // console.log("data", data);
             if (typeof callback === "function") {
                 callback(data);
             }
@@ -530,7 +530,7 @@ export default function CreatePDF({ docData, sigLink }) {
 
     return (
         <>
-            <button onClick={handdlePDF} class="button1 button2">
+            <button onClick={handdlePDF} className="button1 button2">
                 Download
             </button>
         </>

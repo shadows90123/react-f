@@ -94,11 +94,11 @@ const Document4 = () => {
                 );
 
                 const reqData = await getSignatureById(docId);
-                setData(docData);
                 if (reqData !== null) {
                     const newUrl = await getFromStorage(reqData);
                     setSigUrl(newUrl);
                 }
+                setData(docData);
             };
             fetchTeachers();
             fetchDocument();
@@ -112,7 +112,7 @@ const Document4 = () => {
             <br></br>
             <hr></hr>
             <div className="DocDetails">
-                <button class="button1 button2">
+                <button className="button1 button2">
                     <Link
                         to="create"
                         className="text-white  text-decoration-none"
@@ -120,7 +120,7 @@ const Document4 = () => {
                         กรอกเอกสารป.4
                     </Link>
                 </button>
-                <button class="button1 button2">
+                <button className="button1 button2">
                     <Link
                         to="edit"
                         className="text-white  text-decoration-none"
@@ -128,7 +128,7 @@ const Document4 = () => {
                         เเก้ไขเอกสารป.4
                     </Link>
                 </button>
-                <button class="button1 button2" onClick={handleShow}>
+                <button className="button1 button2" onClick={handleShow}>
                     ยื่นขอลายเซ็น
                 </button>
                 <CreatePDF4 docData={data} sigLink={sigUrl} />
@@ -151,7 +151,7 @@ const Document4 = () => {
                             <option value="">เลือกอาจารย์ที่ปรึกษา</option>
                             {Object.keys(teachers).map((t) => {
                                 return (
-                                    <option value={t}>
+                                    <option key={t} value={t}>
                                         {teachers[t].email}
                                     </option>
                                 );

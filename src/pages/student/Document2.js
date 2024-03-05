@@ -94,11 +94,11 @@ const Document2 = () => {
                 );
 
                 const reqData = await getSignatureById(docId);
-                setData(docData);
                 if (reqData !== null) {
                     const newUrl = await getFromStorage(reqData);
                     setSigUrl(newUrl);
                 }
+                setData(docData);
             };
             fetchTeachers();
             fetchDocument();
@@ -112,7 +112,7 @@ const Document2 = () => {
             <br></br>
             <hr></hr>
             <div className="DocDetails">
-                <button class="button1 button2">
+                <button className="button1 button2">
                     <Link
                         to="create"
                         className="text-white  text-decoration-none"
@@ -120,7 +120,7 @@ const Document2 = () => {
                         กรอกเอกสารป.2
                     </Link>
                 </button>
-                <button class="button1 button2">
+                <button className="button1 button2">
                     <Link
                         to="edit"
                         className="text-white  text-decoration-none"
@@ -128,10 +128,10 @@ const Document2 = () => {
                         เเก้ไขเอกสารป.2
                     </Link>
                 </button>
-                <button class="button1 button2" onClick={handleShow}>
+                <button className="button1 button2" onClick={handleShow}>
                     ยื่นขอลายเซ็น
                 </button>
-                {/* <button class="button1 button2">Download</button> */}
+                {/* <button className="button1 button2">Download</button> */}
                 <CreatePDF2 docData={data} sigLink={sigUrl} />
             </div>
             <Modal show={showReqSig} onHide={handleClose} centered>
@@ -152,7 +152,7 @@ const Document2 = () => {
                             <option value="">เลือกอาจารย์ที่ปรึกษา</option>
                             {Object.keys(teachers).map((t) => {
                                 return (
-                                    <option value={t}>
+                                    <option key={t} value={t}>
                                         {teachers[t].email}
                                     </option>
                                 );

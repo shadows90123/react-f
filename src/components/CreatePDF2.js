@@ -13,6 +13,7 @@ const CreatePDF2 = ({ docData, sigLink }) => {
     }, [docData]);
 
     var getImageFromUrl = function (url, callback) {
+        console.log(url);
         var img = new Image(),
             data,
             ret = {
@@ -493,7 +494,7 @@ const CreatePDF2 = ({ docData, sigLink }) => {
     };
     return (
         <div>
-            <button onClick={handdlePDF} class="button1 button2">
+            <button onClick={handdlePDF} className="button1 button2">
                 Download
             </button>
         </div>
