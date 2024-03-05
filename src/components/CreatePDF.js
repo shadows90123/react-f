@@ -52,13 +52,12 @@ export default function CreatePDF({ docData, sigLink }) {
         return ret;
     };
 
-    const handdlePDF = (imgData) => {
+    const handdlePDF = () => {
         // if (data == null) {
         //     alert("ไม่พบข้อมูล!!!");
         //     return;
         // }
         const create = (imgData) => {
-            console.log(sigUrl);
             const doc = new jsPDF();
             var img = new Image();
             var img1 = new Image();
@@ -87,6 +86,7 @@ export default function CreatePDF({ docData, sigLink }) {
 
                 let width = doc.internal.pageSize.getWidth();
 
+                // ลายเซนอาจารย์
                 doc.addImage(imgData, "JPEG", 55, 210, 50, 20);
                 doc.addImage(imgData, "JPEG", 55, 218, 50, 20);
 
@@ -525,11 +525,7 @@ export default function CreatePDF({ docData, sigLink }) {
             };
         };
 
-        try {
-            getImageFromUrl(sigUrl, create);
-        } catch (error) {
-            console.error(error);
-        }
+        getImageFromUrl(sigUrl, create);
     };
 
     return (
