@@ -81,24 +81,28 @@ const Document2 = () => {
     };
 
     useEffect(() => {
-        const fetchTeachers = async () => {
-            const t = await getTeachers();
-            setTeachers(t);
-        };
+        if (user?.uid) {
+            const fetchTeachers = async () => {
+                const t = await getTeachers();
+                setTeachers(t);
+            };
 
-        const fetchDocument = async () => {
-            const [listId, docId, docData] = await getDocumentByUserId(
-                user.uid,
-                "document_2"
-            );
+            const fetchDocument = async () => {
+                const [listId, docId, docData] = await getDocumentByUserId(
+                    user.uid,
+                    "document_2"
+                );
 
-            const reqData = await getSignatureById(docId);
-            // const newUrl = await getFromStorage(reqData);
-            setData(docData);
-            // setSigUrl(newUrl);
-        };
-        fetchTeachers();
-        fetchDocument();
+                const reqData = await getSignatureById(docId);
+                setData(docData);
+                if (reqData !== null) {
+                    const newUrl = await getFromStorage(reqData);
+                    setSigUrl(newUrl);
+                }
+            };
+            fetchTeachers();
+            fetchDocument();
+        }
     }, [user]);
 
     return (
