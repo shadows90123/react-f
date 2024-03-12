@@ -6,6 +6,7 @@ import {
 } from "mdb-react-ui-kit";
 import Header from "./Header";
 import "./TableStudent.css";
+import Button from "react-bootstrap/Button";
 
 const TableStudent = () => {
     return (
@@ -22,6 +23,7 @@ const TableStudent = () => {
                         <th scope="col">ชื่อนักศึกษา</th>
                         <th scope="col">ชื่ออาจารย์ที่ปรึกษา</th>
                         <th scope="col">ผ่าน &nbsp; &nbsp;ไม่ผ่าน</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody>
@@ -38,6 +40,16 @@ const TableStudent = () => {
                                 <MDBCheckbox />
                             </div>
                         </td>
+                        <td>
+                            <Button variant="success" className="button-0">
+                                <Link
+                                    to={""}
+                                    className="text-white text-decoration-none"
+                                >
+                                    Submit
+                                </Link>
+                            </Button>
+                        </td>
                     </tr>
                 </MDBTableBody>
             </MDBTable>
@@ -52,6 +64,7 @@ const TableStudent = () => {
                         <th scope="col">ชื่อนักศึกษา</th>
                         <th scope="col">ชื่ออาจารย์ที่ปรึกษา</th>
                         <th scope="col">ผ่าน &nbsp; &nbsp;ไม่ผ่าน</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody>
@@ -67,6 +80,16 @@ const TableStudent = () => {
                                 &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;{" "}
                                 <MDBCheckbox />
                             </div>
+                        </td>
+                        <td>
+                            <Button variant="success" className="button-0">
+                                <Link
+                                    to={""}
+                                    className="text-white text-decoration-none"
+                                >
+                                    Submit
+                                </Link>
+                            </Button>
                         </td>
                     </tr>
                 </MDBTableBody>
@@ -83,6 +106,7 @@ const TableStudent = () => {
                         <th scope="col">
                             ส่งเล่มครบ &nbsp; &nbsp;ส่งเล่มครบไม่
                         </th>
+                        <th scope="col">Action</th>
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody>
@@ -98,6 +122,16 @@ const TableStudent = () => {
                                 &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;
                                 &nbsp;&nbsp; &nbsp; &nbsp; <MDBCheckbox />
                             </div>
+                        </td>
+                        <td>
+                            <Button variant="success" className="button-0">
+                                <Link
+                                    to={""}
+                                    className="text-white text-decoration-none"
+                                >
+                                    Submit
+                                </Link>
+                            </Button>
                         </td>
                     </tr>
                 </MDBTableBody>
