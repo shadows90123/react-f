@@ -95,14 +95,39 @@ const DocDetails1 = () => {
     return (
         <div>
             <Header />
-            <div className="from">
-                <div className="frame">
-                    <div className="title">กรอกเอกสาร ป.1</div>
-                    <div className="formcheck">
+            <div className=" p-5">
+                <div
+                    className="container-xxl bg-white mt-2 rounded-4   "
+                    style={{
+                        border: "2px solid #7e0202 ",
+                    }}
+                >
+                    <div
+                        className="rounded-top p-3 m-4 text-white d-flex justify-content-center"
+                        style={{
+                            background: "#7e0202 ",
+                        }}
+                    >
+                        {" "}
+                        กรอกเอกสาร ป.1
+                    </div>
+                    <div className="d-flex justify-content-center col- p-3  ">
+                        <label className="p-1">เสนอหัวข้อโครงงาน</label>
+                        <MDBInput
+                            style={{ width: 500 }}
+                            size="sm"
+                            name="project"
+                            id="project"
+                            type="text"
+                            value={formData.project}
+                            disabled
+                        />
+                    </div>
+                    <div className=" d-flex justify-content-evenly p-3">
                         <MDBCheckbox
                             name="checkGroup1"
                             id="flexCheckDefault"
-                            label="&nbsp;โยธา"
+                            label="โยธา"
                             disabled
                             value={formData.checkGroup1}
                             checked={formData.checkGroup1}
@@ -110,7 +135,7 @@ const DocDetails1 = () => {
                         <MDBCheckbox
                             name="checkGroup2"
                             id="flexCheckDefault"
-                            label="&nbsp;อุสาหการ"
+                            label="อุสาหการ"
                             disabled
                             value={formData.checkGroup2}
                             checked={formData.checkGroup2}
@@ -118,7 +143,7 @@ const DocDetails1 = () => {
                         <MDBCheckbox
                             name="checkGroup3"
                             id="flexCheckDefault"
-                            label="&nbsp;สิ่งเเวดล้อม"
+                            label="สิ่งเเวดล้อม"
                             disabled
                             value={formData.checkGroup3}
                             checked={formData.checkGroup3}
@@ -126,7 +151,7 @@ const DocDetails1 = () => {
                         <MDBCheckbox
                             name="checkGroup4"
                             id="flexCheckDefault"
-                            label="&nbsp;คอมพิวเตอร์"
+                            label="คอมพิวเตอร์"
                             disabled
                             value={formData.checkGroup4}
                             checked={formData.checkGroup4}
@@ -134,35 +159,39 @@ const DocDetails1 = () => {
                         <MDBCheckbox
                             name="checkGroup5"
                             id="flexCheckDefault"
-                            label="&nbsp;พลังงาน"
+                            label="พลังงาน"
                             disabled
                             value={formData.checkGroup5}
                             checked={formData.checkGroup5}
                         />
                     </div>
-                    <div className="input">
-                        <label>1. ชื่อ-สกุล&nbsp;</label>
+                    <div className="d-flex justify-content-evenly col- p-3">
+                        <label>1. ชื่อ-สกุล</label>
                         <MDBInput
-                            background
+                            className="w-auto "
+                            size="sm"
                             type="text"
                             id="name1"
                             name="name1"
                             value={formData.name1}
                             disabled
                         />
-                        &nbsp;
-                        <label>รหัสนักศึกษา&nbsp;</label>
+
+                        <label>รหัสนักศึกษา</label>
                         <MDBInput
-                            background
+                            className="w-auto "
+                            size="sm"
                             type="text"
                             id="pass1"
                             name="pass1"
                             value={formData.pass1}
                             disabled
                         />
-                        &nbsp;
-                        <label>เบอร์โทรติดต่อ&nbsp;</label>
+
+                        <label>เบอร์โทรติดต่อ</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             background
                             id="number1"
                             name="number1"
@@ -170,69 +199,78 @@ const DocDetails1 = () => {
                             value={formData.number1}
                             disabled
                         />
-                        &nbsp;
                     </div>
-                    <div className="input">
-                        <label>2. ชื่อ-สกุล&nbsp;</label>
+                    <div className="d-flex justify-content-evenly col- p-3">
+                        <label>2. ชื่อ-สกุล</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="name2"
                             id="name2"
                             type="text"
                             value={formData.name2}
                             disabled
                         />
-                        &nbsp;
-                        <label>รหัสนักศึกษา&nbsp;</label>
+
+                        <label>รหัสนักศึกษา</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="pass2"
                             id="pass2"
                             type="text"
                             value={formData.pass2}
                             disabled
                         />
-                        &nbsp;
-                        <label>เบอร์โทรติดต่อ&nbsp;</label>
+
+                        <label>เบอร์โทรติดต่อ</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="number2"
                             id="number2"
                             type="text"
                             value={formData.number2}
                             disabled
                         />
-                        &nbsp;
                     </div>
-                    <div className="input">
-                        <label>3. ชื่อ-สกุล&nbsp;</label>
+                    <div className="d-flex justify-content-evenly col- p-3">
+                        <label>3. ชื่อ-สกุล</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="name3"
                             id="name3"
                             type="text"
                             value={formData.name3}
                             disabled
                         />
-                        &nbsp;
-                        <label>รหัสนักศึกษา&nbsp;</label>
+
+                        <label>รหัสนักศึกษา</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="pass3"
                             id="pass3"
                             type="text"
                             value={formData.pass3}
                             disabled
                         />
-                        &nbsp;
-                        <label>เบอร์โทรติดต่อ&nbsp;</label>
+
+                        <label>เบอร์โทรติดต่อ</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="number3"
                             id="number3"
                             type="text"
                             value={formData.number3}
                             disabled
                         />
-                        &nbsp;
                     </div>
 
-                    <div className="changeradio">
-                        <label>4. ลงทะเบียนเรียน </label>
+                    <div className="d-flex justify-content-evenly col- p-3">
+                        <label>ลงทะเบียนเรียน </label>
                         <MDBRadio
                             name="radioGroup"
                             value="group1"
@@ -265,8 +303,12 @@ const DocDetails1 = () => {
                             disabled
                             checked={formData.radioGroup === "group4"}
                         />
-                        &nbsp;&nbsp;<label>ลายเซ็นอาจารย์ที่ปรึกษา</label>
-                        <div className="signture">
+                        <label>ลายเซ็นอาจารย์ที่ปรึกษา</label>
+                        <div
+                            style={{
+                                border: "0.5px solid black ",
+                            }}
+                        >
                             <SignatureCanvas
                                 penColor="black"
                                 canvasProps={{
@@ -286,22 +328,8 @@ const DocDetails1 = () => {
                         </Button>
                     </div>
 
-                    <div className="input">
-                        <label>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.
-                            เสนอหัวข้อโครงงาน&nbsp;
-                        </label>
-                        <MDBInput
-                            name="project"
-                            id="project"
-                            type="text1"
-                            value={formData.project}
-                            disabled
-                        />
-                        &nbsp; &nbsp;
-                    </div>
-                    <div className="input">
-                        <label>&nbsp;6. อาจารย์ที่ปรึกษา</label>
+                    <div className="d-flex justify-content-evenly col- p-3">
+                        <label>อาจารย์ที่ปรึกษา</label>
                         <MDBCheckbox
                             name="checkGroup6"
                             label="เเต่งตั้ง"
@@ -311,6 +339,8 @@ const DocDetails1 = () => {
                         />
                         <label>อาจารย์ที่ปรึกษา(หลัก)</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="teacher1"
                             type="text2"
                             id="teacher1"
@@ -320,6 +350,8 @@ const DocDetails1 = () => {
 
                         <label>อาจารย์ที่ปรึกษา(ร่วม)</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="teacher2"
                             id="teacher2"
                             type="text2"
@@ -327,39 +359,39 @@ const DocDetails1 = () => {
                             disabled
                         />
                     </div>
-                    <label>
-                        &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;7.
-                        รับรองการเสนอหัวข้อโคงงานฯ
-                        เเละการเเต่งตั้งอาจารย์ที่ปรึกษา
-                    </label>
-                    <div className="input">
+                    <div className="d-flex justify-content-evenly col- p-3">
                         <label>1. ลงชื่อนักศึกษา</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="student1"
                             id="student1"
                             type="text"
                             value={formData.student1}
                             disabled
                         />
-                        &nbsp;
+
                         <label>2. ลงชื่อนักศึกษา</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="student2"
                             id="student2"
                             type="text"
                             value={formData.student2}
                             disabled
                         />
-                        &nbsp;
+
                         <label>3. ลงชื่อนักศึกษา</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="student3"
                             id="student3"
                             type="text"
                             value={formData.student3}
                             disabled
                         />
-                        &nbsp;
                     </div>
                     <div className="button">
                         <div>

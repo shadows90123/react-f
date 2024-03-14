@@ -91,10 +91,35 @@ const Docx3 = ({ action }) => {
     return (
         <div>
             <HeaderStudent />
-            <div className="from">
-                <div className="frame-1">
-                    <div className="title"> กรอกเอกสาร ป.3</div>
-                    <div className="formcheck">
+            <div className="p-5">
+                <div
+                    className="container-xxl bg-white mt-2 rounded-4   "
+                    style={{
+                        border: "2px solid #7e0202 ",
+                    }}
+                >
+                    <div
+                        className="rounded-top p-3 m-4 text-white d-flex justify-content-center"
+                        style={{
+                            background: "#7e0202 ",
+                        }}
+                    >
+                        {" "}
+                        กรอกเอกสาร ป.3
+                    </div>
+                    <div className="d-flex justify-content-center col- p-3 ">
+                        <label className="p-1">เสนอหัวข้อโครงงาน</label>
+                        <MDBInput
+                            style={{ width: 500 }}
+                            size="sm"
+                            name="project"
+                            id="project"
+                            type="text1"
+                            value={formData.project}
+                            onChange={onFormDataChange}
+                        />
+                    </div>
+                    <div className="d-flex justify-content-evenly p-3 ">
                         <MDBCheckbox
                             name="checkGroup1"
                             value={formData.checkGroup1}
@@ -137,8 +162,8 @@ const Docx3 = ({ action }) => {
                         />
                     </div>
 
-                    <div className="changeradio-1">
-                        <label>1. ลงทะเบียนเรียน </label>
+                    <div className="d-flex justify-content-evenly p-3 ">
+                        <label>ลงทะเบียนเรียน </label>
                         <MDBRadio
                             name="radioGroup"
                             value="group1"
@@ -172,10 +197,11 @@ const Docx3 = ({ action }) => {
                             inline
                         />
                     </div>
-                    <div className="input">
-                        <label>2. ชื่อ-สกุล&nbsp;</label>
+                    <div className="d-flex justify-content-evenly p-3">
+                        <label>1. ชื่อ-สกุล</label>
                         <MDBInput
-                            background
+                            className="w-auto "
+                            size="sm"
                             type="text"
                             id="name1"
                             name="name1"
@@ -183,99 +209,94 @@ const Docx3 = ({ action }) => {
                             onChange={onFormDataChange}
                         />
                         &nbsp;
-                        <label>รหัสนักศึกษา&nbsp;</label>
+                        <label>รหัสนักศึกษา</label>
                         <MDBInput
-                            background
+                            className="w-auto "
+                            size="sm"
                             type="text"
                             id="pass1"
                             name="pass1"
                             value={formData.pass1}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
-                        <label>เบอร์โทรติดต่อ&nbsp;</label>
+                        <label>เบอร์โทรติดต่อ</label>
                         <MDBInput
-                            background
+                            className="w-auto "
+                            size="sm"
                             id="number1"
                             name="number1"
                             type="text"
                             value={formData.number1}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
                     </div>
-                    <div className="input">
-                        <label>3. ชื่อ-สกุล&nbsp;</label>
+                    <div className="d-flex justify-content-evenly p-3">
+                        <label>2. ชื่อ-สกุล</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="name2"
                             id="name2"
                             type="text"
                             value={formData.name2}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
-                        <label>รหัสนักศึกษา&nbsp;</label>
+
+                        <label>รหัสนักศึกษา</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="pass2"
                             id="pass2"
                             type="text"
                             value={formData.pass2}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
-                        <label>เบอร์โทรติดต่อ&nbsp;</label>
+
+                        <label>เบอร์โทรติดต่อ</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="number2"
                             id="number2"
                             type="text"
                             value={formData.number2}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
                     </div>
-                    <div className="input">
-                        <label>4. ชื่อ-สกุล&nbsp;</label>
+                    <div className="d-flex justify-content-evenly p-3">
+                        <label>3. ชื่อ-สกุล</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="name3"
                             id="name3"
                             type="text"
                             value={formData.name3}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
-                        <label>รหัสนักศึกษา&nbsp;</label>
+
+                        <label>รหัสนักศึกษา</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="pass3"
                             id="pass3"
                             type="text"
                             value={formData.pass3}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
-                        <label>เบอร์โทรติดต่อ&nbsp;</label>
+
+                        <label>เบอร์โทรติดต่อ</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="number3"
                             id="number3"
                             type="text"
                             value={formData.number3}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
-                    </div>
-
-                    <div className="input">
-                        <label>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.
-                            เสนอหัวข้อโครงงาน&nbsp;
-                        </label>
-                        <MDBInput
-                            name="project"
-                            id="project"
-                            type="text1"
-                            value={formData.project}
-                            onChange={onFormDataChange}
-                        />
-                        &nbsp; &nbsp;
                     </div>
 
                     <div className="button">

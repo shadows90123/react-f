@@ -96,17 +96,41 @@ const Docx2 = ({ action }) => {
     return (
         <div>
             <HeaderStudent />
-            <div className="from">
-                <div className="frame-2">
-                    <div className="title"> กรอกเอกสาร ป.2</div>
-                    <div className="formcheck">
+            <div className="p-5">
+                <div
+                    className="container-xxl bg-white mt-2 rounded-4   "
+                    style={{
+                        border: "2px solid #7e0202 ",
+                    }}
+                >
+                    <div
+                        className="rounded-top p-3 m-4 text-white d-flex justify-content-center"
+                        style={{
+                            background: "#7e0202 ",
+                        }}
+                    >
+                        {" "}
+                        กรอกเอกสาร ป.2
+                    </div>
+                    <div className="d-flex justify-content-center col- p-3 ">
+                        <label className="p-1">เสนอหัวข้อโครงงาน</label>
+                        <MDBInput
+                            style={{ width: 500 }}
+                            size="sm"
+                            name="project"
+                            type="text"
+                            value={formData.project}
+                            onChange={onFormDataChange}
+                        />
+                    </div>
+                    <div className=" d-flex justify-content-evenly p-3  ">
                         <MDBCheckbox
                             name="checkGroup1"
                             value={formData.checkGroup1}
                             checked={formData.checkGroup1}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
-                            label="&nbsp;โยธา"
+                            label="โยธา"
                         />
                         <MDBCheckbox
                             name="checkGroup2"
@@ -114,7 +138,7 @@ const Docx2 = ({ action }) => {
                             checked={formData.checkGroup2}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
-                            label="&nbsp;อุสาหการ"
+                            label="อุสาหการ"
                         />
                         <MDBCheckbox
                             name="checkGroup3"
@@ -122,7 +146,7 @@ const Docx2 = ({ action }) => {
                             checked={formData.checkGroup3}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
-                            label="&nbsp;สิ่งเเวดล้อม"
+                            label="สิ่งเเวดล้อม"
                         />
                         <MDBCheckbox
                             name="checkGroup4"
@@ -130,7 +154,7 @@ const Docx2 = ({ action }) => {
                             checked={formData.checkGroup4}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
-                            label="&nbsp;คอมพิวเตอร์"
+                            label="คอมพิวเตอร์"
                         />
                         <MDBCheckbox
                             name="checkGroup5"
@@ -138,174 +162,168 @@ const Docx2 = ({ action }) => {
                             checked={formData.checkGroup5}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
-                            label="&nbsp;พลังงาน"
+                            label="พลังงาน"
                         />
                     </div>
 
-                    <div className="formcheck-1">
-                        <label>1.บัดนี้ ได้ดำเนินการจัดทำโครงงานวิศวกรรม</label>
-                        &nbsp;&nbsp;&nbsp;
+                    <div className=" d-flex justify-content-evenly p-3 ">
+                        <label>การจัดทำโครงงานวิศวกรรม</label>
                         <MDBCheckbox
                             name="checkGroup6"
                             value={formData.checkGroup6}
                             checked={formData.checkGroup6}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
-                            label="&nbsp;&nbsp;โครงงานฯ 1"
+                            label="โครงงานฯ 1"
                         />
-                        &nbsp;&nbsp;&nbsp;
                         <MDBCheckbox
                             name="checkGroup7"
                             value={formData.checkGroup7}
                             checked={formData.checkGroup7}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
-                            label="&nbsp;&nbsp;โครงงานฯ 2"
+                            label="โครงงานฯ 2"
                         />
-                        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-                        <label>2.มีความประสงค์ขอสอบ</label>
-                        &nbsp;&nbsp;&nbsp;
+                        <label>มีความประสงค์ขอสอบ</label>
                         <MDBCheckbox
                             name="checkGroup8"
                             value={formData.checkGroup8}
                             checked={formData.checkGroup8}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
-                            label="&nbsp;&nbsp;ความก้าวหน้า"
+                            label="ความก้าวหน้า"
                         />
-                        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
                         <MDBCheckbox
                             name="checkGroup9"
                             value={formData.checkGroup9}
                             checked={formData.checkGroup9}
                             onChange={onFormDataChange}
                             id="flexCheckDefault"
-                            label="&nbsp;&nbsp;ปริญญานิพนธ์ขั้นทุดท้าย"
+                            label="ปริญญานิพนธ์ขั้นทุดท้าย"
                         />
-                        &nbsp;&nbsp;&nbsp;
                     </div>
-                    <div className="input">
-                        <label>3. ชื่อ-สกุล&nbsp;</label>
+
+                    <div className="d-flex justify-content-evenly col- p-3">
+                        <label>1. ชื่อ-สกุล</label>
                         <MDBInput
-                            background
+                            className="w-auto "
+                            size="sm"
                             type="text"
                             id="name1"
                             name="name1"
                             value={formData.name1}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
-                        <label>รหัสนักศึกษา&nbsp;</label>
+                        <label>รหัสนักศึกษา</label>
                         <MDBInput
-                            background
+                            className="w-auto "
+                            size="sm"
                             type="text"
                             id="pass1"
                             name="pass1"
                             value={formData.pass1}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
-                        <label>เบอร์โทรติดต่อ&nbsp;</label>
+                        <label>เบอร์โทรติดต่อ</label>
                         <MDBInput
-                            background
+                            className="w-auto "
+                            size="sm"
                             id="number1"
                             name="number1"
                             type="text"
                             value={formData.number1}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
                     </div>
-                    <div className="input">
-                        <label>4. ชื่อ-สกุล&nbsp;</label>
+                    <div className="d-flex justify-content-evenly col- p-3">
+                        <label>2. ชื่อ-สกุล</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="name2"
                             id="name2"
                             type="text"
                             value={formData.name2}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
-                        <label>รหัสนักศึกษา&nbsp;</label>
+                        <label>รหัสนักศึกษา</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="pass2"
                             id="pass2"
                             type="text"
                             value={formData.pass2}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
-                        <label>เบอร์โทรติดต่อ&nbsp;</label>
+                        <label>เบอร์โทรติดต่อ</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="number2"
                             id="number2"
                             type="text"
                             value={formData.number2}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
                     </div>
-                    <div className="input">
-                        <label>5. ชื่อ-สกุล&nbsp;</label>
+                    <div className="d-flex justify-content-evenly col- p-3">
+                        <label>3. ชื่อ-สกุล</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="name3"
                             id="name3"
                             type="text"
                             value={formData.name3}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
-                        <label>รหัสนักศึกษา&nbsp;</label>
+                        <label>รหัสนักศึกษา</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="pass3"
                             id="pass3"
                             type="text"
                             value={formData.pass3}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
-                        <label>เบอร์โทรติดต่อ&nbsp;</label>
+                        <label>เบอร์โทรติดต่อ</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="number3"
                             id="number3"
                             type="text"
                             value={formData.number3}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;
                     </div>
 
-                    <div className="input">
-                        <label>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.
-                            เสนอหัวข้อโครงงาน&nbsp;
-                        </label>
+                    <div className="d-flex justify-content-evenly col- p-3">
+                        <label>4.ลงชื่อนักศึกษา</label>
                         <MDBInput
-                            name="project"
-                            type="text"
-                            value={formData.project}
-                            onChange={onFormDataChange}
-                        />
-                        &nbsp; &nbsp;
-                    </div>
-                    <div className="input">
-                        <label>7.ลงชื่อนักศึกษา</label>
-                        <MDBInput
+                            className="w-auto "
+                            size="sm"
                             name="student"
                             type="text"
                             value={formData.student}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;<label>ภาคเรียนที่ &nbsp;</label>
+                        <label>ภาคเรียนที่ </label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             background
                             type="text"
                             name="sec"
                             value={formData.sec}
                             onChange={onFormDataChange}
                         />
-                        &nbsp;<label>ปีการศึกษา &nbsp;</label>
+                        <label>ปีการศึกษา</label>
                         <MDBInput
+                            className="w-auto "
+                            size="sm"
                             background
                             type="text"
                             name="year"
