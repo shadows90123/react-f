@@ -18,7 +18,7 @@ const BranchPresidentHome = () => {
                                 className="color"
                             >
                                 <Link
-                                    to="/"
+                                    to="/DocumentBranch"
                                     className="text-white text-decoration-none"
                                 >
                                     ข้อมูลกรอกเอกสารของนักศึกษาทั้งหมด
@@ -30,7 +30,7 @@ const BranchPresidentHome = () => {
                                 className="color"
                             >
                                 <Link
-                                    to="/"
+                                    to="/TableStudent"
                                     className="text-white text-decoration-none"
                                 >
                                     ตรวจสอบสิทธิ์เข้าสอบ

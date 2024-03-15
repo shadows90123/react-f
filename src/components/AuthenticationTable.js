@@ -1,12 +1,21 @@
-import Header from "./Header";
+import HeaderBP from "../components/Student/Header";
 import "./Table.css";
 
 const AuthenticationTable = () => {
     return (
         <div>
             <Header />
-            <div className="header-table">
-                <div className="table-1">
+            <div className="header-table  ">
+                <div className="table-1 mb-2">
+                    <div
+                        className="text-white d-flex justify-content-center container p-2 m-2  rounded-top"
+                        style={{
+                            background: "#7e0202 ",
+                        }}
+                    >
+                        {" "}
+                        นักศึกษาโครงงาน 1
+                    </div>
                     <div className="customers">
                         <table>
                             <thead>
@@ -34,7 +43,16 @@ const AuthenticationTable = () => {
                 </div>
             </div>
             <div className="header-table">
-                <div className="table-1">
+                <div className="table-1 mb-2">
+                    <div
+                        className="text-white d-flex justify-content-center container p-2 m-2  rounded-top"
+                        style={{
+                            background: "#7e0202 ",
+                        }}
+                    >
+                        {" "}
+                        นักศึกษาโครงงาน 2
+                    </div>
                     <div className="customers">
                         <table>
                             <thead>
@@ -62,8 +80,17 @@ const AuthenticationTable = () => {
                 </div>
             </div>
             <div className="header-table">
-                <div className="table-1">
-                    <div className="customers">
+                <div className="table-1 mb-2">
+                    <div
+                        className="text-white d-flex justify-content-center container p-2 m-2  rounded-top "
+                        style={{
+                            background: "#7e0202 ",
+                        }}
+                    >
+                        {" "}
+                        กรอกเอกสารป.3
+                    </div>
+                    <div className="customers ">
                         <table>
                             <thead>
                                 <tr>

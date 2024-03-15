@@ -2,6 +2,7 @@ import Button from "react-bootstrap/Button";
 import { IoIosLogOut } from "react-icons/io";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { logOut } from "../../libs/Firebase";
 
 const Header = () => {
     return (
