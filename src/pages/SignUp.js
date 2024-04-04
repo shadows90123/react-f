@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import { registerWithPassword } from "../libs/Firebase";
+
 import {
     MDBContainer,
     MDBRow,
@@ -9,9 +13,6 @@ import {
     MDBInput,
     MDBRadio,
 } from "mdb-react-ui-kit";
-import Button from "react-bootstrap/Button";
-import { db, registerWithPassword } from "../libs/Firebase";
-import { doc, setDoc } from "firebase/firestore";
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -22,20 +23,16 @@ const SignUp = () => {
     const onSignUp = async (e) => {
         e.preventDefault();
         if (email === "" && password === "") {
-            alert("กรอกข้อมูลให้ครบ");
+            toast.error("เกิดข้อผิดพลาด: กรอกข้อมูลให้ครบ");
             return;
         }
-        const user = await registerWithPassword(email, password);
+        const isRegister = await registerWithPassword(email, password, role);
 
-        if (user?.uid) {
-            await setDoc(doc(db, "users", user.uid), {
-                email: user.email,
-                name: user.displayName,
-                user_type: role,
-            });
+        if (isRegister) {
+            toast.success("สมัครสำเร็จ");
             navigate("/");
         } else {
-            alert("Sign Up Failed!");
+            toast.error("เกิดข้อผิดพลาด: สมัครไม่สำเร็จ");
         }
     };
     return (

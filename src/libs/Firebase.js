@@ -8,13 +8,13 @@ import {
 import {
     getFirestore,
     collection,
+    setDoc,
     addDoc,
-    query,
-    where,
     getDocs,
     getDoc,
     doc,
     updateDoc,
+    deleteDoc,
 } from "firebase/firestore";
 
 import {
@@ -33,13 +33,18 @@ const firebaseConfig = {
     appId: "1:37794414436:web:53b4ca53acb3bfad308471",
 };
 
-// Initialize Firebase
+//////////////////////////////////////////////////////////
+///////           Initialize Firebase
+//////////////////////////////////////////////////////////
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
-// Authentication
+//////////////////////////////////////////////////////////
+///////                    Auth
+//////////////////////////////////////////////////////////
+
 export const logOut = async () => {
     signOut(auth);
 };
@@ -47,7 +52,6 @@ export const logOut = async () => {
 export const loginWithPassword = async (email, password) => {
     return await signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            // Signed in
             const user = userCredential.user;
             return user;
         })
@@ -56,228 +60,82 @@ export const loginWithPassword = async (email, password) => {
         });
 };
 
-export const registerWithPassword = async (email, password) => {
-    return await createUserWithEmailAndPassword(auth, email, password)
-        .then(async (userCredential) => {
-            const user = userCredential.user;
-            return user;
-        })
-        .catch((error) => {
-            console.error(error);
+export const registerWithPassword = async (email, password, role) => {
+    try {
+        const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+        const user = userCredential.user;
+        await setDoc(doc(db, "users", user.uid), {
+            email: user.email,
+            name: user.displayName,
+            user_type: role,
         });
-};
-
-// New FireStore
-export const addNewDocument = async (collect, data) => {
-    try {
-        const docRef = await addDoc(collection(db, collect), data);
-        return docRef;
+        return true;
     } catch (error) {
         console.error(error);
-        return null;
+        return false;
     }
 };
 
-export const updateDocumentById = async (collect, { id, data }) => {
+//////////////////////////////////////////////////////////
+///////                     V2
+//////////////////////////////////////////////////////////
+
+export const GetDocument = async (collect, document) => {
     try {
-        const updatedRef = await updateDoc(doc(db, collect, id), data);
-        return updatedRef;
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
-};
-
-// FireStore
-
-export const getUserByRole = async (role) => {
-    const q = query(collection(db, "users"), where("user_type", "==", role));
-
-    const querySnapshot = await getDocs(q);
-
-    const data = {};
-    querySnapshot.forEach((doc) => {
-        data[doc.id] = doc.data();
-    });
-    return data;
-};
-
-export const createDocument = async (uid, docType, data) => {
-    try {
-        const docRef = await addDoc(collection(db, `documents`), data);
-        await addDoc(collection(db, `document_lists`), {
-            student_uid: uid,
-            doc_type: docType,
-            doc_id: docRef.id,
-            request_state: false,
-            verify_state: false,
-            created_at: new Date(),
-            updated_at: new Date(),
-        });
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-export const updateDocument = async (id, data) => {
-    try {
-        await updateDoc(doc(db, "documents", id), data);
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-export const getDocumentById = async (collect, id) => {
-    try {
-        const docRef = doc(db, collect, id);
+        const docRef = doc(db, collect, document);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
             return docSnap.data();
         } else {
-            return null;
+            console.log("No such document!");
+            return undefined;
         }
     } catch (error) {
         console.error(error);
-        return null;
     }
 };
 
-export const getDocumentByUserId = async (uid, docType) => {
+export const GetAllDocument = async (collect) => {
     try {
-        const q = query(
-            collection(db, "document_lists"),
-            where("student_uid", "==", uid),
-            where("doc_type", "==", docType)
-        );
-
-        const querySnapshot = await getDocs(q);
-        let docId;
-        let listId;
+        const querySnapshot = await getDocs(collection(db, collect));
+        const retData = {};
         querySnapshot.forEach((doc) => {
-            docId = doc.data()?.doc_id;
-            listId = doc.id;
+            retData[doc.id] = doc.data();
         });
-
-        if (docId) {
-            const docRef = doc(db, "documents", docId);
-            const docSnap = await getDoc(docRef);
-
-            if (docSnap.exists()) {
-                return [listId, docSnap.id, docSnap.data()];
-            } else {
-                console.log("No such document!");
-            }
-        }
-        return [null, null, null];
+        return retData;
     } catch (error) {
         console.error(error);
-        return [null, null, null];
     }
 };
 
-export const getTeachers = async () => {
-    const q = query(
-        collection(db, "users"),
-        where("user_type", "==", "teacher")
-    );
-    const teachers = {};
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-        teachers[doc.id] = doc.data();
-    });
-    return teachers;
-};
-
-export const createRequestSig = async (uid, docType, docId, tid) => {
+export const AddDocument = async (collect, data) => {
     try {
-        // const docRef = await addDoc(collection(db, `document_request`), data);
-        await addDoc(collection(db, `document_request`), {
-            student_uid: uid,
-            doc_type: docType,
-            doc_id: docId,
-            teacher_id: tid,
-            verify_state: false,
-            created_at: new Date(),
-            updated_at: new Date(),
-            signature: null,
-        });
+        const docRef = await addDoc(collection(db, collect), data);
+        return docRef;
     } catch (error) {
         console.error(error);
     }
 };
 
-export const getDocReq = async (uid, docType, docId) => {
-    const q = query(
-        collection(db, "document_request"),
-        where("student_uid", "==", uid),
-        where("doc_type", "==", docType),
-        where("doc_id", "==", docId)
-    );
-
-    const querySnapshot = await getDocs(q);
-
-    const data = {};
-    querySnapshot.forEach((doc) => {
-        data[doc.id] = doc.data();
-    });
-
-    return data;
-};
-export const getSignatureById = async (docId) => {
-    const q = query(
-        collection(db, "document_request"),
-        where("doc_id", "==", docId)
-    );
-
-    const querySnapshot = await getDocs(q);
-
-    let data = null;
-    querySnapshot.forEach((doc) => {
-        // data[doc.id] = doc.data();
-        data = doc.data().signature;
-    });
-
-    return data;
-};
-
-export const getTeacherDocReq = async (uid, docType) => {
-    const q = query(
-        collection(db, "document_request"),
-        where("teacher_id", "==", uid),
-        where("doc_type", "==", docType),
-        where("verify_state", "==", false)
-    );
-
-    const querySnapshot = await getDocs(q);
-
-    const data = {};
-    querySnapshot.forEach((doc) => {
-        data[doc.id] = doc.data();
-    });
-
-    return data;
-};
-
-export const getStudentById = async (uid) => {
-    const docRef = doc(db, "users", uid);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-        return docSnap.data();
-    } else {
-        // docSnap.data() will be undefined in this case
-        return null;
+export const UpdateDocument = async (collect, document, data) => {
+    try {
+        await updateDoc(doc(db, collect, document), data);
+    } catch (error) {
+        console.error(error);
     }
 };
 
-// Storage
-export const uploadToStorage = async (data) => {
-    const name = `sig_${Date.now()}`;
-    const storageRef = ref(storage, `signatures/${name}.png`);
-
-    const uploaded = await uploadString(storageRef, data, "data_url");
-    return uploaded;
+export const DeleteDocument = async (collect, document, data) => {
+    try {
+        await deleteDoc(doc(db, collect, document));
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const getFromStorage = async (path) => {
@@ -286,9 +144,67 @@ export const getFromStorage = async (path) => {
             return url;
         })
         .catch((error) => {
-            // Handle any errors
+            console.error(error);
+            return null;
         });
 
     return url;
 };
-// https://firebasestorage.googleapis.com/v0/b/react-f-b9ab0.appspot.com/o/signatures%2Fsig_1708966466746?alt=media&token=8059544b-3ea4-4254-9f2b-dafced3d1bde
+
+//////////////////////////////////////////////////////////
+///////                     Form
+//////////////////////////////////////////////////////////
+
+export const CreateDocForm = async (_config, _user, formData) => {
+    return await AddDocument("documents", {
+        created_at: new Date().toJSON(),
+        updated_at: new Date().toJSON(),
+        project_type: _config?.project,
+        doc_type: _config?.doc,
+        doc_form: formData,
+        owner_id: _user.uid,
+        approved: {
+            teacher: {
+                state: "unsubmitted",
+                created_at: new Date().toJSON(),
+                updated_at: new Date().toJSON(),
+            },
+            president: {
+                state: "unsubmitted",
+                created_at: new Date().toJSON(),
+                updated_at: new Date().toJSON(),
+            },
+        },
+        signatured: "",
+    });
+};
+
+export const EditDocForm = async (docId, formData) => {
+    await UpdateDocument("documents", docId, {
+        doc_form: formData,
+        updated_at: new Date().toJSON(),
+    });
+};
+
+export const ApproveDocForm = async (docId, teacher_id) => {
+    await UpdateDocument("documents", docId, {
+        updated_at: new Date().toJSON(),
+        "approved.teacher.state": "submitted",
+        "approved.teacher.teacher_id": teacher_id,
+        "approved.teacher.created_at": new Date().toJSON(),
+        "approved.teacher.updated_at": new Date().toJSON(),
+    });
+};
+
+export const SignatureForm = async (docId, data) => {
+    const storageRef = ref(storage, `signatures/sig_${Date.now()}.png`);
+    const uploaded = await uploadString(storageRef, data, "data_url");
+
+    await UpdateDocument("documents", docId, {
+        updated_at: new Date().toJSON(),
+        signatured: uploaded.metadata.fullPath,
+        "approved.teacher.state": "approved",
+        "approved.teacher.updated_at": new Date().toJSON(),
+    });
+    return uploaded.metadata.fullPath;
+};

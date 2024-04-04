@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import _ from "lodash";
+import Skeleton from "react-loading-skeleton";
+import { auth, loginWithPassword, GetDocument } from "../libs/Firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Button from "react-bootstrap/Button";
+
 import {
     MDBContainer,
     MDBRow,
@@ -9,12 +16,6 @@ import {
     MDBInput,
     MDBCheckbox,
 } from "mdb-react-ui-kit";
-
-import { auth, db, loginWithPassword } from "../libs/Firebase";
-import { doc, getDoc } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
-import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
 
 const Login = () => {
     const [user, loading] = useAuthState(auth);
@@ -28,39 +29,28 @@ const Login = () => {
         const success = await loginWithPassword(email, password);
 
         if (success) {
-            // navigate("/");
-            if (user) {
-                // navigate
-                const docRef = doc(db, "users", user.uid);
-                const docSnap = await getDoc(docRef);
-                const data = docSnap.exists() ? docSnap.data() : null;
-
-                if (data) {
-                    navigate(`/${data.user_type}`);
-                }
+            if (!_.isEmpty(user)) {
+                const userRef = await GetDocument("users", user?.uid);
+                navigate(`/${userRef.user_type}`);
             }
         } else {
-            alert("Login Failed!");
+            toast.error(`เกิดข้อผิดพลาด : เข้าสู่ระบบไม่สำเร็จ`);
         }
     };
 
     useEffect(() => {
-        const getUserData = async (uid) => {
-            const docRef = doc(db, "users", uid);
-            const docSnap = await getDoc(docRef);
-            return docSnap.exists() ? docSnap.data() : null;
-        };
+        if (!_.isEmpty(user)) {
+            const getUserData = async (uid) => {
+                const userRef = await GetDocument("users", uid);
+                navigate(`/${userRef.user_type}`);
+            };
 
-        if (user) {
-            // navigate
-            getUserData(user.uid).then((res) => {
-                navigate(`/${res.user_type}`);
-            });
+            getUserData(user?.uid);
         }
     }, [user]);
 
     if (loading) {
-        return <p>loading login</p>;
+        return <Skeleton />;
     }
 
     return (

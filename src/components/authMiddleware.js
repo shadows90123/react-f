@@ -1,53 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { auth, db } from "../libs/Firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import { auth, GetDocument } from "../libs/Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
-import { Oval } from "react-loader-spinner";
+import { useNavigate, useLocation } from "react-router-dom";
+import _ from "lodash";
+
+import Skeleton from "react-loading-skeleton";
+import NotFound from "../components/V2/NotFound";
 
 export const authMiddleware = (allowedRoles) => (Component) => {
     const AuthComponent = (props) => {
         const navigate = useNavigate();
+        const location = useLocation();
         const [user, loading] = useAuthState(auth);
-        const [isAuthenticated, setIsAuthenticated] = useState(false);
         const [userRole, setUserRole] = useState(null);
 
         useEffect(() => {
             const getUserData = async (uid) => {
-                const docRef = doc(db, "users", uid);
-                const docSnap = await getDoc(docRef);
-                return docSnap.exists() ? docSnap.data() : null;
+                const userRef = await GetDocument("users", uid);
+                return userRef;
             };
 
-            if (user) {
-                setIsAuthenticated(true);
-                getUserData(user.uid).then((res) => {
-                    setUserRole(res.user_type);
-                });
-            } else {
-                setIsAuthenticated(false);
-                navigate("/");
+            if (!loading) {
+                if (!_.isEmpty(user)) {
+                    getUserData(user.uid).then((res) => {
+                        setUserRole(res.user_type);
+                        if (location.pathname === "/") {
+                            navigate(`/${res.user_type}`);
+                        }
+                    });
+                } else {
+                    navigate("/login");
+                }
             }
-        }, [user]);
+        }, [user, loading]);
 
         if (loading) {
-            return (
-                <Oval
-                    visible={true}
-                    height="80"
-                    width="80"
-                    color="#4fa94d"
-                    ariaLabel="oval-loading"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                />
-            );
+            return <Skeleton />;
         }
 
-        // if (!isAuthenticated) return navigate("/");
-
-        if (userRole && !allowedRoles.includes(userRole))
-            return <>404 NOT FOUND</>;
+        if (userRole && !allowedRoles.includes(userRole)) return <NotFound />;
 
         return <Component {...props} />;
     };
