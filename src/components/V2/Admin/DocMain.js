@@ -2,18 +2,17 @@ import _ from "lodash";
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useLocation } from "react-router-dom";
-import { Tabs, Tab, Card, Row } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
-
 import { auth, GetAllDocument } from "../../../libs/Firebase";
+
 import {
-    getCurrentDocs,
     getPageType,
     getMainPathText,
     getSubPathText,
 } from "../../../libs/coreFunc";
-import TableCurrent from "./TableCurrent";
-import TableHistory from "./TableHistory";
+import TableData from "./TableData";
+
+import { Tabs, Tab, Card, Row } from "react-bootstrap";
 
 export default function Main() {
     let location = useLocation();
@@ -21,8 +20,8 @@ export default function Main() {
     const [isReloadPage, setIsReloadPage] = useState(false);
 
     // Project & Document Type
-    const [projectType, setProjectType] = useState("");
-    const [docType, setDocType] = useState("");
+    const [projectType, setProjectType] = useState(null);
+    const [docType, setDocType] = useState(null);
 
     // Project & Document Text
     const [projectText, setProjectText] = useState("");
@@ -31,30 +30,16 @@ export default function Main() {
     const [docs, setDocs] = useState({});
 
     const [elReqTable, setElReqTable] = useState(<></>);
-    const [elHisTable, setElHisTable] = useState(<></>);
 
     const onReloadPage = () => {
         setIsReloadPage(true);
     };
 
     useEffect(() => {
-        if (projectType !== "" && docType !== "") {
-            const { reqDocs, hisDocs } = getCurrentDocs(docs, "teacher");
-
+        if (projectType && docType) {
             setElReqTable(
-                <TableCurrent
-                    _docs={reqDocs}
-                    _meta={{
-                        projectType,
-                        docType,
-                    }}
-                    _onReloadPage={onReloadPage}
-                />
-            );
-
-            setElHisTable(
-                <TableHistory
-                    _docs={hisDocs}
+                <TableData
+                    _docs={docs}
                     _meta={{
                         projectType,
                         docType,
@@ -71,8 +56,8 @@ export default function Main() {
         setDocType(document);
 
         if (project && document) {
-            setProjectText(getMainPathText(project, "teacher"));
-            setDocText(getSubPathText(project, document, "teacher"));
+            setProjectText(getMainPathText(project, "admin"));
+            setDocText(getSubPathText(project, document, "admin"));
         }
 
         if (!_.isEmpty(user)) {
@@ -83,21 +68,18 @@ export default function Main() {
 
                 _.keys(docsRef).map(async (key) => {
                     const doc = docsRef[key];
-                    const isRole =
-                        doc.approved["teacher"]?.teacher_id === user?.uid ??
-                        false;
+
                     const isType =
                         doc.project_type === project &&
                         doc.doc_type === document;
 
-                    if (isRole && isType) {
+                    if (isType) {
                         _docs = { ..._docs, [key]: doc };
                     }
                 });
 
                 setDocs(_docs);
                 setElReqTable(<></>);
-                setElHisTable(<></>);
                 setIsReloadPage(false);
             };
 
@@ -114,14 +96,11 @@ export default function Main() {
                 <Row className="mb-2">
                     <Tabs
                         defaultActiveKey="request"
-                        id="document-1 -tab"
+                        id="document-1-tab"
                         className="mb-3"
                     >
                         <Tab eventKey="request" title="ตารางโครงการ">
                             {elReqTable}
-                        </Tab>
-                        <Tab eventKey="history" title="ประวัติ">
-                            {elHisTable}
                         </Tab>
                     </Tabs>
                 </Row>

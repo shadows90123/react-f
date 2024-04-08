@@ -2,10 +2,9 @@ import _ from "lodash";
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useLocation } from "react-router-dom";
-import { Tabs, Tab, Card, Row } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
-
 import { auth, GetAllDocument } from "../../../libs/Firebase";
+
 import {
     getCurrentDocs,
     getPageType,
@@ -15,14 +14,16 @@ import {
 import TableCurrent from "./TableCurrent";
 import TableHistory from "./TableHistory";
 
+import { Tabs, Tab, Card, Row } from "react-bootstrap";
+
 export default function Main() {
     let location = useLocation();
     const [user] = useAuthState(auth);
     const [isReloadPage, setIsReloadPage] = useState(false);
 
     // Project & Document Type
-    const [projectType, setProjectType] = useState("");
-    const [docType, setDocType] = useState("");
+    const [projectType, setProjectType] = useState(null);
+    const [docType, setDocType] = useState(null);
 
     // Project & Document Text
     const [projectText, setProjectText] = useState("");
@@ -38,8 +39,8 @@ export default function Main() {
     };
 
     useEffect(() => {
-        if (projectType !== "" && docType !== "") {
-            const { reqDocs, hisDocs } = getCurrentDocs(docs, "teacher");
+        if (projectType && docType) {
+            const { reqDocs, hisDocs } = getCurrentDocs(docs, "president");
 
             setElReqTable(
                 <TableCurrent
@@ -51,7 +52,6 @@ export default function Main() {
                     _onReloadPage={onReloadPage}
                 />
             );
-
             setElHisTable(
                 <TableHistory
                     _docs={hisDocs}
@@ -71,8 +71,8 @@ export default function Main() {
         setDocType(document);
 
         if (project && document) {
-            setProjectText(getMainPathText(project, "teacher"));
-            setDocText(getSubPathText(project, document, "teacher"));
+            setProjectText(getMainPathText(project, "president"));
+            setDocText(getSubPathText(project, document, "president"));
         }
 
         if (!_.isEmpty(user)) {
@@ -83,14 +83,12 @@ export default function Main() {
 
                 _.keys(docsRef).map(async (key) => {
                     const doc = docsRef[key];
-                    const isRole =
-                        doc.approved["teacher"]?.teacher_id === user?.uid ??
-                        false;
+
                     const isType =
                         doc.project_type === project &&
                         doc.doc_type === document;
 
-                    if (isRole && isType) {
+                    if (isType) {
                         _docs = { ..._docs, [key]: doc };
                     }
                 });
@@ -103,7 +101,7 @@ export default function Main() {
 
             fetchAll(project, document);
         }
-    }, [user, location.pathname, isReloadPage]);
+    }, [user, location.pathname]);
 
     if (isReloadPage) return <Skeleton />;
 
@@ -114,7 +112,7 @@ export default function Main() {
                 <Row className="mb-2">
                     <Tabs
                         defaultActiveKey="request"
-                        id="document-1 -tab"
+                        id="document-1-tab"
                         className="mb-3"
                     >
                         <Tab eventKey="request" title="ตารางโครงการ">

@@ -5,10 +5,9 @@ import _ from "lodash";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-import GenerateDoc from "../../../libs/pdf";
-import { getFromStorage } from "../../../libs/Firebase";
+import { DeleteDocument } from "../../../libs/Firebase";
 
-export default function DownloadButton({ disabled, docMeta }) {
+export default function DeleteButton({ disabled, docs, onReloadPage }) {
     const [modalShow, setModalShow] = useState(false);
     const [_docs, setDocs] = useState({});
 
@@ -16,7 +15,6 @@ export default function DownloadButton({ disabled, docMeta }) {
         e.preventDefault();
 
         const docId = _.keys(_docs)[0] ?? false;
-        const docVal = _.values(_docs)[0];
 
         if (!docId) {
             toast.error("เกิดข้อผิดพลาด: ไม่พบข้อมูลเอกสาร");
@@ -24,14 +22,11 @@ export default function DownloadButton({ disabled, docMeta }) {
         }
 
         try {
-            const sigUrl = await getFromStorage(docVal.signatured);
+            await DeleteDocument("documents", docId);
 
-            GenerateDoc({
-                data: docVal,
-                sigUrl: sigUrl,
-                fileName: `project${docVal.project_type}_document${docVal.doc_type}`,
-            });
+            toast.success("ลบเอกสารสำเร็จ");
             onHide();
+            onReloadPage();
         } catch (error) {
             toast.error(`เกิดข้อผิดพลาด : ${error.message}`);
         }
@@ -42,37 +37,37 @@ export default function DownloadButton({ disabled, docMeta }) {
     };
 
     useEffect(() => {
-        if (!_.isEmpty(docMeta)) {
-            setDocs(docMeta);
+        if (!_.isEmpty(docs)) {
+            setDocs(docs);
         }
-    }, [docMeta]);
+    }, [docs]);
 
     return (
         <>
             <Button
-                variant="primary"
+                variant="danger"
                 className="m-1"
                 onClick={() => setModalShow(true)}
                 disabled={!disabled}
             >
-                โหลดเอกสาร
+                ลบเอกสาร
             </Button>
             <Modal
                 onHide={onHide}
                 show={modalShow}
                 size="md"
-                aria-labelledby="contained-modal-document1-download"
+                aria-labelledby="contained-modal-document1-delete"
                 centered
             >
                 <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-document1-download">
-                        โหลดเอกสาร ป.1
+                    <Modal.Title id="contained-modal-document1-delete">
+                        ลบเอกสาร
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>โหลดเอกสาร ป.1</Modal.Body>
+                <Modal.Body>ยืนยันการลบเอกสาร</Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" type="submit" onClick={onSubmit}>
-                        โหลด
+                        ลบ
                     </Button>
                     <Button variant="secondary" onClick={onHide}>
                         ปิด

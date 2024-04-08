@@ -36,6 +36,7 @@ const firebaseConfig = {
 //////////////////////////////////////////////////////////
 ///////           Initialize Firebase
 //////////////////////////////////////////////////////////
+
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const db = getFirestore(app);
@@ -60,7 +61,14 @@ export const loginWithPassword = async (email, password) => {
         });
 };
 
-export const registerWithPassword = async (email, password, role) => {
+export const registerWithPassword = async ({
+    name,
+    studentId,
+    tel,
+    email,
+    password,
+    role,
+}) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(
             auth,
@@ -68,10 +76,15 @@ export const registerWithPassword = async (email, password, role) => {
             password
         );
         const user = userCredential.user;
+
         await setDoc(doc(db, "users", user.uid), {
             email: user.email,
-            name: user.displayName,
-            user_type: role,
+            role,
+            name,
+            studentId,
+            tel,
+            created_at: new Date().toJSON(),
+            updated_at: new Date().toJSON(),
         });
         return true;
     } catch (error) {
@@ -205,6 +218,17 @@ export const SignatureForm = async (docId, data) => {
         signatured: uploaded.metadata.fullPath,
         "approved.teacher.state": "approved",
         "approved.teacher.updated_at": new Date().toJSON(),
+        "approved.president.state": "submitted",
+        "approved.president.created_at": new Date().toJSON(),
+        "approved.president.updated_at": new Date().toJSON(),
     });
     return uploaded.metadata.fullPath;
+};
+
+export const PresidentApproveForm = async (docId, state) => {
+    await UpdateDocument("documents", docId, {
+        updated_at: new Date().toJSON(),
+        "approved.president.state": state,
+        "approved.president.updated_at": new Date().toJSON(),
+    });
 };

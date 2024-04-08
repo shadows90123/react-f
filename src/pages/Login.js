@@ -1,37 +1,43 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import _ from "lodash";
 import Skeleton from "react-loading-skeleton";
 import { auth, loginWithPassword, GetDocument } from "../libs/Firebase";
+import { useUserData } from "../hooks/useUserData";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Button from "react-bootstrap/Button";
-
-import {
-    MDBContainer,
-    MDBRow,
-    MDBCol,
-    MDBCard,
-    MDBCardBody,
-    MDBInput,
-    MDBCheckbox,
-} from "mdb-react-ui-kit";
 
 const Login = () => {
-    const [user, loading] = useAuthState(auth);
-
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [user, loading] = useAuthState(auth);
+    const [userData] = useUserData();
+
+    const [form, setForm] = useState({});
+
+    const onChange = (e) => {
+        const { name, value, type } = e.target;
+        setForm((prev) => {
+            return {
+                ...prev,
+                [name]: type === "checkbox" ? !form[name] : value,
+            };
+        });
+    };
+
+    const onForgotPass = () => {};
+
+    const onRegister = () => {
+        navigate(`/register`);
+    };
 
     const onLogin = async (e) => {
         e.preventDefault();
-        const success = await loginWithPassword(email, password);
+        const success = await loginWithPassword(form?.email, form?.password);
 
         if (success) {
             if (!_.isEmpty(user)) {
                 const userRef = await GetDocument("users", user?.uid);
-                navigate(`/${userRef.user_type}`);
+                navigate(`/${userRef.role}`);
             }
         } else {
             toast.error(`เกิดข้อผิดพลาด : เข้าสู่ระบบไม่สำเร็จ`);
@@ -39,85 +45,110 @@ const Login = () => {
     };
 
     useEffect(() => {
-        if (!_.isEmpty(user)) {
-            const getUserData = async (uid) => {
-                const userRef = await GetDocument("users", uid);
-                navigate(`/${userRef.user_type}`);
-            };
-
-            getUserData(user?.uid);
+        if (!_.isEmpty(userData)) {
+            navigate(`/${userData.role}`);
         }
-    }, [user]);
+    }, [userData]);
 
     if (loading) {
         return <Skeleton />;
     }
 
     return (
-        <div>
-            <MDBContainer fluid>
-                <MDBRow className="d-flex justify-content-center align-items-center h-100">
-                    <MDBCol col="12">
-                        <MDBCard
-                            className="bg-white my-5 mx-auto"
-                            style={{ borderRadius: "1rem", maxWidth: "500px" }}
-                        >
-                            <MDBCardBody className="p-5 w-100 d-flex flex-column">
-                                <h2 className="fw-bold mb-2 text-center">
-                                    Sign in
-                                </h2>
-                                <p className="text-black-50 mb-3">
-                                    Please enter your login and password!
-                                </p>
-                                <MDBInput
-                                    wrapperClass="mb-4 w-100"
-                                    label="Email address"
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    name="email"
-                                    type="email"
-                                    size="lg"
-                                />
-                                <MDBInput
-                                    wrapperClass="mb-4 w-100"
-                                    label="Password"
-                                    onChange={(e) =>
-                                        setPassword(e.target.value)
-                                    }
-                                    name="password"
-                                    type="password"
-                                    size="lg"
-                                />
-                                <MDBCheckbox
-                                    name="flexCheck"
-                                    className="mb-4"
-                                    label="Remember password"
-                                />
-                                <Button
-                                    variant="primary"
-                                    className="mb-2 w-100"
-                                    size="lg"
-                                    onClick={onLogin}
-                                >
-                                    Login
-                                </Button>{" "}
-                                <hr className="my-2" />
-                                <Button
-                                    variant="danger"
-                                    className="mb-2 w-100 "
-                                    size="lg"
-                                >
-                                    <Link
-                                        to="register"
-                                        className="text-white text-decoration-none"
-                                    >
-                                        Register
-                                    </Link>
-                                </Button>{" "}
-                            </MDBCardBody>
-                        </MDBCard>
-                    </MDBCol>
-                </MDBRow>
-            </MDBContainer>
+        <div className="bg-light py-3 py-md-5">
+            <div className="container">
+                <div className="row justify-content-md-center">
+                    <div className="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
+                        <div className="bg-white p-4 p-md-5 rounded shadow-sm">
+                            <div className="row">
+                                <div className="col-12">
+                                    <div className="mb-5">
+                                        <h3>เข้าสู่ระบบ</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <form action="#!">
+                                <div className="row gy-3 gy-md-4 overflow-hidden">
+                                    <div className="col-12">
+                                        <label
+                                            for="email"
+                                            className="form-label"
+                                        >
+                                            อีเมล{" "}
+                                            <span className="text-danger">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input
+                                            type="email"
+                                            className="form-control"
+                                            onChange={onChange}
+                                            value={form["email"] ?? ""}
+                                            name="email"
+                                            id="email"
+                                            placeholder="name@example.com"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="col-12">
+                                        <label
+                                            for="password"
+                                            className="form-label"
+                                        >
+                                            รหัสผ่าน{" "}
+                                            <span className="text-danger">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            onChange={onChange}
+                                            value={form["password"] ?? ""}
+                                            name="password"
+                                            id="password"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="col-12">
+                                        <div className="d-grid">
+                                            <button
+                                                className="btn btn-lg btn-primary"
+                                                type="submit"
+                                                onClick={onLogin}
+                                            >
+                                                เข้าสู่ระบบ
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div className="row">
+                                <div className="col-12">
+                                    <hr className="mt-5 mb-4 border-secondary-subtle" />
+                                    <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
+                                        <a
+                                            href="#"
+                                            className="link-secondary text-decoration-none"
+                                            onClick={onRegister}
+                                        >
+                                            สร้างบัญชีใหม่
+                                        </a>
+                                        <a
+                                            href="#"
+                                            className="link-secondary text-decoration-none"
+                                            onClick={onForgotPass}
+                                        >
+                                            ลืมรหัสผ่าน
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

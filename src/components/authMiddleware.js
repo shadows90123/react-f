@@ -23,9 +23,14 @@ export const authMiddleware = (allowedRoles) => (Component) => {
             if (!loading) {
                 if (!_.isEmpty(user)) {
                     getUserData(user.uid).then((res) => {
-                        setUserRole(res.user_type);
-                        if (location.pathname === "/") {
-                            navigate(`/${res.user_type}`);
+                        const role = res.role;
+                        const pathname = location.pathname;
+
+                        setUserRole(role);
+                        if (pathname === "/") {
+                            navigate(`/${role}`);
+                        } else if (!pathname.includes(role)) {
+                            navigate(`/${role}`);
                         }
                     });
                 } else {

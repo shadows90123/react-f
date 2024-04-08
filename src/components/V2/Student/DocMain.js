@@ -1,25 +1,24 @@
+import _ from "lodash";
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useLocation } from "react-router-dom";
+import { Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
-import _ from "lodash";
-import { auth, GetAllDocument } from "../../../libs/Firebase";
 
 import {
     getPageType,
     getMainPathText,
     getSubPathText,
-} from "../../../libs/StringParser";
-
-import { Card } from "react-bootstrap";
+} from "../../../libs/coreFunc";
+import { auth, GetAllDocument } from "../../../libs/Firebase";
 
 import DocState from "./DocState";
 import DocManage from "./DocManage";
 
-import Document1 from "../Form.Student/Document1";
-import Document2 from "../Form.Student/Document2";
-import Document3 from "../Form.Student/Document3";
-import Document4 from "../Form.Student/Document4";
+import Document1 from "../Form.Share/Document1";
+import Document2 from "../Form.Share/Document2";
+import Document3 from "../Form.Share/Document3";
+import Document4 from "../Form.Share/Document4";
 
 export default function DocMain() {
     let location = useLocation();
@@ -177,42 +176,251 @@ export default function DocMain() {
                 doc: docType,
             };
 
+            console.log(docOptCondition);
             setDocStateEl(<DocState docMeta={_docMeta} />);
 
             setDocManageEl(
                 <DocManage>
                     {docType.startsWith("1") ? (
-                        <Document1
-                            option={_option}
-                            user={user}
-                            docMeta={_docMeta}
-                            config={_config}
-                            onReloadPage={onReloadPage}
-                        />
+                        <>
+                            <Document1
+                                disable={!(docOptCondition.canCreate ?? false)}
+                                type="create"
+                                owner={{ uid: user.uid }}
+                                docs={{}}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document1
+                                disable={!(docOptCondition.canEdit ?? false)}
+                                type="edit"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document1
+                                disable={!(docOptCondition.canDelete ?? false)}
+                                type="delete"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document1
+                                disable={!(docOptCondition.canApprove ?? false)}
+                                type="approve"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document1
+                                disable={
+                                    !(docOptCondition.canDownload ?? false)
+                                }
+                                type="download"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                        </>
                     ) : docType.startsWith("2") ? (
-                        <Document2
-                            option={_option}
-                            user={user}
-                            docMeta={_docMeta}
-                            config={_config}
-                            onReloadPage={onReloadPage}
-                        />
+                        <>
+                            <Document2
+                                disable={!(docOptCondition.canCreate ?? false)}
+                                type="create"
+                                owner={{ uid: user.uid }}
+                                docs={{}}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document2
+                                disable={!(docOptCondition.canEdit ?? false)}
+                                type="edit"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document2
+                                disable={!(docOptCondition.canDelete ?? false)}
+                                type="delete"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document2
+                                disable={!(docOptCondition.canApprove ?? false)}
+                                type="approve"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document2
+                                disable={
+                                    !(docOptCondition.canDownload ?? false)
+                                }
+                                type="download"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                        </>
                     ) : docType.startsWith("3") ? (
-                        <Document3
-                            option={_option}
-                            user={user}
-                            docMeta={_docMeta}
-                            config={_config}
-                            onReloadPage={onReloadPage}
-                        />
+                        <>
+                            <Document3
+                                disable={!(docOptCondition.canCreate ?? false)}
+                                type="create"
+                                owner={{ uid: user.uid }}
+                                docs={{}}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document3
+                                disable={!(docOptCondition.canEdit ?? false)}
+                                type="edit"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document3
+                                disable={!(docOptCondition.canDelete ?? false)}
+                                type="delete"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document3
+                                disable={!(docOptCondition.canApprove ?? false)}
+                                type="approve"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document3
+                                disable={
+                                    !(docOptCondition.canDownload ?? false)
+                                }
+                                type="download"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                        </>
                     ) : docType.startsWith("4") ? (
-                        <Document4
-                            option={_option}
-                            user={user}
-                            docMeta={_docMeta}
-                            config={_config}
-                            onReloadPage={onReloadPage}
-                        />
+                        <>
+                            <Document4
+                                disable={!(docOptCondition.canCreate ?? false)}
+                                type="create"
+                                owner={{ uid: user.uid }}
+                                docs={{}}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document4
+                                disable={!(docOptCondition.canEdit ?? false)}
+                                type="edit"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document4
+                                disable={!(docOptCondition.canDelete ?? false)}
+                                type="delete"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document4
+                                disable={!(docOptCondition.canApprove ?? false)}
+                                type="approve"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                            <Document4
+                                disable={
+                                    !(docOptCondition.canDownload ?? false)
+                                }
+                                type="download"
+                                owner={{ uid: user.uid }}
+                                docs={docs}
+                                meta={{
+                                    projectType,
+                                    docType,
+                                }}
+                                onReloadPage={onReloadPage}
+                            />
+                        </>
                     ) : (
                         <></>
                     )}

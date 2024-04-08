@@ -2,79 +2,16 @@ import { useState, useEffect } from "react";
 import _ from "lodash";
 import Pagination from "../Pagination";
 import { getDateLocale } from "../../../libs/DateParser";
-
+import { getSubsetArray, sortDocByDate } from "../../../libs/coreFunc";
 import { Table, Row } from "react-bootstrap";
 
-import Document1 from "../Form.Teacher/Document1";
-import Document2 from "../Form.Teacher/Document2";
-import Document3 from "../Form.Teacher/Document3";
-import Document4 from "../Form.Teacher/Document4";
+import Document1 from "../Form.Share/Document1";
+import Document2 from "../Form.Share/Document2";
+import Document3 from "../Form.Share/Document3";
+import Document4 from "../Form.Share/Document4";
 
-const getSubsetArray = (arr, start, end) => {
-    if (!Array.isArray(arr)) {
-        throw new Error("Input is not an array.");
-    }
-
-    const _start = start - 1;
-    const _end = end - 1;
-
-    if (_start < 0 || _start > _end) {
-        throw new Error("Invalid start or end indices.");
-    }
-
-    if (_end >= arr.length) {
-        return arr.slice(start - 1, arr.length + 1);
-    }
-
-    // Use Array.slice to get the subset array
-    return arr.slice(_start, _end + 1);
-};
-
-const sortDocByDate = (docArr, docObj, type) => {
-    // type = des / asc
-    const sortByDate = [];
-
-    _.map(docArr, (item, index) => {
-        if (index + 1 < docArr.length) {
-            const nextItem = index + 1;
-            const _date1 = new Date(
-                docObj[item].approved["teacher"].updated_at
-            );
-            const _date2 = new Date(
-                docObj[docArr[nextItem]].approved["teacher"].updated_at
-            );
-
-            if (_.indexOf(sortByDate, item) === -1) {
-                sortByDate.push(item);
-            }
-
-            if (type === "asc") {
-                if (_date1 > _date2) {
-                    sortByDate.unshift(docArr[nextItem]);
-                } else {
-                    sortByDate.push(docArr[nextItem]);
-                }
-            } else if (type === "des") {
-                if (_date1 < _date2) {
-                    sortByDate.unshift(docArr[nextItem]);
-                } else {
-                    sortByDate.push(docArr[nextItem]);
-                }
-            }
-        }
-    });
-
-    if (_.isEmpty(sortByDate)) {
-        return docArr;
-    }
-
-    return sortByDate;
-};
-
-export default function TableData({ _docs, _docType, _permission }) {
-    const [docType, setDocType] = useState(_docType);
-    const [permission, setPermission] = useState(_permission);
-
+export default function TableData({ _docs, _meta, _onReloadPage }) {
+    const [meta] = useState(_meta);
     const [docs, setDocs] = useState({});
     const [elTableData, setElTableData] = useState(<></>);
 
@@ -95,7 +32,14 @@ export default function TableData({ _docs, _docType, _permission }) {
 
     useEffect(() => {
         const docsArr = getItemOnPage(docs);
-        const currentSortByDate = sortDocByDate(docsArr, docs, "asc");
+        const currentSortByDate = sortDocByDate(
+            docsArr,
+            docs,
+            "teacher",
+            "asc"
+        );
+
+        const { docType } = meta;
 
         setElTableData(
             <>
@@ -112,23 +56,35 @@ export default function TableData({ _docs, _docType, _permission }) {
                             <td>
                                 {docType.startsWith("1") ? (
                                     <Document1
+                                        type="view"
+                                        owner={{ uid: docs[key].owner_id }}
                                         docs={{ [key]: docs[key] }}
-                                        permission={permission}
+                                        meta={meta}
+                                        onReloadPage={_onReloadPage}
                                     />
                                 ) : docType.startsWith("2") ? (
                                     <Document2
+                                        type="view"
+                                        owner={{ uid: docs[key].owner_id }}
                                         docs={{ [key]: docs[key] }}
-                                        permission={permission}
+                                        meta={meta}
+                                        onReloadPage={_onReloadPage}
                                     />
                                 ) : docType.startsWith("3") ? (
                                     <Document3
+                                        type="view"
+                                        owner={{ uid: docs[key].owner_id }}
                                         docs={{ [key]: docs[key] }}
-                                        permission={permission}
+                                        meta={meta}
+                                        onReloadPage={_onReloadPage}
                                     />
                                 ) : docType.startsWith("4") ? (
                                     <Document4
+                                        type="view"
+                                        owner={{ uid: docs[key].owner_id }}
                                         docs={{ [key]: docs[key] }}
-                                        permission={permission}
+                                        meta={meta}
+                                        onReloadPage={_onReloadPage}
                                     />
                                 ) : (
                                     <></>
@@ -148,13 +104,6 @@ export default function TableData({ _docs, _docType, _permission }) {
             setCurrentPage(1);
         }
     }, [_docs]);
-
-    useEffect(() => {
-        if (_docType !== null) {
-            setDocType(_docType);
-        }
-        setPermission(_permission);
-    }, [_docType, _permission]);
 
     return (
         <>
