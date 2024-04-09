@@ -2,19 +2,20 @@ import _ from "lodash";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Skeleton from "react-loading-skeleton";
 import { auth, GetAllDocument } from "../../../libs/Firebase";
-import { getDateLocale } from "../../../libs/DateParser";
-import { Tabs, Tab, Card, Row, Table } from "react-bootstrap";
+import { Card, Row, Table } from "react-bootstrap";
 import Pagination from "../Pagination";
 
-import { useUserData } from "../../../hooks/useUserData";
-import FormUser from "../Form.Share/User";
+import FormUser from "../Form/User";
 
-export default function UserMain() {
-    let location = useLocation();
-    const [userData] = useUserData();
-    const [user] = useAuthState(auth);
+const Roles = {
+    student: "นักศึกษา",
+    teacher: "อาจารย์",
+    president: "ประธาน",
+    admin: "ผู้ดูแลระบบ",
+};
+
+export default function UserTable() {
     const [isReloadPage, setIsReloadPage] = useState(true);
 
     const [users, setUsers] = useState({});
@@ -71,7 +72,7 @@ export default function UserMain() {
                                 <td>{index + 1}</td>
                                 <td>{users[key].name}</td>
                                 <td>{users[key].email}</td>
-                                <td>{users[key].role}</td>
+                                <td>{Roles[users[key].role]}</td>
                                 <td>
                                     <FormUser
                                         userData={{ [key]: users[key] }}

@@ -16,7 +16,7 @@ import TableHistory from "./TableHistory";
 
 import { Tabs, Tab, Card, Row } from "react-bootstrap";
 
-export default function Main() {
+export default function Management() {
     let location = useLocation();
     const [user] = useAuthState(auth);
     const [isReloadPage, setIsReloadPage] = useState(false);
@@ -107,7 +107,7 @@ export default function Main() {
 
     return (
         <Card>
-            <Card.Header>{`${projectText} ${docText}`}</Card.Header>
+            <Card.Header className="h5">{`${projectText} ${docText}`}</Card.Header>
             <Card.Body>
                 <Row className="mb-2">
                     <Tabs

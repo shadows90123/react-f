@@ -5,7 +5,7 @@ import _ from "lodash";
 import { GetDocument } from "../../../libs/Firebase";
 import { getDateLocale } from "../../../libs/DateParser";
 
-export default function DocState({ docMeta }) {
+export default function State({ docs }) {
     const [_docs, setDocs] = useState({});
     const [_teacher, setTeacher] = useState({});
 
@@ -41,12 +41,12 @@ export default function DocState({ docMeta }) {
     useEffect(() => {
         setTeacher({});
         setDocs({});
-        if (!_.isEmpty(docMeta)) {
+        if (!_.isEmpty(docs)) {
             setTeacher({});
-            setDocs(docMeta);
+            setDocs(docs);
 
             const fetchReq = async () => {
-                const docVal = _.values(docMeta)[0];
+                const docVal = _.values(docs)[0];
                 const teacherId =
                     docVal?.approved["teacher"]?.teacher_id ?? false;
                 if (teacherId) {
@@ -57,7 +57,7 @@ export default function DocState({ docMeta }) {
 
             fetchReq();
         }
-    }, [docMeta]);
+    }, [docs]);
 
     return (
         <Card body className="mb-2">

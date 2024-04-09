@@ -108,6 +108,11 @@ export const router_locale = {
             icon: "fa-folder-open",
             children: [
                 {
+                    text: "เอกสาร ป.1",
+                    path: "document_1",
+                    icon: "fa-file",
+                },
+                {
                     text: "เอกสาร ป.2 (ความก้าวหน้า)",
                     path: "document_2_1",
                     icon: "fa-file",
@@ -137,6 +142,11 @@ export const router_locale = {
                 {
                     text: "เอกสาร ป.3",
                     path: "document_3",
+                    icon: "fa-file",
+                },
+                {
+                    text: "เอกสาร ป.4",
+                    path: "document_4",
                     icon: "fa-file",
                 },
             ],

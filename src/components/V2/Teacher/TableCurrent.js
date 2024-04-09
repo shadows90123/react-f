@@ -5,10 +5,10 @@ import { getDateLocale } from "../../../libs/DateParser";
 import { getSubsetArray, sortDocByDate } from "../../../libs/coreFunc";
 import { Table, Row } from "react-bootstrap";
 
-import Document1 from "../Form.Share/Document1";
-import Document2 from "../Form.Share/Document2";
-import Document3 from "../Form.Share/Document3";
-import Document4 from "../Form.Share/Document4";
+import Document1 from "../Form/Document1";
+import Document2 from "../Form/Document2";
+import Document3 from "../Form/Document3";
+import Document4 from "../Form/Document4";
 
 export default function TableData({ _docs, _meta, _onReloadPage }) {
     const [meta] = useState(_meta);

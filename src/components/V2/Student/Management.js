@@ -12,20 +12,19 @@ import {
 } from "../../../libs/coreFunc";
 import { auth, GetAllDocument } from "../../../libs/Firebase";
 
-import DocState from "./DocState";
-import DocManage from "./DocManage";
+import State from "./State";
 
-import Document1 from "../Form.Share/Document1";
-import Document2 from "../Form.Share/Document2";
-import Document3 from "../Form.Share/Document3";
-import Document4 from "../Form.Share/Document4";
+import Document1 from "../Form/Document1";
+import Document2 from "../Form/Document2";
+import Document3 from "../Form/Document3";
+import Document4 from "../Form/Document4";
 
-export default function DocMain() {
+export default function DocumentStudent() {
     let location = useLocation();
     const [user] = useAuthState(auth);
 
-    const [docManageEl, setDocManageEl] = useState(<></>);
-    const [docStateEl, setDocStateEl] = useState(<></>);
+    const [manageElem, setManageElem] = useState(<></>);
+    const [stateElem, setStateElem] = useState(<></>);
     const [isReloadPage, setIsReloadPage] = useState(false);
 
     // Project & Document Type
@@ -169,18 +168,13 @@ export default function DocMain() {
 
     useEffect(() => {
         if (projectType && docType) {
-            const _option = docOptCondition;
-            const _docMeta = docs;
-            const _config = {
-                project: projectType,
-                doc: docType,
-            };
+            setStateElem(<State docs={docs} />);
 
-            console.log(docOptCondition);
-            setDocStateEl(<DocState docMeta={_docMeta} />);
-
-            setDocManageEl(
-                <DocManage>
+            setManageElem(
+                <Card body className="mb-2">
+                    <Card.Subtitle className="mb-2 text-muted">
+                        เครื่องมือ
+                    </Card.Subtitle>
                     {docType.startsWith("1") ? (
                         <>
                             <Document1
@@ -424,7 +418,7 @@ export default function DocMain() {
                     ) : (
                         <></>
                     )}
-                </DocManage>
+                </Card>
             );
         }
     }, [docs, docOptCondition, user, projectType, docType]);
@@ -433,10 +427,10 @@ export default function DocMain() {
 
     return (
         <Card>
-            <Card.Header>{`${projectText} ${docText}`}</Card.Header>
+            <Card.Header className="h5">{`${projectText} ${docText}`}</Card.Header>
             <Card.Body>
-                {docStateEl}
-                {docManageEl}
+                {stateElem}
+                {manageElem}
             </Card.Body>
         </Card>
     );

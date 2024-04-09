@@ -25,13 +25,7 @@ const validationForm = (form) => {
 const SignUp = () => {
     const navigate = useNavigate();
 
-    const [form, setForm] = useState({
-        // name: "",
-        // tel: "",
-        // email: "",
-        // password: "",
-        // role: "student",
-    });
+    const [form, setForm] = useState({});
 
     const onChange = (e) => {
         const { name, value, type } = e.target;

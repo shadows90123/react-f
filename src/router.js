@@ -9,33 +9,33 @@ import Layout from "./components/V2/Layout";
 import NotFound from "./components/V2/NotFound";
 
 import HomeStudent from "./pages/student/Home";
-import DocStudent from "./components/V2/Student/DocMain";
+import ManageStudent from "./components/V2/Student/Management";
 
 import HomeTeacher from "./pages/teacher/Home";
-import DocTeacher from "./components/V2/Teacher/DocMain";
+import ManageTeacher from "./components/V2/Teacher/Management";
 
 import HomePresident from "./pages/president/Home";
-import DocPresident from "./components/V2/President/DocMain";
+import ManagePresident from "./components/V2/President/Management";
 
 import HomeAdmin from "./pages/admin/Home";
-import UserMain from "./components/V2/Admin/UserMain";
-import DocAdmin from "./components/V2/Admin/DocMain";
+import UserTable from "./components/V2/Admin/UserTable";
+import ManageAdmin from "./components/V2/Admin/Management";
 
 const AuthLogin = authMiddleware(["*"])(Login);
 
 const AuthIndex = authMiddleware(["student"])(() => <></>);
 const AuthHomeStudent = authMiddleware(["student"])(HomeStudent);
-const AuthDocStudent = authMiddleware(["student"])(DocStudent);
+const AuthManageStudent = authMiddleware(["student"])(ManageStudent);
 
 const AuthHomeTeacher = authMiddleware(["teacher"])(HomeTeacher);
-const AuthDocTeacher = authMiddleware(["teacher"])(DocTeacher);
+const AuthManageTeacher = authMiddleware(["teacher"])(ManageTeacher);
 
 const AuthHomePresident = authMiddleware(["president"])(HomePresident);
-const AuthDocPresident = authMiddleware(["president"])(DocPresident);
+const AuthManagePresident = authMiddleware(["president"])(ManagePresident);
 
 const AuthHomeAdmin = authMiddleware(["admin"])(HomeAdmin);
-const AuthUserMain = authMiddleware(["admin"])(UserMain);
-const AuthDocAdmin = authMiddleware(["admin"])(DocAdmin);
+const AuthUserTable = authMiddleware(["admin"])(UserTable);
+const AuthManageAdmin = authMiddleware(["admin"])(ManageAdmin);
 
 export const router = createBrowserRouter([
     {
@@ -67,15 +67,15 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: "document_1",
-                        element: <AuthDocStudent />,
+                        element: <AuthManageStudent />,
                     },
                     {
                         path: "document_2_1",
-                        element: <AuthDocStudent />,
+                        element: <AuthManageStudent />,
                     },
                     {
                         path: "document_2_2",
-                        element: <AuthDocStudent />,
+                        element: <AuthManageStudent />,
                     },
                 ],
             },
@@ -84,19 +84,19 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: "document_2_1",
-                        element: <AuthDocStudent />,
+                        element: <AuthManageStudent />,
                     },
                     {
                         path: "document_2_2",
-                        element: <AuthDocStudent />,
+                        element: <AuthManageStudent />,
                     },
                     {
                         path: "document_3",
-                        element: <AuthDocStudent />,
+                        element: <AuthManageStudent />,
                     },
                     {
                         path: "document_4",
-                        element: <AuthDocStudent />,
+                        element: <AuthManageStudent />,
                     },
                 ],
             },
@@ -116,15 +116,15 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: "document_1",
-                        element: <AuthDocTeacher />,
+                        element: <AuthManageTeacher />,
                     },
                     {
                         path: "document_2_1",
-                        element: <AuthDocTeacher />,
+                        element: <AuthManageTeacher />,
                     },
                     {
                         path: "document_2_2",
-                        element: <AuthDocTeacher />,
+                        element: <AuthManageTeacher />,
                     },
                 ],
             },
@@ -133,19 +133,19 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: "document_2_1",
-                        element: <AuthDocTeacher />,
+                        element: <AuthManageTeacher />,
                     },
                     {
                         path: "document_2_2",
-                        element: <AuthDocTeacher />,
+                        element: <AuthManageTeacher />,
                     },
                     {
                         path: "document_3",
-                        element: <AuthDocTeacher />,
+                        element: <AuthManageTeacher />,
                     },
                     {
                         path: "document_4",
-                        element: <AuthDocTeacher />,
+                        element: <AuthManageTeacher />,
                     },
                 ],
             },
@@ -164,12 +164,16 @@ export const router = createBrowserRouter([
                 path: "project_1",
                 children: [
                     {
+                        path: "document_1",
+                        element: <AuthManagePresident />,
+                    },
+                    {
                         path: "document_2_1",
-                        element: <AuthDocPresident />,
+                        element: <AuthManagePresident />,
                     },
                     {
                         path: "document_2_2",
-                        element: <AuthDocPresident />,
+                        element: <AuthManagePresident />,
                     },
                 ],
             },
@@ -178,15 +182,19 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: "document_2_1",
-                        element: <AuthDocPresident />,
+                        element: <AuthManagePresident />,
                     },
                     {
                         path: "document_2_2",
-                        element: <AuthDocPresident />,
+                        element: <AuthManagePresident />,
                     },
                     {
                         path: "document_3",
-                        element: <AuthDocPresident />,
+                        element: <AuthManagePresident />,
+                    },
+                    {
+                        path: "document_4",
+                        element: <AuthManagePresident />,
                     },
                 ],
             },
@@ -203,22 +211,22 @@ export const router = createBrowserRouter([
             },
             {
                 path: "users",
-                element: <AuthUserMain />,
+                element: <AuthUserTable />,
             },
             {
                 path: "project_1",
                 children: [
                     {
                         path: "document_1",
-                        element: <AuthDocAdmin />,
+                        element: <AuthManageAdmin />,
                     },
                     {
                         path: "document_2_1",
-                        element: <AuthDocAdmin />,
+                        element: <AuthManageAdmin />,
                     },
                     {
                         path: "document_2_2",
-                        element: <AuthDocAdmin />,
+                        element: <AuthManageAdmin />,
                     },
                 ],
             },
@@ -227,19 +235,19 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: "document_2_1",
-                        element: <AuthDocAdmin />,
+                        element: <AuthManageAdmin />,
                     },
                     {
                         path: "document_2_2",
-                        element: <AuthDocAdmin />,
+                        element: <AuthManageAdmin />,
                     },
                     {
                         path: "document_3",
-                        element: <AuthDocAdmin />,
+                        element: <AuthManageAdmin />,
                     },
                     {
                         path: "document_4",
-                        element: <AuthDocAdmin />,
+                        element: <AuthManageAdmin />,
                     },
                 ],
             },

@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, Col, Row } from "react-bootstrap";
 import { registerWithPassword, UpdateDocument } from "../../../libs/Firebase";
+import { getDateLocale } from "../../../libs/DateParser";
 
 const Roles = {
     student: "นักศึกษา",
@@ -210,6 +211,42 @@ export default function FormUser({ userData, type, onReloadPage }) {
                                     </select>
                                 </Form.Group>
                             </Row>
+
+                            {isView && (
+                                <>
+                                    {" "}
+                                    <Row className="mb-2">
+                                        <Form.Group as={Col}>
+                                            <Form.Label>วันที่สร้าง</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                name="tel"
+                                                value={
+                                                    getDateLocale(
+                                                        form["created_at"]
+                                                    ) ?? ""
+                                                }
+                                                disabled={isView}
+                                            />
+                                        </Form.Group>
+                                    </Row>
+                                    <Row className="mb-2">
+                                        <Form.Group as={Col}>
+                                            <Form.Label>แก้ไขล่าสุด</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                name="tel"
+                                                value={
+                                                    getDateLocale(
+                                                        form["updated_at"]
+                                                    ) ?? ""
+                                                }
+                                                disabled={isView}
+                                            />
+                                        </Form.Group>
+                                    </Row>
+                                </>
+                            )}
                         </Form>
                     )}
                 </Modal.Body>
