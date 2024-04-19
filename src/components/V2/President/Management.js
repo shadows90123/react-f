@@ -20,11 +20,6 @@ export default function Management() {
     const [pageType] = usePageType();
     const [isReloadPage, setIsReloadPage] = useState(false);
 
-    // Project & Document Type
-    // const [projectType, setProjectType] = useState(null);
-    // const [docType, setDocType] = useState(null);
-
-    // Project & Document Text
     const [projectText, setProjectText] = useState("");
     const [docText, setDocText] = useState("");
 
@@ -67,19 +62,10 @@ export default function Management() {
                 />
             );
         }
-        // }, [docs, projectType, docType]);
     }, [docs, pageType]);
 
     useEffect(() => {
         const { role, project, document } = pageType;
-
-        // setProjectType(project);
-        // setDocType(document);
-
-        // if (project && document) {
-        //     setProjectText(getMainPathText(project, role));
-        //     setDocText(getSubPathText(project, document, role));
-        // }
 
         setProjectText(getMainPathText(project, role));
         setDocText(getSubPathText(project, document, role));
@@ -110,7 +96,7 @@ export default function Management() {
 
             fetchAll(project, document);
         }
-    }, [user, pageType]);
+    }, [user, pageType, isReloadPage]);
 
     if (isReloadPage) return <Skeleton />;
 

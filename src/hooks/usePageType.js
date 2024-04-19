@@ -7,13 +7,13 @@ const getPageType = (str) => {
 
     // const regexPattern =
     //     /^\/(?<role>\w+)\/project_(?<project>\d+)\/document_(?<document>[\d_]+)$/;
+
     const regexPattern =
         /^\/(?<role>\w+)\/(project_|exam_)(?<project>\d+)\/document_(?<document>[\d_]+)$/;
 
     const matches = str.match(regexPattern);
 
     if (matches) {
-        console.log(matches.groups);
         const { role, project, document } = matches.groups;
 
         return { role, project, document };

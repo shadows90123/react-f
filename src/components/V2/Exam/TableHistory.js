@@ -9,7 +9,6 @@ import Pagination from "../Pagination";
 import DocForm from "../Form/LayoutForm";
 
 export default function TableData({ _docs, _meta, _onReloadPage }) {
-    const [meta] = useState(_meta);
     const [docs, setDocs] = useState({});
     const [elTableData, setElTableData] = useState(<></>);
 
@@ -31,7 +30,7 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
     useEffect(() => {
         const docsArr = getItemOnPage(docs);
 
-        const { docType } = meta;
+        const { docType } = _meta;
 
         setElTableData(
             <>
@@ -52,14 +51,14 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                             type="view"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
-                                            meta={meta}
+                                            meta={_meta}
                                             onReloadPage={_onReloadPage}
                                         />
                                         <DocForm
                                             type="download"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
-                                            meta={meta}
+                                            meta={_meta}
                                             onReloadPage={() => {}}
                                         />
                                     </>
@@ -69,14 +68,14 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                             type="view"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
-                                            meta={meta}
+                                            meta={_meta}
                                             onReloadPage={_onReloadPage}
                                         />
                                         <DocForm
                                             type="download"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
-                                            meta={meta}
+                                            meta={_meta}
                                             onReloadPage={() => {}}
                                         />
                                     </>
@@ -86,14 +85,14 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                             type="view"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
-                                            meta={meta}
+                                            meta={_meta}
                                             onReloadPage={_onReloadPage}
                                         />
                                         <DocForm
                                             type="download"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
-                                            meta={meta}
+                                            meta={_meta}
                                             onReloadPage={() => {}}
                                         />
                                     </>
@@ -103,14 +102,14 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                             type="view"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
-                                            meta={meta}
+                                            meta={_meta}
                                             onReloadPage={_onReloadPage}
                                         />
                                         <DocForm
                                             type="download"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
-                                            meta={meta}
+                                            meta={_meta}
                                             onReloadPage={() => {}}
                                         />
                                     </>

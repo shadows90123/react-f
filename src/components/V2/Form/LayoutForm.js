@@ -12,6 +12,7 @@ import {
     PresidentApproveForm,
     SignatureForm,
     ExamDateForm,
+    ExamStateForm,
     getFromStorage,
 } from "../../../libs/Firebase";
 import GenerateDoc from "../../../libs/pdf";
@@ -55,7 +56,7 @@ export default function LayoutForm({
     const [reason, setReason] = useState("");
 
     const [elemDocument, setElemDocument] = useState(<></>);
-    const [modelTitle, setModelTitle] = useState(meta.docType.charAt(0));
+    const [modelTitle] = useState(meta.docType.charAt(0));
 
     const isCreate = type === "create";
     const isEdit = type === "edit";
@@ -88,9 +89,9 @@ export default function LayoutForm({
         : isPresidentProve
         ? "ตรวจเอกสาร"
         : isDateExam
-        ? "จัดการเวลาสอบ"
+        ? "เวลาสอบ"
         : isStateExam
-        ? "จัดการสถานะการสอบ"
+        ? "สถานะการสอบ"
         : "";
 
     const btnColor = isDelete ? "danger" : "primary";
@@ -198,18 +199,27 @@ export default function LayoutForm({
                     .getTrimmedCanvas()
                     .toDataURL("signCanvas");
 
-                await SignatureForm(docId, signature);
+                await SignatureForm({ docId, signature });
             } else if (isPresidentProve) {
                 const docId = _.keys(_docs)[0];
-                await PresidentApproveForm(docId, {
+                await PresidentApproveForm({
+                    docId,
                     state,
                     reason,
                 });
             } else if (isDateExam) {
                 const docId = _.keys(_docs)[0];
+
                 await ExamDateForm({
                     docId: docId,
-                    date: new Date(selectedDateTime).toJSON(),
+                    dated: new Date(selectedDateTime).toJSON(),
+                });
+            } else if (isStateExam) {
+                const docId = _.keys(_docs)[0];
+
+                await ExamStateForm({
+                    docId: docId,
+                    state,
                 });
             }
 

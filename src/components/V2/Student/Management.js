@@ -114,17 +114,17 @@ export default function DocumentStudent() {
     };
 
     useEffect(() => {
-        const { project, document } = pageType;
+        const { role, project, document } = pageType;
+
         setProjectType(project);
         setDocType(document);
-        if (project && document) {
-            setProjectText(getMainPathText(project, "student"));
-            setDocText(getSubPathText(project, document, "student"));
-        }
+
+        setProjectText(getMainPathText(project, role));
+        setDocText(getSubPathText(project, document, role));
 
         if (!_.isEmpty(user)) {
-            const fetchAllDocMeta = async (project, document) => {
-                const docsRef = await GetAllDocument("documents");
+            const fetchAll = async (project, document) => {
+                const docsRef = await GetAllDocument("documents", role);
                 let _docMeta = {};
                 let _docOpt = {};
 
@@ -153,20 +153,25 @@ export default function DocumentStudent() {
                 setIsReloadPage(false);
             };
 
-            fetchAllDocMeta(project, document);
+            fetchAll(project, document);
         }
     }, [user, pageType, isReloadPage]);
 
     useEffect(() => {
-        if (projectType && docType) {
+        if (pageType?.project) {
             setStateElem(<State docs={docs} />);
-            const _meta = { projectType, docType };
+
+            const _meta = {
+                projectType: pageType.project,
+                docType: pageType.document,
+            };
+
             setManageElem(
                 <Card body className="mb-2">
                     <Card.Subtitle className="mb-2 text-muted">
                         เครื่องมือ
                     </Card.Subtitle>
-                    {docType.startsWith("1") ? (
+                    {pageType.document.startsWith("1") ? (
                         <>
                             <DocForm
                                 disable={!(docOptCondition.canCreate ?? false)}
@@ -211,7 +216,7 @@ export default function DocumentStudent() {
                                 onReloadPage={() => {}}
                             />
                         </>
-                    ) : docType.startsWith("2") ? (
+                    ) : pageType.document.startsWith("2") ? (
                         <>
                             <DocForm
                                 disable={!(docOptCondition.canCreate ?? false)}
@@ -256,7 +261,7 @@ export default function DocumentStudent() {
                                 onReloadPage={() => {}}
                             />
                         </>
-                    ) : docType.startsWith("3") ? (
+                    ) : pageType.document.startsWith("3") ? (
                         <>
                             <DocForm
                                 disable={!(docOptCondition.canCreate ?? false)}
@@ -301,7 +306,7 @@ export default function DocumentStudent() {
                                 onReloadPage={() => {}}
                             />
                         </>
-                    ) : docType.startsWith("4") ? (
+                    ) : pageType.document.startsWith("4") ? (
                         <>
                             <DocForm
                                 disable={!(docOptCondition.canCreate ?? false)}
@@ -352,7 +357,7 @@ export default function DocumentStudent() {
                 </Card>
             );
         }
-    }, [docs, docOptCondition, user, projectType, docType]);
+    }, [docs, docOptCondition, user, pageType]);
 
     if (isReloadPage) return <Skeleton />;
 

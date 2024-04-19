@@ -19,11 +19,6 @@ export default function Management() {
     const [pageType] = usePageType();
     const [isReloadPage, setIsReloadPage] = useState(false);
 
-    // Project & Document Type
-    const [projectType, setProjectType] = useState("");
-    const [docType, setDocType] = useState("");
-
-    // Project & Document Text
     const [projectText, setProjectText] = useState("");
     const [docText, setDocText] = useState("");
 
@@ -37,22 +32,24 @@ export default function Management() {
     };
 
     useEffect(() => {
-        if (projectType !== "" && docType !== "") {
-            const currentDocs = getDocsByApproveState(docs, "teacher", [
+        if (pageType?.project) {
+            const currentDocs = getDocsByApproveState(docs, pageType.role, [
                 "submitted",
             ]);
-            const historyDocs = getDocsByApproveState(docs, "teacher", [
+            const historyDocs = getDocsByApproveState(docs, pageType.role, [
                 "approved",
                 "unapproved",
             ]);
 
+            const _meta = {
+                projectType: pageType.project,
+                docType: pageType.document,
+            };
+
             setElReqTable(
                 <TableCurrent
                     _docs={currentDocs}
-                    _meta={{
-                        projectType,
-                        docType,
-                    }}
+                    _meta={_meta}
                     _onReloadPage={onReloadPage}
                 />
             );
@@ -60,37 +57,28 @@ export default function Management() {
             setElHisTable(
                 <TableHistory
                     _docs={historyDocs}
-                    _meta={{
-                        projectType,
-                        docType,
-                    }}
+                    _meta={_meta}
                     _onReloadPage={onReloadPage}
                 />
             );
         }
-    }, [docs, projectType, docType]);
+    }, [docs, pageType]);
 
     useEffect(() => {
-        const { project, document } = pageType;
-        setProjectType(project);
-        setDocType(document);
+        const { role, project, document } = pageType;
 
-        if (project && document) {
-            setProjectText(getMainPathText(project, "teacher"));
-            setDocText(getSubPathText(project, document, "teacher"));
-        }
+        setProjectText(getMainPathText(project, role));
+        setDocText(getSubPathText(project, document, role));
 
         if (!_.isEmpty(user)) {
             const fetchAll = async (project, document) => {
-                const docsRef = await GetAllDocument("documents", "teacher");
-
+                const docsRef = await GetAllDocument("documents", role);
                 let _docs = {};
 
                 _.keys(docsRef).map(async (key) => {
                     const doc = docsRef[key];
                     const isRole =
-                        doc.approved["teacher"]?.teacher_id === user?.uid ??
-                        false;
+                        doc.approved[role]?.teacher_id === user?.uid ?? false;
                     const isType =
                         doc.project_type === project &&
                         doc.doc_type === document;

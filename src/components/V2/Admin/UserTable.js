@@ -1,11 +1,8 @@
 import _ from "lodash";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, GetAllDocument } from "../../../libs/Firebase";
+import { GetAllDocument } from "../../../libs/Firebase";
 import { Card, Row, Table } from "react-bootstrap";
 import Pagination from "../Pagination";
-
 import FormUser from "../Form/User";
 
 const Roles = {
@@ -77,11 +74,13 @@ export default function UserTable() {
                                     <FormUser
                                         userData={{ [key]: users[key] }}
                                         type="view"
+                                        editorRole="admin"
                                         onReloadPage={onReloadPage}
                                     />
                                     <FormUser
                                         userData={{ [key]: users[key] }}
                                         type="edit"
+                                        editorRole="admin"
                                         onReloadPage={onReloadPage}
                                     />
                                 </td>
@@ -109,6 +108,7 @@ export default function UserTable() {
                                     <FormUser
                                         userData={{}}
                                         type="create"
+                                        editorRole="admin"
                                         onReloadPage={onReloadPage}
                                     />
                                 </th>

@@ -247,7 +247,7 @@ export const ApproveDocForm = async ({ docId, teacher_id }) => {
     });
 };
 
-export const SignatureForm = async (docId, data) => {
+export const SignatureForm = async ({ docId, data }) => {
     const storageRef = ref(storage, `signatures/sig_${Date.now()}.png`);
     const uploaded = await uploadString(storageRef, data, "data_url");
 
@@ -263,7 +263,7 @@ export const SignatureForm = async (docId, data) => {
     return uploaded.metadata.fullPath;
 };
 
-export const PresidentApproveForm = async (docId, { state, reason }) => {
+export const PresidentApproveForm = async ({ docId, state, reason }) => {
     await UpdateDocument("documents", docId, {
         updated_at: new Date().toJSON(),
         "approved.president.state": state,
@@ -277,7 +277,14 @@ export const PresidentApproveForm = async (docId, { state, reason }) => {
 
 export const ExamDateForm = async ({ docId, dated }) => {
     await UpdateDocument("documents", docId, {
-        "exam.date": dated,
-        "exam.updated_at": new Date().toJSON(),
+        "approved.exam.dated": dated,
+        "approved.exam.updated_at": new Date().toJSON(),
+    });
+};
+
+export const ExamStateForm = async ({ docId, state }) => {
+    await UpdateDocument("documents", docId, {
+        "approved.exam.state": state,
+        "approved.exam.updated_at": new Date().toJSON(),
     });
 };

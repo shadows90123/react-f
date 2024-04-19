@@ -15,11 +15,6 @@ export default function Management() {
     const [pageType] = usePageType();
     const [isReloadPage, setIsReloadPage] = useState(false);
 
-    // Project & Document Type
-    const [projectType, setProjectType] = useState(null);
-    const [docType, setDocType] = useState(null);
-
-    // Project & Document Text
     const [projectText, setProjectText] = useState("");
     const [docText, setDocText] = useState("");
 
@@ -32,33 +27,31 @@ export default function Management() {
     };
 
     useEffect(() => {
-        if (projectType && docType) {
+        if (pageType?.project) {
+            const _meta = {
+                projectType: pageType.project,
+                docType: pageType.document,
+            };
+
             setElReqTable(
                 <TableData
                     _docs={docs}
-                    _meta={{
-                        projectType,
-                        docType,
-                    }}
+                    _meta={_meta}
                     _onReloadPage={onReloadPage}
                 />
             );
         }
-    }, [docs, projectType, docType]);
+    }, [docs, pageType]);
 
     useEffect(() => {
-        const { project, document } = pageType;
-        setProjectType(project);
-        setDocType(document);
+        const { role, project, document } = pageType;
 
-        if (project && document) {
-            setProjectText(getMainPathText(project, "admin"));
-            setDocText(getSubPathText(project, document, "admin"));
-        }
+        setProjectText(getMainPathText(project, role));
+        setDocText(getSubPathText(project, document, role));
 
         if (!_.isEmpty(user)) {
             const fetchAll = async (project, document) => {
-                const docsRef = await GetAllDocument("documents");
+                const docsRef = await GetAllDocument("documents", role);
 
                 let _docs = {};
 

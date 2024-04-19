@@ -9,6 +9,7 @@ import {
     getMainPathText,
     getSubPathText,
     getDocsByApproveState,
+    getDocsPrepareExam,
 } from "../../../libs/coreFunc";
 import TableCurrent from "./TableCurrent";
 import TableHistory from "./TableHistory";
@@ -20,11 +21,6 @@ export default function Management() {
     const [pageType] = usePageType();
     const [isReloadPage, setIsReloadPage] = useState(false);
 
-    // Project & Document Type
-    const [projectType, setProjectType] = useState(null);
-    const [docType, setDocType] = useState(null);
-
-    // Project & Document Text
     const [projectText, setProjectText] = useState("");
     const [docText, setDocText] = useState("");
 
@@ -38,51 +34,45 @@ export default function Management() {
     };
 
     useEffect(() => {
-        if (projectType && docType) {
-            const currentDocs = getDocsByApproveState(docs, "exam", [
-                "submitted",
-            ]);
+        if (pageType?.project) {
+            const currentDocs = getDocsPrepareExam(docs);
+
             const historyDocs = getDocsByApproveState(docs, "exam", [
                 "approved",
                 "unapproved",
             ]);
 
+            const _meta = {
+                projectType: pageType.project,
+                docType: pageType.document,
+            };
+
             setElReqTable(
                 <TableCurrent
                     _docs={currentDocs}
-                    _meta={{
-                        projectType,
-                        docType,
-                    }}
+                    _meta={_meta}
                     _onReloadPage={onReloadPage}
                 />
             );
             setElHisTable(
                 <TableHistory
                     _docs={historyDocs}
-                    _meta={{
-                        projectType,
-                        docType,
-                    }}
+                    _meta={_meta}
                     _onReloadPage={onReloadPage}
                 />
             );
         }
-    }, [docs, projectType, docType]);
+    }, [docs, pageType]);
 
     useEffect(() => {
-        const { project, document } = pageType;
-        setProjectType(project);
-        setDocType(document);
+        const { role, project, document } = pageType;
 
-        if (project && document) {
-            setProjectText(getMainPathText(project, "president"));
-            setDocText(getSubPathText(project, document, "president"));
-        }
+        setProjectText(getMainPathText(project, role));
+        setDocText(getSubPathText(project, document, role));
 
         if (!_.isEmpty(user)) {
             const fetchAll = async (project, document) => {
-                const docsRef = await GetAllDocument("documents");
+                const docsRef = await GetAllDocument("documents", role);
 
                 let _docs = {};
 
@@ -106,7 +96,7 @@ export default function Management() {
 
             fetchAll(project, document);
         }
-    }, [user, pageType]);
+    }, [user, pageType, isReloadPage]);
 
     if (isReloadPage) return <Skeleton />;
 
@@ -119,11 +109,12 @@ export default function Management() {
                         defaultActiveKey="request"
                         id="document-1-tab"
                         className="mb-3"
+                        c
                     >
                         <Tab eventKey="request" title="ตารางโครงการ">
                             {elReqTable}
                         </Tab>
-                        {docType?.startsWith("2") && (
+                        {pageType?.document?.startsWith("2") && (
                             <Tab eventKey="history" title="ประวัติ">
                                 {elHisTable}
                             </Tab>

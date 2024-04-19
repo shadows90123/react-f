@@ -8,7 +8,6 @@ import { Table, Row } from "react-bootstrap";
 import DocForm from "../Form/LayoutForm";
 
 export default function TableData({ _docs, _meta, _onReloadPage }) {
-    const [meta] = useState(_meta);
     const [docs, setDocs] = useState({});
     const [elTableData, setElTableData] = useState(<></>);
 
@@ -30,7 +29,7 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
     useEffect(() => {
         const docsArr = getItemOnPage(docs);
 
-        const { docType } = meta;
+        const { docType } = _meta;
 
         setElTableData(
             <>
@@ -50,7 +49,7 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                         type="teacherProve"
                                         owner={{ uid: docs[key].owner_id }}
                                         docs={{ [key]: docs[key] }}
-                                        meta={meta}
+                                        meta={_meta}
                                         onReloadPage={_onReloadPage}
                                     />
                                 ) : docType.startsWith("2") ? (
@@ -58,7 +57,7 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                         type="teacherProve"
                                         owner={{ uid: docs[key].owner_id }}
                                         docs={{ [key]: docs[key] }}
-                                        meta={meta}
+                                        meta={_meta}
                                         onReloadPage={_onReloadPage}
                                     />
                                 ) : docType.startsWith("3") ? (
@@ -66,7 +65,7 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                         type="teacherProve"
                                         owner={{ uid: docs[key].owner_id }}
                                         docs={{ [key]: docs[key] }}
-                                        meta={meta}
+                                        meta={_meta}
                                         onReloadPage={_onReloadPage}
                                     />
                                 ) : docType.startsWith("4") ? (
@@ -74,7 +73,7 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                         type="teacherProve"
                                         owner={{ uid: docs[key].owner_id }}
                                         docs={{ [key]: docs[key] }}
-                                        meta={meta}
+                                        meta={_meta}
                                         onReloadPage={_onReloadPage}
                                     />
                                 ) : (

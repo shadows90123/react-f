@@ -12,7 +12,12 @@ const Roles = {
     admin: "ผู้ดูแลระบบ",
 };
 
-export default function FormUser({ userData, type, onReloadPage }) {
+export default function FormUser({
+    userData,
+    type,
+    editorRole = "anonymous",
+    onReloadPage,
+}) {
     const [modalShow, setModalShow] = useState(false);
     const [formType, setFormType] = useState("view");
     const [userId, setUserId] = useState(null);
@@ -184,33 +189,35 @@ export default function FormUser({ userData, type, onReloadPage }) {
                                     </Form.Group>
                                 </Row>
                             )}
-                            <Row className="mb-2">
-                                <Form.Group as={Col}>
-                                    <Form.Label>บทบาท</Form.Label>
-                                    <select
-                                        className="form-select"
-                                        aria-label="Default select example"
-                                        name="role"
-                                        onChange={onChange}
-                                        required
-                                        disabled={isView}
-                                    >
-                                        {_.keys(Roles).map((key) => {
-                                            return (
-                                                <option
-                                                    key={key}
-                                                    value={key}
-                                                    selected={
-                                                        form["role"] === key
-                                                    }
-                                                >
-                                                    {Roles[key]}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                </Form.Group>
-                            </Row>
+                            {editorRole === "admin" && (
+                                <Row className="mb-2">
+                                    <Form.Group as={Col}>
+                                        <Form.Label>บทบาท</Form.Label>
+                                        <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            name="role"
+                                            onChange={onChange}
+                                            required
+                                            disabled={isView}
+                                        >
+                                            {_.keys(Roles).map((key) => {
+                                                return (
+                                                    <option
+                                                        key={key}
+                                                        value={key}
+                                                        selected={
+                                                            form["role"] === key
+                                                        }
+                                                    >
+                                                        {Roles[key]}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                    </Form.Group>
+                                </Row>
+                            )}
 
                             {isView && (
                                 <>

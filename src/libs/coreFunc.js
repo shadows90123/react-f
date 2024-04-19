@@ -21,6 +21,22 @@ export const getDocsByApproveState = (_docs, _role, _state) => {
     return docs;
 };
 
+export const getDocsPrepareExam = (_docs, _role, _state) => {
+    let docs = {};
+
+    _.keys(_docs).map((key) => {
+        const d = _docs[key];
+        const state1 = d.approved["president"].state;
+        const state2 = d.approved["exam"].state;
+
+        if (state1 === "approved" && state2 === "submitted") {
+            docs = { ...docs, [key]: d };
+        }
+    });
+
+    return docs;
+};
+
 export const getSubsetArray = (arr, start, end) => {
     if (!Array.isArray(arr)) {
         throw new Error("Input is not an array.");
