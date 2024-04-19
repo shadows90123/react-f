@@ -5,16 +5,24 @@ import SignatureCanvas from "react-signature-canvas";
 
 import {
     GetAllDocument,
-    AddDocument,
+    ApproveDocForm,
     UpdateDocument,
     DeleteDocument,
+    CreateDocForm,
     PresidentApproveForm,
     SignatureForm,
+    ExamDateForm,
     getFromStorage,
 } from "../../../libs/Firebase";
 import GenerateDoc from "../../../libs/pdf";
 
 import { Modal, Button, Form, Col, Row } from "react-bootstrap";
+import DateAndTimePicker from "../DateAndTimePicker";
+
+import Document1 from "./Doc1";
+import Document2 from "./Doc2";
+import Document3 from "./Doc3";
+import Document4 from "./Doc4";
 
 const majors = {
     major1: "โยธา",
@@ -30,8 +38,7 @@ const groups = {
     group3: "กลุ่ม 3",
     group4: "กลุ่มอื่น ๆ",
 };
-
-export default function Document({
+export default function LayoutForm({
     disable = false,
     type,
     owner,
@@ -40,23 +47,29 @@ export default function Document({
     onReloadPage,
 }) {
     const [modalShow, setModalShow] = useState(false);
-    const [_type] = useState(type);
-    const [_meta] = useState(meta);
-    const [_owner] = useState(owner);
 
     const [allTeacher, setAllTeacher] = useState({});
     const [_docs, setDocs] = useState({});
     const [formData, setFormData] = useState({});
     const [signCanvas, setSignCanvas] = useState("");
+    const [reason, setReason] = useState("");
 
-    const isCreate = _type === "create";
-    const isEdit = _type === "edit";
-    const isView = _type === "view";
-    const isDelete = _type === "delete";
-    const isApprove = _type === "approve";
-    const isDownload = _type === "download";
-    const isTeacherProve = _type === "teacherProve";
-    const isPresidentProve = _type === "presidentProve";
+    const [elemDocument, setElemDocument] = useState(<></>);
+    const [modelTitle, setModelTitle] = useState(meta.docType.charAt(0));
+
+    const isCreate = type === "create";
+    const isEdit = type === "edit";
+    const isView = type === "view";
+    const isDelete = type === "delete";
+    const isApprove = type === "approve";
+    const isDownload = type === "download";
+    const isTeacherProve = type === "teacherProve";
+    const isPresidentProve = type === "presidentProve";
+    const isDateExam = type === "dateExam";
+    const isStateExam = type === "stateExam";
+
+    const fromDisabled =
+        isView || isTeacherProve || isPresidentProve || isStateExam;
 
     const typeLabel = isCreate
         ? "เพิ่ม"
@@ -74,12 +87,22 @@ export default function Document({
         ? "ตรวจเอกสาร"
         : isPresidentProve
         ? "ตรวจเอกสาร"
+        : isDateExam
+        ? "จัดการเวลาสอบ"
+        : isStateExam
+        ? "จัดการสถานะการสอบ"
         : "";
 
     const btnColor = isDelete ? "danger" : "primary";
 
     const resetSignature = () => {
         signCanvas.clear();
+    };
+
+    const [selectedDateTime, setSelectedDateTime] = useState(new Date());
+
+    const handleDateTimeChange = (value) => {
+        setSelectedDateTime(value);
     };
 
     const onChange = (e) => {
@@ -90,36 +113,25 @@ export default function Document({
         });
     };
 
+    const formUpdate = (data) => {
+        setFormData(data);
+    };
+
     const onSubmit = async (e, state = undefined) => {
         e.preventDefault();
 
-        if (isCreate && !_owner.uid) {
+        if (isCreate && !owner?.uid) {
             toast.success("เกิดข้อผิดพลาด: ไม่พบข้อมูลผู้ใช้");
             return;
         }
 
         try {
             if (isCreate) {
-                await AddDocument("documents", {
-                    created_at: new Date().toJSON(),
-                    updated_at: new Date().toJSON(),
-                    project_type: _meta.projectType,
-                    doc_type: _meta.docType,
+                await CreateDocForm({
+                    project_type: meta.projectType,
+                    doc_type: meta.docType,
                     doc_form: formData,
-                    owner_id: _owner.uid,
-                    approved: {
-                        teacher: {
-                            state: "unsubmitted",
-                            created_at: new Date().toJSON(),
-                            updated_at: new Date().toJSON(),
-                        },
-                        president: {
-                            state: "unsubmitted",
-                            created_at: new Date().toJSON(),
-                            updated_at: new Date().toJSON(),
-                        },
-                    },
-                    signatured: "",
+                    owner_id: owner.uid,
                 });
             } else if (isEdit) {
                 const docId = _.keys(_docs)[0] ?? false;
@@ -145,7 +157,9 @@ export default function Document({
                     return;
                 }
 
-                const sigUrl = await getFromStorage(docVal.signatured);
+                const sigUrl = await getFromStorage(
+                    docVal.approved["teacher"].signatured
+                );
 
                 GenerateDoc({
                     data: docVal,
@@ -174,12 +188,9 @@ export default function Document({
                     return;
                 }
 
-                await UpdateDocument("documents", docId, {
-                    updated_at: new Date().toJSON(),
-                    "approved.teacher.state": "submitted",
-                    "approved.teacher.teacher_id": formData?.teacher,
-                    "approved.teacher.created_at": new Date().toJSON(),
-                    "approved.teacher.updated_at": new Date().toJSON(),
+                await ApproveDocForm({
+                    docId,
+                    teacher_id: formData?.teacher,
                 });
             } else if (isTeacherProve) {
                 const docId = _.keys(_docs)[0];
@@ -190,7 +201,16 @@ export default function Document({
                 await SignatureForm(docId, signature);
             } else if (isPresidentProve) {
                 const docId = _.keys(_docs)[0];
-                await PresidentApproveForm(docId, state);
+                await PresidentApproveForm(docId, {
+                    state,
+                    reason,
+                });
+            } else if (isDateExam) {
+                const docId = _.keys(_docs)[0];
+                await ExamDateForm({
+                    docId: docId,
+                    date: new Date(selectedDateTime).toJSON(),
+                });
             }
 
             onHide();
@@ -206,11 +226,60 @@ export default function Document({
     };
 
     useEffect(() => {
+        let _formData = {};
+
+        setFormData({});
         if (!_.isEmpty(docs)) {
+            _formData = _.values(docs)[0].doc_form;
             setDocs(docs);
-            setFormData(_.values(docs)[0].doc_form);
+            setFormData(_formData);
+        } else {
+            if (meta.docType.startsWith("2")) {
+                _formData = {
+                    project: meta.projectType,
+                    purpose: meta.docType === "2_1" ? "progress" : "final",
+                };
+                setFormData(_formData);
+            }
         }
-    }, [docs]);
+
+        setElemDocument(
+            <>
+                {meta?.docType.startsWith("1") ? (
+                    <Document1
+                        formData={_formData}
+                        formUpdate={formUpdate}
+                        majors={majors}
+                        groups={groups}
+                        fromDisabled={fromDisabled}
+                    />
+                ) : meta?.docType.startsWith("2") ? (
+                    <Document2
+                        formData={_formData}
+                        formUpdate={formUpdate}
+                        majors={majors}
+                        fromDisabled={fromDisabled}
+                    />
+                ) : meta?.docType.startsWith("3") ? (
+                    <Document3
+                        formData={_formData}
+                        formUpdate={formUpdate}
+                        majors={majors}
+                        groups={groups}
+                        fromDisabled={fromDisabled}
+                    />
+                ) : meta?.docType.startsWith("4") ? (
+                    <Document4
+                        formData={_formData}
+                        formUpdate={formUpdate}
+                        fromDisabled={fromDisabled}
+                    />
+                ) : (
+                    <></>
+                )}
+            </>
+        );
+    }, [docs, meta]);
 
     useEffect(() => {
         if (isApprove) {
@@ -244,12 +313,12 @@ export default function Document({
                 onHide={onHide}
                 show={modalShow}
                 size="xl"
-                aria-labelledby="contained-modal-document-3"
+                aria-labelledby="contained-modal-document-2"
                 centered
             >
                 <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-document-3">
-                        {typeLabel} เอกสาร ป.3
+                    <Modal.Title id="contained-modal-document-2">
+                        {typeLabel} เอกสาร ป.{modelTitle}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -276,165 +345,17 @@ export default function Document({
                                 </Form.Select>
                             </Form.Group>
                         </Row>
+                    ) : isDateExam ? (
+                        <Row className="mb-2">
+                            <DateAndTimePicker
+                                selectedDateTime={selectedDateTime}
+                                onChange={handleDateTimeChange}
+                            />
+                        </Row>
                     ) : (
                         <Form>
-                            {/* Major */}
-                            <Row className="mb-2">
-                                <Form.Group className="mb-3">
-                                    {_.keys(majors).map((item) => {
-                                        return (
-                                            <Form.Check
-                                                key={item}
-                                                inline
-                                                label={majors[item]}
-                                                name={item}
-                                                type="checkbox"
-                                                checked={
-                                                    formData[item] ?? false
-                                                }
-                                                onChange={onChange}
-                                                disabled={isView}
-                                            />
-                                        );
-                                    })}
-                                </Form.Group>
-                            </Row>
-                            {/* Group */}
-                            <Row className="mb-2">
-                                <Form.Group className="mb-3">
-                                    {_.keys(groups).map((item) => {
-                                        return (
-                                            <Form.Check
-                                                key={item}
-                                                inline
-                                                label={groups[item]}
-                                                name="group"
-                                                type="radio"
-                                                value={item}
-                                                checked={
-                                                    formData["group"] === item
-                                                }
-                                                onChange={onChange}
-                                                disabled={isView}
-                                            />
-                                        );
-                                    })}
-                                </Form.Group>
-                            </Row>
+                            {elemDocument}
 
-                            <Row className="mb-2">
-                                <Form.Group as={Col}>
-                                    <Form.Label>เสนอหัวข้อโครงงาน</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="projectName"
-                                        value={formData["projectName"] ?? ""}
-                                        onChange={onChange}
-                                        disabled={isView}
-                                    />
-                                </Form.Group>
-                            </Row>
-                            {/* Student 1 */}
-                            <Row className="mb-2">
-                                <Form.Group as={Col}>
-                                    <Form.Label>1. ชื่อ-สกุล</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="fullName1"
-                                        value={formData["fullName1"] ?? ""}
-                                        onChange={onChange}
-                                        disabled={isView}
-                                    />
-                                </Form.Group>
-
-                                <Form.Group as={Col}>
-                                    <Form.Label>รห้สนักศึกษา</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="studentId1"
-                                        value={formData["studentId1"] ?? ""}
-                                        onChange={onChange}
-                                        disabled={isView}
-                                    />
-                                </Form.Group>
-                                <Form.Group as={Col}>
-                                    <Form.Label>เบอร์โทรติดต่อ</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="tel1"
-                                        value={formData["tel1"] ?? ""}
-                                        onChange={onChange}
-                                        disabled={isView}
-                                    />
-                                </Form.Group>
-                            </Row>
-                            {/* Student 2 */}
-                            <Row className="mb-2">
-                                <Form.Group as={Col}>
-                                    <Form.Label>2. ชื่อ-สกุล</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="fullName2"
-                                        value={formData["fullName2"] ?? ""}
-                                        onChange={onChange}
-                                        disabled={isView}
-                                    />
-                                </Form.Group>
-                                <Form.Group as={Col}>
-                                    <Form.Label>รห้สนักศึกษา</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="studentId2"
-                                        value={formData["studentId2"] ?? ""}
-                                        onChange={onChange}
-                                        disabled={isView}
-                                    />
-                                </Form.Group>
-                                <Form.Group as={Col}>
-                                    <Form.Label>เบอร์โทรติดต่อ</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="tel2"
-                                        value={formData["tel2"] ?? ""}
-                                        onChange={onChange}
-                                        disabled={isView}
-                                    />
-                                </Form.Group>
-                            </Row>
-                            {/* Student 3 */}
-                            <Row className="mb-2">
-                                <Form.Group as={Col}>
-                                    <Form.Label>3. ชื่อ-สกุล</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="fullName3"
-                                        value={formData["fullName3"] ?? ""}
-                                        onChange={onChange}
-                                        disabled={isView}
-                                    />
-                                </Form.Group>
-
-                                <Form.Group as={Col}>
-                                    <Form.Label>รห้สนักศึกษา</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="studentId3"
-                                        value={formData["studentId3"] ?? ""}
-                                        onChange={onChange}
-                                        disabled={isView}
-                                    />
-                                </Form.Group>
-                                <Form.Group as={Col}>
-                                    <Form.Label>เบอร์โทรติดต่อ</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="tel3"
-                                        value={formData["tel3"] ?? ""}
-                                        onChange={onChange}
-                                        disabled={isView}
-                                    />
-                                </Form.Group>
-                            </Row>
                             {isTeacherProve && (
                                 <Row className="mb-2">
                                     <Form.Group as={Col}>
@@ -466,8 +387,27 @@ export default function Document({
                         </Form>
                     )}
                 </Modal.Body>
+
+                <Modal.Body>
+                    {isPresidentProve && (
+                        <Row className="mb-2">
+                            <Form.Group className="mb-3">
+                                <Form.Label>หมายเหตุ</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={2}
+                                    value={reason}
+                                    onChange={(e) => {
+                                        setReason(e.target.value);
+                                    }}
+                                />
+                            </Form.Group>
+                        </Row>
+                    )}
+                </Modal.Body>
+
                 <Modal.Footer>
-                    {(isEdit || isCreate) && (
+                    {(isEdit || isCreate || isDateExam) && (
                         <Button
                             variant="primary"
                             type="submit"
@@ -513,7 +453,7 @@ export default function Document({
                         </Button>
                     )}
 
-                    {(isTeacherProve || isPresidentProve) && (
+                    {(isTeacherProve || isPresidentProve || isStateExam) && (
                         <Button
                             variant="primary"
                             type="submit"
@@ -521,11 +461,11 @@ export default function Document({
                                 onSubmit(e, "approved");
                             }}
                         >
-                            อนุมัติ
+                            {isStateExam ? "ผ่าน" : "อนุมัติ"}
                         </Button>
                     )}
 
-                    {isPresidentProve && (
+                    {(isPresidentProve || isStateExam) && (
                         <Button
                             variant="danger"
                             type="submit"
@@ -533,7 +473,7 @@ export default function Document({
                                 onSubmit(e, "unapproved");
                             }}
                         >
-                            ไม่อนุมัติ
+                            {isStateExam ? "ไม่ผ่าน" : "ไม่อนุมัติ"}
                         </Button>
                     )}
 

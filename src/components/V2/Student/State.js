@@ -24,6 +24,14 @@ export default function State({ docs }) {
         return approvedText[docVal.approved[type].state];
     };
 
+    const getNote = (type) => {
+        if (_.isEmpty(_docs)) return "ไม่มีข้อมูล";
+
+        const docVal = _.values(_docs)[0];
+
+        return docVal.approved[type]?.note ?? "";
+    };
+
     const isPresidentApproved = (type) => {
         if (!type) return false;
 
@@ -98,6 +106,9 @@ export default function State({ docs }) {
                             <ListGroup variant="flush">
                                 <ListGroup.Item>
                                     สถานะ : {getVerifyState("president")}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    เนื่องจาก : {getNote("president")}
                                 </ListGroup.Item>
                             </ListGroup>
                         </Card>

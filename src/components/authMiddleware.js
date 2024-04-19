@@ -22,7 +22,7 @@ export const authMiddleware = (allowedRoles) => (Component) => {
 
             if (!loading) {
                 if (!_.isEmpty(user)) {
-                    getUserData(user.uid).then((res) => {
+                    getUserData(user?.uid).then((res) => {
                         const role = res.role;
                         const pathname = location.pathname;
 

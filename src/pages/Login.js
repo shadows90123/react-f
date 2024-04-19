@@ -71,7 +71,7 @@ const Login = () => {
                                 <div className="row gy-3 gy-md-4 overflow-hidden">
                                     <div className="col-12">
                                         <label
-                                            for="email"
+                                            htmlFor="email"
                                             className="form-label"
                                         >
                                             อีเมล{" "}
@@ -92,7 +92,7 @@ const Login = () => {
                                     </div>
                                     <div className="col-12">
                                         <label
-                                            for="password"
+                                            htmlFor="password"
                                             className="form-label"
                                         >
                                             รหัสผ่าน{" "}

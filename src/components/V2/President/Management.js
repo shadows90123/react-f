@@ -1,15 +1,14 @@
 import _ from "lodash";
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useLocation } from "react-router-dom";
+import { usePageType } from "../../../hooks/usePageType";
 import Skeleton from "react-loading-skeleton";
 import { auth, GetAllDocument } from "../../../libs/Firebase";
 
 import {
-    getCurrentDocs,
-    getPageType,
     getMainPathText,
     getSubPathText,
+    getDocsByApproveState,
 } from "../../../libs/coreFunc";
 import TableCurrent from "./TableCurrent";
 import TableHistory from "./TableHistory";
@@ -17,13 +16,13 @@ import TableHistory from "./TableHistory";
 import { Tabs, Tab, Card, Row } from "react-bootstrap";
 
 export default function Management() {
-    let location = useLocation();
     const [user] = useAuthState(auth);
+    const [pageType] = usePageType();
     const [isReloadPage, setIsReloadPage] = useState(false);
 
     // Project & Document Type
-    const [projectType, setProjectType] = useState(null);
-    const [docType, setDocType] = useState(null);
+    // const [projectType, setProjectType] = useState(null);
+    // const [docType, setDocType] = useState(null);
 
     // Project & Document Text
     const [projectText, setProjectText] = useState("");
@@ -39,45 +38,55 @@ export default function Management() {
     };
 
     useEffect(() => {
-        if (projectType && docType) {
-            const { reqDocs, hisDocs } = getCurrentDocs(docs, "president");
+        if (pageType?.project) {
+            const currentDocs = getDocsByApproveState(docs, pageType.role, [
+                "submitted",
+            ]);
+            const historyDocs = getDocsByApproveState(docs, pageType.role, [
+                "approved",
+                "unapproved",
+            ]);
+
+            const _meta = {
+                projectType: pageType.project,
+                docType: pageType.document,
+            };
 
             setElReqTable(
                 <TableCurrent
-                    _docs={reqDocs}
-                    _meta={{
-                        projectType,
-                        docType,
-                    }}
+                    _docs={currentDocs}
+                    _meta={_meta}
                     _onReloadPage={onReloadPage}
                 />
             );
             setElHisTable(
                 <TableHistory
-                    _docs={hisDocs}
-                    _meta={{
-                        projectType,
-                        docType,
-                    }}
+                    _docs={historyDocs}
+                    _meta={_meta}
                     _onReloadPage={onReloadPage}
                 />
             );
         }
-    }, [docs, projectType, docType]);
+        // }, [docs, projectType, docType]);
+    }, [docs, pageType]);
 
     useEffect(() => {
-        const { project, document } = getPageType(location.pathname);
-        setProjectType(project);
-        setDocType(document);
+        const { role, project, document } = pageType;
 
-        if (project && document) {
-            setProjectText(getMainPathText(project, "president"));
-            setDocText(getSubPathText(project, document, "president"));
-        }
+        // setProjectType(project);
+        // setDocType(document);
+
+        // if (project && document) {
+        //     setProjectText(getMainPathText(project, role));
+        //     setDocText(getSubPathText(project, document, role));
+        // }
+
+        setProjectText(getMainPathText(project, role));
+        setDocText(getSubPathText(project, document, role));
 
         if (!_.isEmpty(user)) {
             const fetchAll = async (project, document) => {
-                const docsRef = await GetAllDocument("documents");
+                const docsRef = await GetAllDocument("documents", role);
 
                 let _docs = {};
 
@@ -101,7 +110,7 @@ export default function Management() {
 
             fetchAll(project, document);
         }
-    }, [user, location.pathname]);
+    }, [user, pageType]);
 
     if (isReloadPage) return <Skeleton />;
 
@@ -118,9 +127,11 @@ export default function Management() {
                         <Tab eventKey="request" title="ตารางโครงการ">
                             {elReqTable}
                         </Tab>
-                        <Tab eventKey="history" title="ประวัติ">
-                            {elHisTable}
-                        </Tab>
+                        {pageType?.document?.startsWith("2") && (
+                            <Tab eventKey="history" title="ประวัติ">
+                                {elHisTable}
+                            </Tab>
+                        )}
                     </Tabs>
                 </Row>
             </Card.Body>

@@ -16,6 +16,7 @@ import ManageTeacher from "./components/V2/Teacher/Management";
 
 import HomePresident from "./pages/president/Home";
 import ManagePresident from "./components/V2/President/Management";
+import ManageExam from "./components/V2/Exam/Management";
 
 import HomeAdmin from "./pages/admin/Home";
 import UserTable from "./components/V2/Admin/UserTable";
@@ -32,6 +33,7 @@ const AuthManageTeacher = authMiddleware(["teacher"])(ManageTeacher);
 
 const AuthHomePresident = authMiddleware(["president"])(HomePresident);
 const AuthManagePresident = authMiddleware(["president"])(ManagePresident);
+const AuthManageExam = authMiddleware(["president"])(ManageExam);
 
 const AuthHomeAdmin = authMiddleware(["admin"])(HomeAdmin);
 const AuthUserTable = authMiddleware(["admin"])(UserTable);
@@ -195,6 +197,32 @@ export const router = createBrowserRouter([
                     {
                         path: "document_4",
                         element: <AuthManagePresident />,
+                    },
+                ],
+            },
+            {
+                path: "exam_1",
+                children: [
+                    {
+                        path: "document_2_1",
+                        element: <AuthManageExam />,
+                    },
+                    {
+                        path: "document_2_2",
+                        element: <AuthManageExam />,
+                    },
+                ],
+            },
+            {
+                path: "exam_2",
+                children: [
+                    {
+                        path: "document_2_1",
+                        element: <AuthManageExam />,
+                    },
+                    {
+                        path: "document_2_2",
+                        element: <AuthManageExam />,
                     },
                 ],
             },

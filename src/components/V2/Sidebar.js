@@ -20,7 +20,6 @@ export default function Sidebar() {
         } else if (pathname.includes("admin")) {
             setRole("admin");
         }
-        console.log(location.pathname);
     }, [location]);
 
     return (
@@ -49,7 +48,7 @@ export default function Sidebar() {
                                         <div className="mb-1">
                                             {item?.icon && (
                                                 <i
-                                                    class={`fa-solid ${item.icon} fa-sm me-2`}
+                                                    className={`fa-solid ${item.icon} fa-sm me-2`}
                                                 ></i>
                                             )}
                                             {item.text}
@@ -73,7 +72,7 @@ export default function Sidebar() {
                                                 >
                                                     {subItem?.icon && (
                                                         <i
-                                                            class={`fa-regular ${subItem.icon} fa-sm me-2`}
+                                                            className={`fa-regular ${subItem.icon} fa-sm me-2`}
                                                         ></i>
                                                     )}
                                                     {subItem.text}
@@ -95,7 +94,7 @@ export default function Sidebar() {
                                     >
                                         {item?.icon && (
                                             <i
-                                                class={`fa-regular ${item.icon} fa-sm me-2`}
+                                                className={`fa-regular ${item.icon} fa-sm me-2`}
                                             ></i>
                                         )}
                                         {item.text}

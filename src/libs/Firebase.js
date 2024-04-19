@@ -15,6 +15,8 @@ import {
     doc,
     updateDoc,
     deleteDoc,
+    query,
+    orderBy,
 } from "firebase/firestore";
 
 import {
@@ -77,7 +79,7 @@ export const registerWithPassword = async ({
         );
         const user = userCredential.user;
 
-        await setDoc(doc(db, "users", user.uid), {
+        await setDoc(doc(db, "users", user?.uid), {
             email: user.email,
             role,
             name,
@@ -113,10 +115,19 @@ export const GetDocument = async (collect, document) => {
     }
 };
 
-export const GetAllDocument = async (collect) => {
+export const GetAllDocument = async (collect, role = "student") => {
     try {
-        const querySnapshot = await getDocs(collection(db, collect));
+        let orderType = "created_at";
+
+        if (role === "teacher") {
+            orderType = "approved.teacher.created_at";
+        } else if (role === "president") {
+            orderType = "approved.president.created_at";
+        }
+
+        const q = query(collection(db, collect), orderBy(orderType));
         const retData = {};
+        const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             retData[doc.id] = doc.data();
         });
@@ -124,6 +135,17 @@ export const GetAllDocument = async (collect) => {
     } catch (error) {
         console.error(error);
     }
+
+    // try {
+    //     const querySnapshot = await getDocs(collection(db, collect));
+    //     const retData = {};
+    //     querySnapshot.forEach((doc) => {
+    //         retData[doc.id] = doc.data();
+    //     });
+    //     return retData;
+    // } catch (error) {
+    //     console.error(error);
+    // }
 };
 
 export const AddDocument = async (collect, data) => {
@@ -168,27 +190,43 @@ export const getFromStorage = async (path) => {
 ///////                     Form
 //////////////////////////////////////////////////////////
 
-export const CreateDocForm = async (_config, _user, formData) => {
+export const CreateDocForm = async ({
+    project_type,
+    doc_type,
+    doc_form,
+    owner_id,
+}) => {
+    const created_at = new Date().toJSON();
+    const updated_at = new Date().toJSON();
+    const state = "unsubmitted";
     return await AddDocument("documents", {
-        created_at: new Date().toJSON(),
-        updated_at: new Date().toJSON(),
-        project_type: _config?.project,
-        doc_type: _config?.doc,
-        doc_form: formData,
-        owner_id: _user.uid,
+        created_at,
+        updated_at,
+        project_type,
+        doc_type,
+        doc_form,
+        owner_id,
         approved: {
             teacher: {
-                state: "unsubmitted",
-                created_at: new Date().toJSON(),
-                updated_at: new Date().toJSON(),
+                state,
+                teacher_id: null,
+                signatured: null,
+                created_at,
+                updated_at,
             },
             president: {
-                state: "unsubmitted",
-                created_at: new Date().toJSON(),
-                updated_at: new Date().toJSON(),
+                state,
+                reason: "",
+                created_at,
+                updated_at,
+            },
+            exam: {
+                state,
+                dated: null,
+                created_at,
+                updated_at,
             },
         },
-        signatured: "",
     });
 };
 
@@ -199,7 +237,7 @@ export const EditDocForm = async (docId, formData) => {
     });
 };
 
-export const ApproveDocForm = async (docId, teacher_id) => {
+export const ApproveDocForm = async ({ docId, teacher_id }) => {
     await UpdateDocument("documents", docId, {
         updated_at: new Date().toJSON(),
         "approved.teacher.state": "submitted",
@@ -215,7 +253,7 @@ export const SignatureForm = async (docId, data) => {
 
     await UpdateDocument("documents", docId, {
         updated_at: new Date().toJSON(),
-        signatured: uploaded.metadata.fullPath,
+        "approved.teacher.signatured": uploaded.metadata.fullPath,
         "approved.teacher.state": "approved",
         "approved.teacher.updated_at": new Date().toJSON(),
         "approved.president.state": "submitted",
@@ -225,10 +263,21 @@ export const SignatureForm = async (docId, data) => {
     return uploaded.metadata.fullPath;
 };
 
-export const PresidentApproveForm = async (docId, state) => {
+export const PresidentApproveForm = async (docId, { state, reason }) => {
     await UpdateDocument("documents", docId, {
         updated_at: new Date().toJSON(),
         "approved.president.state": state,
+        "approved.president.reason": reason,
         "approved.president.updated_at": new Date().toJSON(),
+        "approved.exam.state": "submitted",
+        "approved.exam.created_at": new Date().toJSON(),
+        "approved.exam.updated_at": new Date().toJSON(),
+    });
+};
+
+export const ExamDateForm = async ({ docId, dated }) => {
+    await UpdateDocument("documents", docId, {
+        "exam.date": dated,
+        "exam.updated_at": new Date().toJSON(),
     });
 };

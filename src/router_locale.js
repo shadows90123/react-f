@@ -151,6 +151,40 @@ export const router_locale = {
                 },
             ],
         },
+        {
+            text: "ตารางสอบ โครงงาน 1",
+            path: "exam_1",
+            icon: "fa-folder-open",
+            children: [
+                {
+                    text: "เอกสาร ป.2 (ความก้าวหน้า)",
+                    path: "document_2_1",
+                    icon: "fa-table",
+                },
+                {
+                    text: "เอกสาร ป.2 (ขั้นสุดท้าย)",
+                    path: "document_2_2",
+                    icon: "fa-table",
+                },
+            ],
+        },
+        {
+            text: "ตารางสอบ โครงงาน 2",
+            path: "exam_2",
+            icon: "fa-folder-open",
+            children: [
+                {
+                    text: "เอกสาร ป.2 (ความก้าวหน้า)",
+                    path: "document_2_1",
+                    icon: "fa-table",
+                },
+                {
+                    text: "เอกสาร ป.2 (ขั้นสุดท้าย)",
+                    path: "document_2_2",
+                    icon: "fa-table",
+                },
+            ],
+        },
     ],
     admin: [
         {

@@ -1,23 +1,22 @@
 import _ from "lodash";
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useLocation } from "react-router-dom";
+import { usePageType } from "../../../hooks/usePageType";
 import { Tabs, Tab, Card, Row } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 
 import { auth, GetAllDocument } from "../../../libs/Firebase";
 import {
-    getCurrentDocs,
-    getPageType,
     getMainPathText,
     getSubPathText,
+    getDocsByApproveState,
 } from "../../../libs/coreFunc";
 import TableCurrent from "./TableCurrent";
 import TableHistory from "./TableHistory";
 
 export default function Management() {
-    let location = useLocation();
     const [user] = useAuthState(auth);
+    const [pageType] = usePageType();
     const [isReloadPage, setIsReloadPage] = useState(false);
 
     // Project & Document Type
@@ -39,11 +38,17 @@ export default function Management() {
 
     useEffect(() => {
         if (projectType !== "" && docType !== "") {
-            const { reqDocs, hisDocs } = getCurrentDocs(docs, "teacher");
+            const currentDocs = getDocsByApproveState(docs, "teacher", [
+                "submitted",
+            ]);
+            const historyDocs = getDocsByApproveState(docs, "teacher", [
+                "approved",
+                "unapproved",
+            ]);
 
             setElReqTable(
                 <TableCurrent
-                    _docs={reqDocs}
+                    _docs={currentDocs}
                     _meta={{
                         projectType,
                         docType,
@@ -54,7 +59,7 @@ export default function Management() {
 
             setElHisTable(
                 <TableHistory
-                    _docs={hisDocs}
+                    _docs={historyDocs}
                     _meta={{
                         projectType,
                         docType,
@@ -66,7 +71,7 @@ export default function Management() {
     }, [docs, projectType, docType]);
 
     useEffect(() => {
-        const { project, document } = getPageType(location.pathname);
+        const { project, document } = pageType;
         setProjectType(project);
         setDocType(document);
 
@@ -77,7 +82,7 @@ export default function Management() {
 
         if (!_.isEmpty(user)) {
             const fetchAll = async (project, document) => {
-                const docsRef = await GetAllDocument("documents");
+                const docsRef = await GetAllDocument("documents", "teacher");
 
                 let _docs = {};
 
@@ -103,7 +108,7 @@ export default function Management() {
 
             fetchAll(project, document);
         }
-    }, [user, location.pathname, isReloadPage]);
+    }, [user, pageType, isReloadPage]);
 
     if (isReloadPage) return <Skeleton />;
 

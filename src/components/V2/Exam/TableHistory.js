@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import _ from "lodash";
-import { Table, Row } from "react-bootstrap";
 
 import { getDateLocale } from "../../../libs/DateParser";
 import { getSubsetArray } from "../../../libs/coreFunc";
+import { Table, Row } from "react-bootstrap";
 
 import Pagination from "../Pagination";
 import DocForm from "../Form/LayoutForm";
@@ -42,7 +42,7 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                             <td>{docs[key].doc_form.projectName}</td>
                             <td>
                                 {getDateLocale(
-                                    docs[key].approved["teacher"].updated_at
+                                    docs[key].approved["president"].updated_at
                                 )}
                             </td>
                             <td>
@@ -56,18 +56,11 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                             onReloadPage={_onReloadPage}
                                         />
                                         <DocForm
-                                            type="edit"
+                                            type="download"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
                                             meta={meta}
-                                            onReloadPage={_onReloadPage}
-                                        />
-                                        <DocForm
-                                            type="delete"
-                                            owner={{ uid: docs[key].owner_id }}
-                                            docs={{ [key]: docs[key] }}
-                                            meta={meta}
-                                            onReloadPage={_onReloadPage}
+                                            onReloadPage={() => {}}
                                         />
                                     </>
                                 ) : docType.startsWith("2") ? (
@@ -80,18 +73,11 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                             onReloadPage={_onReloadPage}
                                         />
                                         <DocForm
-                                            type="edit"
+                                            type="download"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
                                             meta={meta}
-                                            onReloadPage={_onReloadPage}
-                                        />
-                                        <DocForm
-                                            type="delete"
-                                            owner={{ uid: docs[key].owner_id }}
-                                            docs={{ [key]: docs[key] }}
-                                            meta={meta}
-                                            onReloadPage={_onReloadPage}
+                                            onReloadPage={() => {}}
                                         />
                                     </>
                                 ) : docType.startsWith("3") ? (
@@ -104,18 +90,11 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                             onReloadPage={_onReloadPage}
                                         />
                                         <DocForm
-                                            type="edit"
+                                            type="download"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
                                             meta={meta}
-                                            onReloadPage={_onReloadPage}
-                                        />
-                                        <DocForm
-                                            type="delete"
-                                            owner={{ uid: docs[key].owner_id }}
-                                            docs={{ [key]: docs[key] }}
-                                            meta={meta}
-                                            onReloadPage={_onReloadPage}
+                                            onReloadPage={() => {}}
                                         />
                                     </>
                                 ) : docType.startsWith("4") ? (
@@ -128,18 +107,11 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                             onReloadPage={_onReloadPage}
                                         />
                                         <DocForm
-                                            type="edit"
+                                            type="download"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
                                             meta={meta}
-                                            onReloadPage={_onReloadPage}
-                                        />
-                                        <DocForm
-                                            type="delete"
-                                            owner={{ uid: docs[key].owner_id }}
-                                            docs={{ [key]: docs[key] }}
-                                            meta={meta}
-                                            onReloadPage={_onReloadPage}
+                                            onReloadPage={() => {}}
                                         />
                                     </>
                                 ) : (

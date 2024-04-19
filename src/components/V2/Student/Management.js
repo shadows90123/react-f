@@ -1,28 +1,19 @@
 import _ from "lodash";
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useLocation } from "react-router-dom";
+import { usePageType } from "../../../hooks/usePageType";
 import { Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 
-import {
-    getPageType,
-    getMainPathText,
-    getSubPathText,
-} from "../../../libs/coreFunc";
+import { getMainPathText, getSubPathText } from "../../../libs/coreFunc";
 import { auth, GetAllDocument } from "../../../libs/Firebase";
 
 import State from "./State";
-
-import Document1 from "../Form/Document1";
-import Document2 from "../Form/Document2";
-import Document3 from "../Form/Document3";
-import Document4 from "../Form/Document4";
+import DocForm from "../Form/LayoutForm";
 
 export default function DocumentStudent() {
-    let location = useLocation();
     const [user] = useAuthState(auth);
-
+    const [pageType] = usePageType();
     const [manageElem, setManageElem] = useState(<></>);
     const [stateElem, setStateElem] = useState(<></>);
     const [isReloadPage, setIsReloadPage] = useState(false);
@@ -123,7 +114,7 @@ export default function DocumentStudent() {
     };
 
     useEffect(() => {
-        const { project, document } = getPageType(location.pathname);
+        const { project, document } = pageType;
         setProjectType(project);
         setDocType(document);
         if (project && document) {
@@ -139,7 +130,7 @@ export default function DocumentStudent() {
 
                 _.keys(docsRef).map((key) => {
                     const item = docsRef[key];
-                    if (item.owner_id === user.uid) {
+                    if (item.owner_id === user?.uid) {
                         if (
                             item.project_type === project &&
                             item.doc_type === document
@@ -164,12 +155,12 @@ export default function DocumentStudent() {
 
             fetchAllDocMeta(project, document);
         }
-    }, [user, location.pathname, isReloadPage]);
+    }, [user, pageType, isReloadPage]);
 
     useEffect(() => {
         if (projectType && docType) {
             setStateElem(<State docs={docs} />);
-
+            const _meta = { projectType, docType };
             setManageElem(
                 <Card body className="mb-2">
                     <Card.Subtitle className="mb-2 text-muted">
@@ -177,242 +168,182 @@ export default function DocumentStudent() {
                     </Card.Subtitle>
                     {docType.startsWith("1") ? (
                         <>
-                            <Document1
+                            <DocForm
                                 disable={!(docOptCondition.canCreate ?? false)}
                                 type="create"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={{}}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document1
+                            <DocForm
                                 disable={!(docOptCondition.canEdit ?? false)}
                                 type="edit"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document1
+                            <DocForm
                                 disable={!(docOptCondition.canDelete ?? false)}
                                 type="delete"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document1
+                            <DocForm
                                 disable={!(docOptCondition.canApprove ?? false)}
                                 type="approve"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document1
+                            <DocForm
                                 disable={
                                     !(docOptCondition.canDownload ?? false)
                                 }
                                 type="download"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
-                                onReloadPage={onReloadPage}
+                                meta={_meta}
+                                onReloadPage={() => {}}
                             />
                         </>
                     ) : docType.startsWith("2") ? (
                         <>
-                            <Document2
+                            <DocForm
                                 disable={!(docOptCondition.canCreate ?? false)}
                                 type="create"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={{}}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document2
+                            <DocForm
                                 disable={!(docOptCondition.canEdit ?? false)}
                                 type="edit"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document2
+                            <DocForm
                                 disable={!(docOptCondition.canDelete ?? false)}
                                 type="delete"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document2
+                            <DocForm
                                 disable={!(docOptCondition.canApprove ?? false)}
                                 type="approve"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document2
+                            <DocForm
                                 disable={
                                     !(docOptCondition.canDownload ?? false)
                                 }
                                 type="download"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
-                                onReloadPage={onReloadPage}
+                                meta={_meta}
+                                onReloadPage={() => {}}
                             />
                         </>
                     ) : docType.startsWith("3") ? (
                         <>
-                            <Document3
+                            <DocForm
                                 disable={!(docOptCondition.canCreate ?? false)}
                                 type="create"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={{}}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document3
+                            <DocForm
                                 disable={!(docOptCondition.canEdit ?? false)}
                                 type="edit"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document3
+                            <DocForm
                                 disable={!(docOptCondition.canDelete ?? false)}
                                 type="delete"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document3
+                            <DocForm
                                 disable={!(docOptCondition.canApprove ?? false)}
                                 type="approve"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document3
+                            <DocForm
                                 disable={
                                     !(docOptCondition.canDownload ?? false)
                                 }
                                 type="download"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
-                                onReloadPage={onReloadPage}
+                                meta={_meta}
+                                onReloadPage={() => {}}
                             />
                         </>
                     ) : docType.startsWith("4") ? (
                         <>
-                            <Document4
+                            <DocForm
                                 disable={!(docOptCondition.canCreate ?? false)}
                                 type="create"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={{}}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document4
+                            <DocForm
                                 disable={!(docOptCondition.canEdit ?? false)}
                                 type="edit"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document4
+                            <DocForm
                                 disable={!(docOptCondition.canDelete ?? false)}
                                 type="delete"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document4
+                            <DocForm
                                 disable={!(docOptCondition.canApprove ?? false)}
                                 type="approve"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
+                                meta={_meta}
                                 onReloadPage={onReloadPage}
                             />
-                            <Document4
+                            <DocForm
                                 disable={
                                     !(docOptCondition.canDownload ?? false)
                                 }
                                 type="download"
-                                owner={{ uid: user.uid }}
+                                owner={{ uid: user?.uid }}
                                 docs={docs}
-                                meta={{
-                                    projectType,
-                                    docType,
-                                }}
-                                onReloadPage={onReloadPage}
+                                meta={_meta}
+                                onReloadPage={() => {}}
                             />
                         </>
                     ) : (

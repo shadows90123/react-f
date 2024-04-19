@@ -6,22 +6,19 @@ import { router_locale } from "../router_locale";
 ///                 Docs
 //////////////////////////////////////////////
 
-export const getCurrentDocs = (_docs, role) => {
-    let reqDocs = {};
-    let hisDocs = {};
+export const getDocsByApproveState = (_docs, _role, _state) => {
+    let docs = {};
+
     _.keys(_docs).map((key) => {
         const d = _docs[key];
-        const state = d.approved[role].state;
+        const state = d.approved[_role].state;
 
-        if (state === "submitted") {
-            reqDocs = { ...reqDocs, [key]: d };
-        }
-        if (state !== "submitted" && state !== "unsubmitted") {
-            hisDocs = { ...hisDocs, [key]: d };
+        if (_state.includes(state)) {
+            docs = { ...docs, [key]: d };
         }
     });
 
-    return { reqDocs, hisDocs };
+    return docs;
 };
 
 export const getSubsetArray = (arr, start, end) => {
@@ -86,19 +83,6 @@ export const sortDocByDate = (docArr, docObj, role, type) => {
 //////////////////////////////////////////////
 ///             String Parser
 //////////////////////////////////////////////
-
-export const getPageType = (str) => {
-    const regexPattern =
-        /project_(?<project>\d+)\/document_(?<document>\d+(?:_\d+)?)/;
-    const matches = str.match(regexPattern);
-    if (matches) {
-        const { project, document } = matches.groups;
-        return { project, document };
-    } else {
-        console.log("No match found.");
-        return { project: null, document: null };
-    }
-};
 
 export const getMainPathText = (path, type) => {
     for (const i in router_locale[type]) {

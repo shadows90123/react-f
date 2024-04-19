@@ -2,13 +2,9 @@ import { useState, useEffect } from "react";
 import _ from "lodash";
 import Pagination from "../Pagination";
 import { getDateLocale } from "../../../libs/DateParser";
-import { getSubsetArray, sortDocByDate } from "../../../libs/coreFunc";
+import { getSubsetArray } from "../../../libs/coreFunc";
 import { Table, Row } from "react-bootstrap";
-
-import Document1 from "../Form/Document1";
-import Document2 from "../Form/Document2";
-import Document3 from "../Form/Document3";
-import Document4 from "../Form/Document4";
+import DocForm from "../Form/LayoutForm";
 
 export default function TableData({ _docs, _meta, _onReloadPage }) {
     const [meta] = useState(_meta);
@@ -17,7 +13,7 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
 
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(2);
+    const [itemsPerPage] = useState(10);
     const [totalItems, setTotalItems] = useState(0);
 
     const onPageChange = (page) => {
@@ -32,18 +28,12 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
 
     useEffect(() => {
         const docsArr = getItemOnPage(docs);
-        const currentSortByDate = sortDocByDate(
-            docsArr,
-            docs,
-            "teacher",
-            "asc"
-        );
 
         const { docType } = meta;
 
         setElTableData(
             <>
-                {currentSortByDate.map((key, index) => {
+                {docsArr.map((key, index) => {
                     return (
                         <tr key={index}>
                             <td>{index + 1}</td>
@@ -55,7 +45,7 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                             </td>
                             <td>
                                 {docType.startsWith("1") ? (
-                                    <Document1
+                                    <DocForm
                                         type="view"
                                         owner={{ uid: docs[key].owner_id }}
                                         docs={{ [key]: docs[key] }}
@@ -63,7 +53,7 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                         onReloadPage={_onReloadPage}
                                     />
                                 ) : docType.startsWith("2") ? (
-                                    <Document2
+                                    <DocForm
                                         type="view"
                                         owner={{ uid: docs[key].owner_id }}
                                         docs={{ [key]: docs[key] }}
@@ -71,7 +61,7 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                         onReloadPage={_onReloadPage}
                                     />
                                 ) : docType.startsWith("3") ? (
-                                    <Document3
+                                    <DocForm
                                         type="view"
                                         owner={{ uid: docs[key].owner_id }}
                                         docs={{ [key]: docs[key] }}
@@ -79,7 +69,7 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                         onReloadPage={_onReloadPage}
                                     />
                                 ) : docType.startsWith("4") ? (
-                                    <Document4
+                                    <DocForm
                                         type="view"
                                         owner={{ uid: docs[key].owner_id }}
                                         docs={{ [key]: docs[key] }}

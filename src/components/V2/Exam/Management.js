@@ -5,8 +5,13 @@ import { usePageType } from "../../../hooks/usePageType";
 import Skeleton from "react-loading-skeleton";
 import { auth, GetAllDocument } from "../../../libs/Firebase";
 
-import { getMainPathText, getSubPathText } from "../../../libs/coreFunc";
-import TableData from "./TableData";
+import {
+    getMainPathText,
+    getSubPathText,
+    getDocsByApproveState,
+} from "../../../libs/coreFunc";
+import TableCurrent from "./TableCurrent";
+import TableHistory from "./TableHistory";
 
 import { Tabs, Tab, Card, Row } from "react-bootstrap";
 
@@ -26,6 +31,7 @@ export default function Management() {
     const [docs, setDocs] = useState({});
 
     const [elReqTable, setElReqTable] = useState(<></>);
+    const [elHisTable, setElHisTable] = useState(<></>);
 
     const onReloadPage = () => {
         setIsReloadPage(true);
@@ -33,9 +39,27 @@ export default function Management() {
 
     useEffect(() => {
         if (projectType && docType) {
+            const currentDocs = getDocsByApproveState(docs, "exam", [
+                "submitted",
+            ]);
+            const historyDocs = getDocsByApproveState(docs, "exam", [
+                "approved",
+                "unapproved",
+            ]);
+
             setElReqTable(
-                <TableData
-                    _docs={docs}
+                <TableCurrent
+                    _docs={currentDocs}
+                    _meta={{
+                        projectType,
+                        docType,
+                    }}
+                    _onReloadPage={onReloadPage}
+                />
+            );
+            setElHisTable(
+                <TableHistory
+                    _docs={historyDocs}
                     _meta={{
                         projectType,
                         docType,
@@ -52,8 +76,8 @@ export default function Management() {
         setDocType(document);
 
         if (project && document) {
-            setProjectText(getMainPathText(project, "admin"));
-            setDocText(getSubPathText(project, document, "admin"));
+            setProjectText(getMainPathText(project, "president"));
+            setDocText(getSubPathText(project, document, "president"));
         }
 
         if (!_.isEmpty(user)) {
@@ -76,12 +100,13 @@ export default function Management() {
 
                 setDocs(_docs);
                 setElReqTable(<></>);
+                setElHisTable(<></>);
                 setIsReloadPage(false);
             };
 
             fetchAll(project, document);
         }
-    }, [user, pageType, isReloadPage]);
+    }, [user, pageType]);
 
     if (isReloadPage) return <Skeleton />;
 
@@ -98,6 +123,11 @@ export default function Management() {
                         <Tab eventKey="request" title="ตารางโครงการ">
                             {elReqTable}
                         </Tab>
+                        {docType?.startsWith("2") && (
+                            <Tab eventKey="history" title="ประวัติ">
+                                {elHisTable}
+                            </Tab>
+                        )}
                     </Tabs>
                 </Row>
             </Card.Body>
