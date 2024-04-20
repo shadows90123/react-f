@@ -24,7 +24,7 @@ export default function State({ docs }) {
         return approvedText[docVal.approved[type].state];
     };
 
-    const getNote = (type) => {
+    const getReason = (type) => {
         if (_.isEmpty(_docs)) return "ไม่มีข้อมูล";
 
         const docVal = _.values(_docs)[0];
@@ -96,6 +96,9 @@ export default function State({ docs }) {
                             <ListGroup.Item>
                                 สถานะ : {getVerifyState("teacher")}
                             </ListGroup.Item>
+                            <ListGroup.Item>
+                                หมายเหตุ : {getReason("teacher")}
+                            </ListGroup.Item>
                         </ListGroup>
                     </Card>
                 </Col>
@@ -108,7 +111,7 @@ export default function State({ docs }) {
                                     สถานะ : {getVerifyState("president")}
                                 </ListGroup.Item>
                                 <ListGroup.Item>
-                                    หมายเหตุ : {getNote("president")}
+                                    หมายเหตุ : {getReason("president")}
                                 </ListGroup.Item>
                             </ListGroup>
                         </Card>

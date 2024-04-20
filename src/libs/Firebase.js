@@ -211,6 +211,7 @@ export const CreateDocForm = async ({
                 signatured: null,
                 created_at,
                 updated_at,
+                reason: "",
             },
             president: {
                 state,
@@ -245,7 +246,7 @@ export const ApproveDocForm = async ({ docId, teacher_id }) => {
     });
 };
 
-export const SignatureForm = async ({ docId, signature }) => {
+export const SignatureForm = async ({ docId, signature, reason }) => {
     const storageRef = ref(storage, `signatures/sig_${Date.now()}.png`);
     const uploaded = await uploadString(storageRef, signature, "data_url");
 
@@ -253,6 +254,7 @@ export const SignatureForm = async ({ docId, signature }) => {
         updated_at: new Date().toJSON(),
         "approved.teacher.signatured": uploaded.metadata.fullPath,
         "approved.teacher.state": "approved",
+        "approved.teacher.reason": reason,
         "approved.teacher.updated_at": new Date().toJSON(),
         "approved.president.state": "submitted",
         "approved.president.created_at": new Date().toJSON(),

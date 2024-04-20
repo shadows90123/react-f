@@ -199,7 +199,7 @@ export default function LayoutForm({
                     .getTrimmedCanvas()
                     .toDataURL("signCanvas");
 
-                await SignatureForm({ docId, signature });
+                await SignatureForm({ docId, signature, reason });
             } else if (isPresidentProve) {
                 const docId = _.keys(_docs)[0];
                 await PresidentApproveForm({
@@ -399,7 +399,7 @@ export default function LayoutForm({
                 </Modal.Body>
 
                 <Modal.Body>
-                    {isPresidentProve && (
+                    {(isPresidentProve || isTeacherProve) && (
                         <Row className="mb-2">
                             <Form.Group className="mb-3">
                                 <Form.Label>หมายเหตุ</Form.Label>
