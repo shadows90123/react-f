@@ -348,7 +348,7 @@ export default function LayoutForm({
                                     {_.keys(allTeacher).map((key) => {
                                         return (
                                             <option key={key} value={key}>
-                                                {allTeacher[key].email}
+                                                {allTeacher[key].name}
                                             </option>
                                         );
                                     })}

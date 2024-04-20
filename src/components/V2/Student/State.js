@@ -29,7 +29,7 @@ export default function State({ docs }) {
 
         const docVal = _.values(_docs)[0];
 
-        return docVal.approved[type]?.note ?? "";
+        return docVal.approved[type]?.reason ?? "";
     };
 
     const isPresidentApproved = (type) => {
@@ -108,7 +108,7 @@ export default function State({ docs }) {
                                     สถานะ : {getVerifyState("president")}
                                 </ListGroup.Item>
                                 <ListGroup.Item>
-                                    เนื่องจาก : {getNote("president")}
+                                    หมายเหตุ : {getNote("president")}
                                 </ListGroup.Item>
                             </ListGroup>
                         </Card>
