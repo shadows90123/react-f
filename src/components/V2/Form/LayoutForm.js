@@ -94,7 +94,7 @@ export default function LayoutForm({
         ? "สถานะการสอบ"
         : "";
 
-    const btnColor = isDelete ? "delete" : isView ? "view" : "primary";
+    const btnColor = isDelete ? "danger" : "primary";
 
     const resetSignature = () => {
         signCanvas.clear();
@@ -311,29 +311,6 @@ export default function LayoutForm({
 
     return (
         <>
-            <style type="text/css">
-                {`
-                    .btn-view {
-                        background-color:#42ba96;
-                        color: white;
-                    }
-                    .btn-view:hover {
-                        background-color:#39a887;
-                        color: white;
-                    }
-
-                    .btn-delete {
-                        background-color:#7e0202;
-                        color: white;
-                    }
-                    .btn-delete:hover {
-                        background-color:#690202;
-                        color: white;
-                    }
-
-                `}
-            </style>
-
             <Button
                 variant={btnColor}
                 className="m-1"
