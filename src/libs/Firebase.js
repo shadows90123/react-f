@@ -245,9 +245,9 @@ export const ApproveDocForm = async ({ docId, teacher_id }) => {
     });
 };
 
-export const SignatureForm = async ({ docId, data }) => {
+export const SignatureForm = async ({ docId, signature }) => {
     const storageRef = ref(storage, `signatures/sig_${Date.now()}.png`);
-    const uploaded = await uploadString(storageRef, data, "data_url");
+    const uploaded = await uploadString(storageRef, signature, "data_url");
 
     await UpdateDocument("documents", docId, {
         updated_at: new Date().toJSON(),

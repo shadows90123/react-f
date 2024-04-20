@@ -43,7 +43,22 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                 )}
                             </td>
                             <td>
-                                {docType.startsWith("1") ? (
+                                <DocForm
+                                    type="view"
+                                    owner={{ uid: docs[key].owner_id }}
+                                    docs={{ [key]: docs[key] }}
+                                    meta={_meta}
+                                    onReloadPage={_onReloadPage}
+                                />
+                                <DocForm
+                                    type="download"
+                                    owner={{ uid: docs[key].owner_id }}
+                                    docs={{ [key]: docs[key] }}
+                                    meta={_meta}
+                                    onReloadPage={_onReloadPage}
+                                />
+
+                                {/* {docType.startsWith("1") ? (
                                     <DocForm
                                         type="view"
                                         owner={{ uid: docs[key].owner_id }}
@@ -77,7 +92,7 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                     />
                                 ) : (
                                     <></>
-                                )}
+                                )} */}
                             </td>
                         </tr>
                     );
