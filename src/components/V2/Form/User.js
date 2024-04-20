@@ -133,21 +133,6 @@ export default function FormUser({
                                     />
                                 </Form.Group>
                             </Row>
-                            {form?.role === "student" && (
-                                <Row className="mb-2">
-                                    <Form.Group as={Col}>
-                                        <Form.Label>รห้สนักศึกษา</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="studentId"
-                                            value={form["studentId"] ?? ""}
-                                            onChange={onChange}
-                                            required
-                                            disabled={isView}
-                                        />
-                                    </Form.Group>
-                                </Row>
-                            )}
                             <Row className="mb-2">
                                 <Form.Group as={Col}>
                                     <Form.Label>เบอร์โทร</Form.Label>
