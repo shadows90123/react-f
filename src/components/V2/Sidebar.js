@@ -29,7 +29,7 @@ export default function Sidebar() {
             className="flex-column text-light h-100 p-2 bg-dark"
         >
             <Nav.Item as="li">
-                <Nav.Link href="/" className="fs-4">
+                <Nav.Link href="/" className="fs-4 text-white">
                     หน้าหลัก
                 </Nav.Link>
             </Nav.Item>

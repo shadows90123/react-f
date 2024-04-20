@@ -2,7 +2,10 @@ import _ from "lodash";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, Col, Row } from "react-bootstrap";
-import { registerWithPassword, UpdateDocument } from "../../../libs/Firebase";
+import {
+    adminRegisterWithPassword,
+    UpdateDocument,
+} from "../../../libs/Firebase";
 import { getDateLocale } from "../../../libs/DateParser";
 
 const Roles = {
@@ -48,7 +51,7 @@ export default function FormUser({
 
         try {
             if (isCreate) {
-                const isRegister = await registerWithPassword(form);
+                const isRegister = await adminRegisterWithPassword(form);
                 if (isRegister) {
                     onHide();
                     toast.success("สำเร็จ");

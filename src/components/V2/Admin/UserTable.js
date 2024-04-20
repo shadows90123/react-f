@@ -20,7 +20,7 @@ export default function UserTable() {
 
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(5);
+    const [itemsPerPage] = useState(10);
     const [totalItems, setTotalItems] = useState(0);
 
     const onPageChange = (page) => {
@@ -90,7 +90,7 @@ export default function UserTable() {
                 </>
             );
         }
-    }, [users, currentPage]);
+    }, [users, currentPage, isReloadPage]);
 
     return (
         <Card>

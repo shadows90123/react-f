@@ -1,9 +1,11 @@
 import { initializeApp } from "firebase/app";
+
 import {
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
+    setPersistence,
 } from "firebase/auth";
 import {
     getFirestore,
@@ -40,7 +42,7 @@ const firebaseConfig = {
 //////////////////////////////////////////////////////////
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth();
+export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
@@ -86,11 +88,60 @@ export const registerWithPassword = async ({
             created_at: new Date().toJSON(),
             updated_at: new Date().toJSON(),
         });
+
         return true;
     } catch (error) {
         console.error(error);
         return false;
     }
+};
+
+export const adminRegisterWithPassword = async ({
+    name,
+    tel,
+    email,
+    password,
+    role,
+}) => {
+    let success = true;
+    try {
+        const secondaryApp = initializeApp(firebaseConfig, "secondaryApp");
+        const secondaryAuth = getAuth(secondaryApp);
+        console.log(secondaryAuth);
+
+        // secondaryAuth.setPersistence("none");
+
+        setPersistence(secondaryAuth, "none")
+            .catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                success = false;
+            })
+            .finally(async () => {
+                const userCredential = await createUserWithEmailAndPassword(
+                    secondaryAuth,
+                    email,
+                    password
+                );
+
+                const user = userCredential.user;
+
+                await setDoc(doc(db, "users", user?.uid), {
+                    email: user.email,
+                    role,
+                    name,
+                    tel,
+                    created_at: new Date().toJSON(),
+                    updated_at: new Date().toJSON(),
+                });
+            });
+        return true;
+    } catch (error) {
+        console.error(error);
+        success = false;
+    }
+    return success;
 };
 
 //////////////////////////////////////////////////////////

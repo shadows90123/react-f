@@ -11,7 +11,9 @@ function Header() {
     return (
         <Navbar expand="lg" className="bg-dark">
             <Container>
-                <Navbar.Brand className="text-light">Boss Project</Navbar.Brand>
+                <Navbar.Brand className="text-light">
+                    ระบบจัดการปริญญานิพนธ์
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse
                     id="basic-navbar-nav"
