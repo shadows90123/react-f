@@ -107,9 +107,6 @@ export const adminRegisterWithPassword = async ({
     try {
         const secondaryApp = initializeApp(firebaseConfig, "secondaryApp");
         const secondaryAuth = getAuth(secondaryApp);
-        console.log(secondaryAuth);
-
-        // secondaryAuth.setPersistence("none");
 
         setPersistence(secondaryAuth, "none")
             .catch((error) => {
