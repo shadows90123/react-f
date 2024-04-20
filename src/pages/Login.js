@@ -135,13 +135,13 @@ const Login = () => {
                                         >
                                             สร้างบัญชีใหม่
                                         </a>
-                                        <a
+                                        {/* <a
                                             href="#"
                                             className="link-secondary text-decoration-none"
                                             onClick={onForgotPass}
                                         >
                                             ลืมรหัสผ่าน
-                                        </a>
+                                        </a> */}
                                     </div>
                                 </div>
                             </div>

@@ -61,7 +61,7 @@ const SignUp = () => {
     };
 
     useEffect(() => {
-        setForm({ role: _.keys(Roles)[0] });
+        setForm({ role: "student" });
     }, []);
 
     return (
@@ -159,7 +159,7 @@ const SignUp = () => {
                                         />
                                     </div>
 
-                                    <div className="col-12">
+                                    {/* <div className="col-12">
                                         <label
                                             for="password"
                                             className="form-label"
@@ -189,7 +189,7 @@ const SignUp = () => {
                                                 );
                                             })}
                                         </select>
-                                    </div>
+                                    </div> */}
 
                                     <div className="col-12">
                                         <div className="d-grid">

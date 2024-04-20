@@ -65,7 +65,6 @@ export const loginWithPassword = async (email, password) => {
 
 export const registerWithPassword = async ({
     name,
-    studentId,
     tel,
     email,
     password,
@@ -83,7 +82,6 @@ export const registerWithPassword = async ({
             email: user.email,
             role,
             name,
-            studentId,
             tel,
             created_at: new Date().toJSON(),
             updated_at: new Date().toJSON(),
