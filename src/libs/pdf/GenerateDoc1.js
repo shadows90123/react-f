@@ -141,7 +141,7 @@ export default function createPDF({ imgData, data, fileName }) {
             if (data["major3"]) {
                 doc.addImage(checkImage, "png", 107, 54, 5, 5);
             }
-            if (data["majors4"]) {
+            if (data["major4"]) {
                 doc.addImage(checkImage, "png", 134, 54, 5, 5);
             }
             if (data["major5"]) {
