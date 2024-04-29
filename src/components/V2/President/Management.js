@@ -113,7 +113,8 @@ export default function Management() {
                         <Tab eventKey="request" title="ตารางโครงการ">
                             {elReqTable}
                         </Tab>
-                        {pageType?.document?.startsWith("2") && (
+                        {(pageType?.document?.startsWith("2") ||
+                            pageType?.document?.startsWith("3")) && (
                             <Tab eventKey="history" title="ประวัติ">
                                 {elHisTable}
                             </Tab>

@@ -68,6 +68,13 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                             meta={_meta}
                                             onReloadPage={_onReloadPage}
                                         />
+                                        <DocForm
+                                            type="download"
+                                            owner={{ uid: docs[key].owner_id }}
+                                            docs={{ [key]: docs[key] }}
+                                            meta={_meta}
+                                            onReloadPage={_onReloadPage}
+                                        />
                                     </>
                                 ) : docType.startsWith("2") ? (
                                     <>
@@ -87,6 +94,13 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                         />
                                         <DocForm
                                             type="delete"
+                                            owner={{ uid: docs[key].owner_id }}
+                                            docs={{ [key]: docs[key] }}
+                                            meta={_meta}
+                                            onReloadPage={_onReloadPage}
+                                        />
+                                        <DocForm
+                                            type="download"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
                                             meta={_meta}
@@ -116,6 +130,13 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                             meta={_meta}
                                             onReloadPage={_onReloadPage}
                                         />
+                                        <DocForm
+                                            type="download"
+                                            owner={{ uid: docs[key].owner_id }}
+                                            docs={{ [key]: docs[key] }}
+                                            meta={_meta}
+                                            onReloadPage={_onReloadPage}
+                                        />
                                     </>
                                 ) : docType.startsWith("4") ? (
                                     <>
@@ -135,6 +156,13 @@ export default function TableData({ _docs, _meta, _onReloadPage }) {
                                         />
                                         <DocForm
                                             type="delete"
+                                            owner={{ uid: docs[key].owner_id }}
+                                            docs={{ [key]: docs[key] }}
+                                            meta={_meta}
+                                            onReloadPage={_onReloadPage}
+                                        />
+                                        <DocForm
+                                            type="download"
                                             owner={{ uid: docs[key].owner_id }}
                                             docs={{ [key]: docs[key] }}
                                             meta={_meta}
