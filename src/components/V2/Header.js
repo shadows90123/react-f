@@ -12,7 +12,7 @@ function Header() {
         <Navbar expand="lg" className="bg-dark">
             <Container>
                 <Navbar.Brand className="text-light">
-                    ระบบจัดการปริญญานิพนธ์
+                    ระบบการกรอกแบบฟอร์มสอบปริญญานิพนธ์
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse
